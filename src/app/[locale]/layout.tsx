@@ -4,6 +4,7 @@ import { getMessages, getTranslations } from 'next-intl/server';
 import { JetBrains_Mono } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
+import SmoothScroll from '@/components/ui/SmoothScroll';
 import '../globals.css';
 
 const jetbrainsMono = JetBrains_Mono({
@@ -54,7 +55,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       </head>
       <body>
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <SmoothScroll>{children}</SmoothScroll>
         </NextIntlClientProvider>
       </body>
     </html>

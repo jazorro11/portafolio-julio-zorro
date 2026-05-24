@@ -8,11 +8,7 @@ const EASE = [0.23, 1, 0.32, 1] as [number, number, number, number];
 
 const revealVariants = {
   hidden: { clipPath: 'inset(0 0 100% 0)', opacity: 0 },
-  visible: {
-    clipPath: 'inset(0 0 0% 0)',
-    opacity: 1,
-    transition: { duration: 0.7, ease: EASE },
-  },
+  visible: { clipPath: 'inset(0 0 0% 0)', opacity: 1 },
 };
 
 function RevealBlock({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
@@ -25,7 +21,7 @@ function RevealBlock({ children, delay = 0 }: { children: React.ReactNode; delay
         initial="hidden"
         animate={inView ? 'visible' : 'hidden'}
         variants={revealVariants}
-        transition={{ delay }}
+        transition={{ delay, duration: 0.8, ease: EASE }}
       >
         {children}
       </motion.div>
