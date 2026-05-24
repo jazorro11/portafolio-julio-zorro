@@ -27,7 +27,7 @@
       },
       "now": {
         "label": "Now",
-        "body": "Building conversational AI agents with LangGraph. Focused on agriculture, industry, and education — places where AI shows up and surprises people."
+        "body": "Building conversational AI agents with LangGraph. Focused on agriculture, industry, and education: places where AI shows up and surprises people."
       }
     }
   },
@@ -49,7 +49,7 @@
       },
       "sinergia": {
         "title": "Estudio Sinergia",
-        "description": "Marketing site for a creative studio — fast, accessible, and built to convert. Astro's island architecture keeps it near-zero JS by default.",
+        "description": "Marketing site for a creative studio. Fast, accessible, and built to convert. Astro's island architecture keeps it near-zero JS by default.",
         "tags": ["Astro", "TypeScript", "Tailwind"]
       },
       "haz": {

@@ -49,7 +49,7 @@
       },
       "sinergia": {
         "title": "Estudio Sinergia",
-        "description": "Sitio de marketing para un estudio creativo — rápido, accesible y enfocado en conversión. La arquitectura de islas de Astro lo mantiene casi sin JS por defecto.",
+        "description": "Sitio de marketing para un estudio creativo. Rápido, accesible y enfocado en conversión. La arquitectura de islas de Astro lo mantiene casi sin JS por defecto.",
         "tags": ["Astro", "TypeScript", "Tailwind"]
       },
       "haz": {
