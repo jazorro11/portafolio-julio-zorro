@@ -49,18 +49,22 @@ export function AmbientBackground({ orbs, particles }: AmbientBackgroundProps) {
     >
       {orbs.map((orb, i) => (
         <motion.div
-          key={i}
+          key={`orb-${orb.color}-${orb.top ?? ''}-${orb.left ?? ''}-${orb.right ?? ''}`}
           animate={
             shouldReduceMotion
               ? {}
               : { x: orb.animateTo.x, y: orb.animateTo.y, scale: orb.animateTo.scale }
           }
-          transition={{
-            duration: orb.duration,
-            repeat: Infinity,
-            repeatType: 'mirror',
-            ease: 'easeInOut',
-          }}
+          transition={
+            shouldReduceMotion
+              ? {}
+              : {
+                  duration: orb.duration,
+                  repeat: Infinity,
+                  repeatType: 'mirror',
+                  ease: 'easeInOut',
+                }
+          }
           style={{
             position: 'absolute',
             width: orb.size,
