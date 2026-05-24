@@ -38,9 +38,10 @@
   "work": {
     "label": "Proyectos",
     "heading": "Lo que he construido",
-    "wip": "En progreso",
+    "wip": "Beta",
     "viewProject": "Ver proyecto",
     "viewCode": "Ver código",
+    "liveDemo": "Demo en vivo",
     "projects": {
       "agent": {
         "title": "Agente Conversacional",

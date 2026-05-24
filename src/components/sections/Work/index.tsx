@@ -5,6 +5,9 @@ import { motion } from 'framer-motion';
 import { AmbientBackground } from '@/components/ui/AmbientBackground';
 import ChatMockup from './ChatMockup';
 
+// Set this to the Vercel URL once agent-web is deployed. Leave empty to hide the button.
+const AGENT_LIVE_URL = '';
+
 const secondaryProjects = [
   {
     key: 'sinergia' as const,
@@ -225,9 +228,16 @@ export default function Work() {
               ))}
             </div>
 
-            <LinkButton href="https://github.com/jazorro11/agent-web" light>
-              {t('viewCode')} ↗
-            </LinkButton>
+            <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+              <LinkButton href="https://github.com/jazorro11/agent-web" light>
+                {t('viewCode')} ↗
+              </LinkButton>
+              {AGENT_LIVE_URL && (
+                <LinkButton href={AGENT_LIVE_URL} light>
+                  {t('liveDemo')} ↗
+                </LinkButton>
+              )}
+            </div>
           </div>
 
           {/* Live chat mockup */}
