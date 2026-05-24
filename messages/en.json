@@ -14,7 +14,7 @@
   "about": {
     "label": "About",
     "heading": "From satellite firmware on avocado farms to conversational AI.",
-    "bio": "I'm an electronic engineer from Universidad de los Andes. For five years I co-built an AgriTech startup where everyone touched everything. My corner: firmware with finite state machines, transmitting sensor data through low-earth-orbit satellites to reach farms with no cellular coverage, and calculating evapotranspiration from weather data to tell Hass avocado growers exactly when to irrigate. We tested it on a real working farm for over a year. Part of that work ended up published in Nature Scientific Reports in 2024.\n\nWhile building the startup I also taught at Universidad Santo Tomás: programming, control systems, circuits, AI and data engineering. The part I keep coming back to is that moment when someone finally gets something complex you explained simply. Now I'm building conversational AI agents with LangGraph and the interfaces around them. The places that interest me most are the ones where nobody expects AI yet.",
+    "bio": "I'm an electronic engineer from Universidad de los Andes. For five years I co-built an AgriTech startup where everyone touched everything. My corner: firmware with finite state machines, transmitting sensor data through low-earth-orbit satellites to reach farms with no cellular coverage, and calculating evapotranspiration from weather data to tell Hass avocado growers exactly when to irrigate. We tested it on a real working farm for over a year. Part of that work ended up published in Nature Scientific Reports in 2024.\n\nWhile building the startup I started teaching at Universidad Santo Tomás in the data engineering and AI program, programming and IoT. Still doing it. The part I keep coming back to is that moment when someone finally gets something complex you explained simply. Now I'm building conversational AI agents with LangGraph and the interfaces around them. The places that interest me most are the ones where nobody expects AI yet.",
     "approach": "I come from hardware: firmware that has to survive in a field, sensors that feed real decisions. That background makes me think about what breaks in production, what a farmer actually needs to see on a screen, and whether the system still works when the connection drops.",
     "chapters": {
       "iot": {
@@ -23,7 +23,7 @@
       },
       "university": {
         "label": "Santo Tomás",
-        "body": "Taught programming, control systems, circuits, and AI courses in parallel with the startup. Still learning from students as much as they learn from me."
+        "body": "Teaching programming and IoT in the data engineering and AI program at Santo Tomás. Started during the startup years, still going. Learning from students as much as they learn from me."
       },
       "now": {
         "label": "Now",

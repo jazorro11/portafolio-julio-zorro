@@ -14,7 +14,7 @@
   "about": {
     "label": "Sobre mí",
     "heading": "Del firmware en fincas aguacateras a los agentes de IA conversacional.",
-    "bio": "Soy ingeniero electrónico de la Universidad de los Andes. Durante cinco años co-construí una startup de AgriTech en un equipo pequeño donde todos hacíamos de todo. Me encargué del firmware con máquinas de estado finito, de transmitir datos de sensores por satélites de baja órbita para llegar a zonas rurales sin señal, y de calcular evapotranspiración a partir de datos climáticos para darles recomendaciones de riego a cultivadores de aguacate Hass. Lo probamos en una finca real por más de un año. Parte de ese trabajo terminó publicado en Nature Scientific Reports en 2024.\n\nEn paralelo con la startup, dicté clases en la Universidad Santo Tomás: programación, control, circuitos, IA e ingeniería de datos. Lo que más me queda de eso es el momento en que alguien entiende algo complejo que expliqué de manera sencilla. Ese momento es difícil de reemplazar. Ahora estoy construyendo agentes de IA conversacional con LangGraph y las interfaces que los rodean. Los contextos que más me llaman la atención son los que nadie asocia todavía con IA.",
+    "bio": "Soy ingeniero electrónico de la Universidad de los Andes. Durante cinco años co-construí una startup de AgriTech en un equipo pequeño donde todos hacíamos de todo. Me encargué del firmware con máquinas de estado finito, de transmitir datos de sensores por satélites de baja órbita para llegar a zonas rurales sin señal, y de calcular evapotranspiración a partir de datos climáticos para darles recomendaciones de riego a cultivadores de aguacate Hass. Lo probamos en una finca real por más de un año. Parte de ese trabajo terminó publicado en Nature Scientific Reports en 2024.\n\nEn paralelo con la startup, empecé a dar clases en la Universidad Santo Tomás en la carrera de ingeniería de datos e IA: programación e IoT. Todavía lo hago. Lo que más me queda de eso es el momento en que alguien entiende algo complejo que expliqué de manera sencilla. Ese momento es difícil de reemplazar. Ahora estoy construyendo agentes de IA conversacional con LangGraph y las interfaces que los rodean. Los contextos que más me llaman la atención son los que nadie asocia todavía con IA.",
     "approach": "Vengo del hardware: firmware que tiene que funcionar en campo, sensores que alimentan decisiones reales. Eso me hace pensar en qué se rompe en producción, qué necesita ver un agricultor en pantalla, y si el sistema sigue funcionando cuando se cae la conexión.",
     "chapters": {
       "iot": {
@@ -23,7 +23,7 @@
       },
       "university": {
         "label": "Santo Tomás",
-        "body": "Dicté programación, control, circuitos e IA mientras construía la startup. Aprendí tanto de los estudiantes como ellos de mí."
+        "body": "Doy clases de programación e IoT en la carrera de ingeniería de datos e IA de la Santo Tomás. Empecé durante la startup y sigo. Aprendo tanto de los estudiantes como ellos de mí."
       },
       "now": {
         "label": "Ahora",
