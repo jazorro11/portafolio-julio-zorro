@@ -13,9 +13,23 @@
   },
   "about": {
     "label": "Sobre mí",
-    "heading": "Ingeniero por formación,\nconstructor por naturaleza.",
-    "bio": "Trabajo en la intersección entre ingeniería de software e inteligencia artificial — diseñando agentes, construyendo interfaces y conectando los dos mundos. Me importan los sistemas que funcionan y las experiencias que se sienten bien.",
-    "approach": "Mi enfoque es directo: entender el problema a fondo y construir la solución más simple que lo resuelva bien."
+    "heading": "Depuré firmware a las 3am y expliqué redes neuronales a las 8am.\nLos dos me enseñaron lo mismo.",
+    "bio": "Ingeniero electrónico de la Universidad de los Andes. Durante cinco años cofundé una startup AgriTech desde cero: diseñé estaciones meteorológicas, escribí firmware, manejé el backend y convertí datos de sensores en recomendaciones de riego que los agricultores realmente podían usar. También enseñé en la universidad — programación, circuitos, control, IA. Ver a un estudiante entender algo por primera vez no pierde su gracia.\n\nAhora construyo agentes de IA conversacional con LangGraph y las interfaces que los hacen realmente útiles. Me importa el stack completo — no por impresionar, sino porque así se hacen buenos productos.",
+    "approach": "El hardware me enseñó que el software vive en el mundo real. Pienso en sistemas, no en funcionalidades — por eso detecto problemas antes, construyo menos cosas que se rompen y entrego trabajo del que no me arrepiento.",
+    "chapters": {
+      "iot": {
+        "label": "Hardware & IoT",
+        "body": "Construí estaciones meteorológicas y software agrícola durante 5 años en una startup AgriTech. Sensores reales, agricultores reales."
+      },
+      "university": {
+        "label": "Universidad",
+        "body": "Profesor en Los Andes — programación, IA, circuitos. Cursos con las mejores calificaciones."
+      },
+      "now": {
+        "label": "Hoy",
+        "body": "Agentes de IA conversacional e interfaces. La misma obsesión con la utilidad, otro medio."
+      }
+    }
   },
   "capabilities": {
     "label": "Stack",

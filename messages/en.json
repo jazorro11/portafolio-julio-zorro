@@ -13,9 +13,23 @@
   },
   "about": {
     "label": "About",
-    "heading": "Engineer by training,\nbuilder by nature.",
-    "bio": "I work at the intersection of software engineering and AI — designing agents, building interfaces, and connecting the two. I care about systems that work and experiences that feel right.",
-    "approach": "My approach is straightforward: understand the problem deeply, then build the simplest thing that solves it well."
+    "heading": "I've debugged firmware at 3am and explained neural nets at 8am.\nBoth taught me the same thing.",
+    "bio": "Electronic engineer from Universidad de los Andes. For five years I co-built an AgriTech startup from the ground up — designing weather stations, writing firmware, running the backend, and turning sensor data into irrigation advice real farmers could act on. I also taught at university: programming, circuits, control systems, AI. Watching a student finally get it never gets old.\n\nNow I build conversational AI agents with LangGraph and the interfaces that make them actually useful. I care about the full stack — not because it's impressive, but because that's how good products get made.",
+    "approach": "Hardware taught me that software lives in the real world. I think in systems, not features — which means I catch problems earlier, build fewer things that break, and ship work I'm not embarrassed by.",
+    "chapters": {
+      "iot": {
+        "label": "Hardware & IoT",
+        "body": "Built weather stations and farm software for 5 years at an AgriTech startup. Real sensors, real farmers."
+      },
+      "university": {
+        "label": "University",
+        "body": "Professor at Los Andes — programming, AI, circuits. Courses rated among the best."
+      },
+      "now": {
+        "label": "Now",
+        "body": "Conversational AI agents and interfaces. Same obsession with usefulness, different medium."
+      }
+    }
   },
   "capabilities": {
     "label": "Stack",
