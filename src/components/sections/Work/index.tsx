@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
+import { AmbientBackground } from '@/components/ui/AmbientBackground';
 import ChatMockup from './ChatMockup';
 
 const secondaryProjects = [
@@ -89,6 +90,29 @@ export default function Work() {
         minHeight: '100svh',
       }}
     >
+      <AmbientBackground
+        orbs={[
+          {
+            size: 200,
+            color: 'rgba(255,140,66,0.10)',
+            blurPx: 60,
+            top: '-30px',
+            right: '-10px',
+            animateTo: { x: 10, y: -10, scale: 1.04 },
+            duration: 6,
+          },
+          {
+            size: 150,
+            color: 'rgba(160,120,80,0.08)',
+            blurPx: 50,
+            bottom: '-20px',
+            left: '20px',
+            animateTo: { x: -6, y: 8, scale: 0.94 },
+            duration: 8,
+          },
+        ]}
+      />
+
       <div className="container">
         {/* Header */}
         <motion.p
