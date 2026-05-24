@@ -8,7 +8,7 @@ import { getLenis } from '@/lib/lenis-instance';
 // SSR: false — Three.js needs window
 const WebGLScene = dynamic(() => import('./WebGLScene'), { ssr: false });
 
-const EASE = [0.23, 1, 0.32, 1] as [number, number, number, number];
+const EASE = [0.23, 1, 0.32, 1] as [number, number, number, number]; // --ease-out-strong
 
 // Stagger each character — Emil rule: 30-80ms between items
 const letterVariants = {
@@ -92,7 +92,7 @@ export default function Hero() {
         <motion.p
           variants={{
             hidden: { opacity: 0, y: 20 },
-            visible: { opacity: 1, y: 0, transition: { delay: 0.1, duration: 0.5, ease: 'easeOut' } },
+            visible: { opacity: 1, y: 0, transition: { delay: 0.1, duration: 0.5, ease: EASE } },
           }}
           className="section-label"
           style={{ color: 'var(--color-accent)', marginBottom: '1.5rem' }}
@@ -122,7 +122,7 @@ export default function Hero() {
             visible: {
               opacity: 1,
               y: 0,
-              transition: { delay: 0.9, duration: 0.6, ease: [0.23, 1, 0.32, 1] },
+              transition: { delay: 0.9, duration: 0.6, ease: EASE },
             },
           }}
           style={{
@@ -150,7 +150,7 @@ export default function Hero() {
             visible: {
               opacity: 1,
               scale: 1,
-              transition: { delay: 1.1, duration: 0.4, ease: [0.23, 1, 0.32, 1] },
+              transition: { delay: 1.1, duration: 0.4, ease: EASE },
             },
           }}
           whileTap={{ scale: 0.97 }} // Emil: scale(0.97) on :active, 160ms ease-out
