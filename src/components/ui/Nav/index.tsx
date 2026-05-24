@@ -68,10 +68,10 @@ export default function Nav() {
         JZ
       </a>
 
-      {/* Links */}
-      <ul style={{ display: 'flex', gap: '2rem', listStyle: 'none', alignItems: 'center' }}>
+      {/* Links — hidden on mobile */}
+      <ul className="nav-links" style={{ display: 'flex', gap: '2rem', listStyle: 'none', alignItems: 'center' }}>
         {links.map(({ href, label }) => (
-          <li key={href}>
+          <li key={href} className="nav-link-item">
             <a
               href={href}
               onClick={e => handleNavClick(e, href)}
@@ -83,6 +83,8 @@ export default function Nav() {
                 color: 'var(--color-text-dark-secondary)',
                 textDecoration: 'none',
                 transition: 'color 200ms ease',
+                padding: '12px 0',
+                display: 'inline-block',
               }}
               onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-accent)')}
               onMouseLeave={e => (e.currentTarget.style.color = 'var(--color-text-dark-secondary)')}
@@ -95,6 +97,12 @@ export default function Nav() {
           <LanguageToggle />
         </li>
       </ul>
+
+      <style>{`
+        @media (max-width: 640px) {
+          .nav-link-item { display: none !important; }
+        }
+      `}</style>
     </nav>
   );
 }

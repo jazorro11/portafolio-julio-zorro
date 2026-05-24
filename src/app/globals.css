@@ -1,13 +1,6 @@
 @import "tailwindcss";
 @import "../styles/tokens.css";
 
-/* Satoshi variable font from Fontshare CDN */
-@font-face {
-  font-family: 'Satoshi';
-  src: url('https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap');
-  font-display: swap;
-}
-
 /* Reset */
 *, *::before, *::after {
   box-sizing: border-box;

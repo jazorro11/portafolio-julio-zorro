@@ -48,12 +48,28 @@ export default function WebGLScene() {
     geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
+    // Circular sprite texture — avoids square default
+    const spriteCanvas = document.createElement('canvas');
+    spriteCanvas.width = 32;
+    spriteCanvas.height = 32;
+    const ctx = spriteCanvas.getContext('2d')!;
+    const grad = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+    grad.addColorStop(0, 'rgba(255,255,255,1)');
+    grad.addColorStop(0.4, 'rgba(255,255,255,0.6)');
+    grad.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 32, 32);
+    const sprite = new THREE.CanvasTexture(spriteCanvas);
+
     const mat = new THREE.PointsMaterial({
-      size: 0.018,
+      size: 0.025,
       vertexColors: true,
       transparent: true,
-      opacity: 0.6,
+      opacity: 0.65,
       sizeAttenuation: true,
+      map: sprite,
+      alphaTest: 0.001,
+      depthWrite: false,
     });
 
     const particles = new THREE.Points(geo, mat);
@@ -94,6 +110,7 @@ export default function WebGLScene() {
       renderer.dispose();
       geo.dispose();
       mat.dispose();
+      sprite.dispose();
       el.removeChild(renderer.domElement);
     };
   }, []);

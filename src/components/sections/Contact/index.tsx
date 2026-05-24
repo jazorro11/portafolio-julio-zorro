@@ -57,6 +57,7 @@ export default function Contact() {
             lineHeight: 0.9,
             color: 'var(--color-text-dark)',
             marginBottom: '1.5rem',
+            hyphens: 'auto',
           }}
         >
           {t('heading')}
@@ -78,6 +79,7 @@ export default function Contact() {
 
         {/* Email — clip-path reveal on hover */}
         <motion.a
+          className="email-link"
           href={`mailto:${email}`}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -146,6 +148,13 @@ export default function Contact() {
           ))}
         </motion.div>
       </div>
+
+      <style>{`
+        @media (max-width: 480px) {
+          #contact h2 { font-size: clamp(2.5rem, 13vw, 4rem) !important; }
+          #contact .email-link { font-size: var(--text-xl) !important; word-break: break-all; }
+        }
+      `}</style>
     </section>
   );
 }
