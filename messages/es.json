@@ -15,38 +15,32 @@
     "label": "Sobre mí",
     "heading": "Ingeniero por formación,\nconstructor por naturaleza.",
     "bio": "Trabajo en la intersección entre ingeniería de software e inteligencia artificial — diseñando agentes, construyendo interfaces y conectando los dos mundos. Me importan los sistemas que funcionan y las experiencias que se sienten bien.",
-    "approach": "Mi enfoque es directo: entender el problema a fondo, y luego construir la solución más simple que lo resuelva bien."
+    "approach": "Mi enfoque es directo: entender el problema a fondo y construir la solución más simple que lo resuelva bien."
   },
   "capabilities": {
     "label": "Stack",
-    "heading": "Con qué trabajo",
-    "categories": {
-      "ai": "AI & Agentes",
-      "frontend": "Frontend",
-      "backend": "Backend",
-      "tools": "Herramientas"
-    }
+    "heading": "Con qué trabajo"
   },
   "work": {
     "label": "Proyectos",
     "heading": "Lo que he construido",
-    "wip": "En construcción",
+    "wip": "En progreso",
     "viewProject": "Ver proyecto",
     "viewCode": "Ver código",
     "projects": {
       "agent": {
         "title": "Agente Conversacional",
-        "description": "Agente conversacional multi-turno construido con LangGraph. Memoria, uso de herramientas y razonamiento estructurado en un solo grafo.",
+        "description": "Agente conversacional multi-turno construido con LangGraph. Memoria, uso de herramientas y razonamiento estructurado orquestados en un solo grafo.",
         "tags": ["LangGraph", "Python", "AI"]
       },
-      "web1": {
-        "title": "Proyecto Web",
-        "description": "Proyecto frontend en desarrollo activo.",
-        "tags": ["React", "TypeScript"]
+      "sinergia": {
+        "title": "Estudio Sinergia",
+        "description": "Sitio de marketing para un estudio creativo — rápido, accesible y enfocado en conversión. La arquitectura de islas de Astro lo mantiene casi sin JS por defecto.",
+        "tags": ["Astro", "TypeScript", "Tailwind"]
       },
-      "web2": {
-        "title": "Proyecto Web",
-        "description": "Proyecto frontend.",
+      "haz": {
+        "title": "HAZ Arquitectura",
+        "description": "Portafolio y servicios para una firma de arquitectura bogotana con más de 30 años de experiencia. Diseño centrado en imagen.",
         "tags": ["Next.js", "TypeScript"]
       }
     }

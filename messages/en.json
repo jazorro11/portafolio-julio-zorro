@@ -19,34 +19,28 @@
   },
   "capabilities": {
     "label": "Stack",
-    "heading": "What I work with",
-    "categories": {
-      "ai": "AI & Agents",
-      "frontend": "Frontend",
-      "backend": "Backend",
-      "tools": "Tools"
-    }
+    "heading": "What I work with"
   },
   "work": {
     "label": "Work",
     "heading": "What I've built",
-    "wip": "Work in progress",
+    "wip": "In progress",
     "viewProject": "View project",
     "viewCode": "View code",
     "projects": {
       "agent": {
         "title": "Conversational Agent",
-        "description": "A multi-turn conversational agent built with LangGraph. Memory, tool use, and structured reasoning in a single graph.",
+        "description": "A multi-turn conversational agent built with LangGraph. Memory, tool use, and structured reasoning orchestrated in a single graph.",
         "tags": ["LangGraph", "Python", "AI"]
       },
-      "web1": {
-        "title": "Web Project",
-        "description": "Frontend project in active development.",
-        "tags": ["React", "TypeScript"]
+      "sinergia": {
+        "title": "Estudio Sinergia",
+        "description": "Marketing site for a creative studio — fast, accessible, and built to convert. Astro's island architecture keeps it near-zero JS by default.",
+        "tags": ["Astro", "TypeScript", "Tailwind"]
       },
-      "web2": {
-        "title": "Web Project",
-        "description": "Frontend project.",
+      "haz": {
+        "title": "HAZ Arquitectura",
+        "description": "Portfolio and services site for a Bogotá-based architecture firm with 30+ years of experience. Image-first, bilingual-ready.",
         "tags": ["Next.js", "TypeScript"]
       }
     }
