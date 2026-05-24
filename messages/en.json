@@ -13,40 +13,48 @@
   },
   "about": {
     "label": "About",
-    "heading": "Engineer by training,\nbuilder by nature.",
-    "bio": "I work at the intersection of software engineering and AI — designing agents, building interfaces, and connecting the two. I care about systems that work and experiences that feel right.",
-    "approach": "My approach is straightforward: understand the problem deeply, then build the simplest thing that solves it well."
+    "heading": "From satellite firmware on avocado farms to conversational AI.",
+    "bio": "I'm an electronic engineer from Universidad de los Andes. For five years I co-built an AgriTech startup where everyone touched everything. My corner: firmware with finite state machines, transmitting sensor data through low-earth-orbit satellites to reach farms with no cellular coverage, and calculating evapotranspiration from weather data to tell Hass avocado growers exactly when to irrigate. We tested it on a real working farm for over a year. Part of that work ended up published in Nature Scientific Reports in 2024.\n\nWhile building the startup I started teaching at Universidad Santo Tomás in the data engineering and AI program, programming and IoT. Still doing it. The part I keep coming back to is that moment when someone finally gets something complex you explained simply. Now I'm building conversational AI agents with LangGraph and the interfaces around them. The places that interest me most are the ones where nobody expects AI yet.",
+    "approach": "I come from hardware: firmware that has to survive in a field, sensors that feed real decisions. That background makes me think about what breaks in production, what a farmer actually needs to see on a screen, and whether the system still works when the connection drops.",
+    "chapters": {
+      "iot": {
+        "label": "Hardware & IoT",
+        "body": "Firmware, LEO satellite connectivity, and evapotranspiration models for Hass avocado farms. Field-tested for over a year. Published in Nature Scientific Reports (2024)."
+      },
+      "university": {
+        "label": "Santo Tomás",
+        "body": "Teaching programming and IoT in the data engineering and AI program at Santo Tomás. Started during the startup years, still going. Learning from students as much as they learn from me."
+      },
+      "now": {
+        "label": "Now",
+        "body": "Building conversational AI agents with LangGraph. Focused on agriculture, industry, and education: places where AI shows up and surprises people."
+      }
+    }
   },
   "capabilities": {
     "label": "Stack",
-    "heading": "What I work with",
-    "categories": {
-      "ai": "AI & Agents",
-      "frontend": "Frontend",
-      "backend": "Backend",
-      "tools": "Tools"
-    }
+    "heading": "What I work with"
   },
   "work": {
     "label": "Work",
     "heading": "What I've built",
-    "wip": "Work in progress",
+    "wip": "In progress",
     "viewProject": "View project",
     "viewCode": "View code",
     "projects": {
       "agent": {
         "title": "Conversational Agent",
-        "description": "A multi-turn conversational agent built with LangGraph. Memory, tool use, and structured reasoning in a single graph.",
+        "description": "A multi-turn conversational agent built with LangGraph. Memory, tool use, and structured reasoning orchestrated in a single graph.",
         "tags": ["LangGraph", "Python", "AI"]
       },
-      "web1": {
-        "title": "Web Project",
-        "description": "Frontend project in active development.",
-        "tags": ["React", "TypeScript"]
+      "sinergia": {
+        "title": "Estudio Sinergia",
+        "description": "Marketing site for a creative studio. Fast, accessible, and built to convert. Astro's island architecture keeps it near-zero JS by default.",
+        "tags": ["Astro", "TypeScript", "Tailwind"]
       },
-      "web2": {
-        "title": "Web Project",
-        "description": "Frontend project.",
+      "haz": {
+        "title": "HAZ Arquitectura",
+        "description": "Portfolio and services site for a Bogotá-based architecture firm with 30+ years of experience. Image-first, bilingual-ready.",
         "tags": ["Next.js", "TypeScript"]
       }
     }

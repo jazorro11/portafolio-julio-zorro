@@ -7,10 +7,11 @@ import Work from '@/components/sections/Work';
 import Contact from '@/components/sections/Contact';
 import Nav from '@/components/ui/Nav';
 import CustomCursor from '@/components/ui/CustomCursor';
+import SmoothScroll from '@/components/ui/SmoothScroll';
 
 export default function HomePage() {
   return (
-    <>
+    <SmoothScroll>
       <CustomCursor />
       <Nav />
       <main>
@@ -20,6 +21,6 @@ export default function HomePage() {
         <Work />
         <Contact />
       </main>
-    </>
+    </SmoothScroll>
   );
 }

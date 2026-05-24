@@ -13,40 +13,48 @@
   },
   "about": {
     "label": "Sobre mí",
-    "heading": "Ingeniero por formación,\nconstructor por naturaleza.",
-    "bio": "Trabajo en la intersección entre ingeniería de software e inteligencia artificial — diseñando agentes, construyendo interfaces y conectando los dos mundos. Me importan los sistemas que funcionan y las experiencias que se sienten bien.",
-    "approach": "Mi enfoque es directo: entender el problema a fondo, y luego construir la solución más simple que lo resuelva bien."
+    "heading": "Del firmware en fincas aguacateras a los agentes de IA conversacional.",
+    "bio": "Soy ingeniero electrónico de la Universidad de los Andes. Durante cinco años co-construí una startup de AgriTech en un equipo pequeño donde todos hacíamos de todo. Me encargué del firmware con máquinas de estado finito, de transmitir datos de sensores por satélites de baja órbita para llegar a zonas rurales sin señal, y de calcular evapotranspiración a partir de datos climáticos para darles recomendaciones de riego a cultivadores de aguacate Hass. Lo probamos en una finca real por más de un año. Parte de ese trabajo terminó publicado en Nature Scientific Reports en 2024.\n\nEn paralelo con la startup, empecé a dar clases en la Universidad Santo Tomás en la carrera de ingeniería de datos e IA: programación e IoT. Todavía lo hago. Lo que más me queda de eso es el momento en que alguien entiende algo complejo que expliqué de manera sencilla. Ese momento es difícil de reemplazar. Ahora estoy construyendo agentes de IA conversacional con LangGraph y las interfaces que los rodean. Los contextos que más me llaman la atención son los que nadie asocia todavía con IA.",
+    "approach": "Vengo del hardware: firmware que tiene que funcionar en campo, sensores que alimentan decisiones reales. Eso me hace pensar en qué se rompe en producción, qué necesita ver un agricultor en pantalla, y si el sistema sigue funcionando cuando se cae la conexión.",
+    "chapters": {
+      "iot": {
+        "label": "Hardware e IoT",
+        "body": "Firmware, conectividad por satélite LEO y modelos de evapotranspiración para fincas de aguacate Hass. Probado en campo por más de un año. Publicado en Nature Scientific Reports (2024)."
+      },
+      "university": {
+        "label": "Santo Tomás",
+        "body": "Doy clases de programación e IoT en la carrera de ingeniería de datos e IA de la Santo Tomás. Empecé durante la startup y sigo. Aprendo tanto de los estudiantes como ellos de mí."
+      },
+      "now": {
+        "label": "Ahora",
+        "body": "Construyendo agentes de IA conversacional con LangGraph. Me interesan la agricultura, la industria y la educación: los lugares donde la IA aparece y sorprende."
+      }
+    }
   },
   "capabilities": {
     "label": "Stack",
-    "heading": "Con qué trabajo",
-    "categories": {
-      "ai": "AI & Agentes",
-      "frontend": "Frontend",
-      "backend": "Backend",
-      "tools": "Herramientas"
-    }
+    "heading": "Con qué trabajo"
   },
   "work": {
     "label": "Proyectos",
     "heading": "Lo que he construido",
-    "wip": "En construcción",
+    "wip": "En progreso",
     "viewProject": "Ver proyecto",
     "viewCode": "Ver código",
     "projects": {
       "agent": {
         "title": "Agente Conversacional",
-        "description": "Agente conversacional multi-turno construido con LangGraph. Memoria, uso de herramientas y razonamiento estructurado en un solo grafo.",
+        "description": "Agente conversacional multi-turno construido con LangGraph. Memoria, uso de herramientas y razonamiento estructurado orquestados en un solo grafo.",
         "tags": ["LangGraph", "Python", "AI"]
       },
-      "web1": {
-        "title": "Proyecto Web",
-        "description": "Proyecto frontend en desarrollo activo.",
-        "tags": ["React", "TypeScript"]
+      "sinergia": {
+        "title": "Estudio Sinergia",
+        "description": "Sitio de marketing para un estudio creativo. Rápido, accesible y enfocado en conversión. La arquitectura de islas de Astro lo mantiene casi sin JS por defecto.",
+        "tags": ["Astro", "TypeScript", "Tailwind"]
       },
-      "web2": {
-        "title": "Proyecto Web",
-        "description": "Proyecto frontend.",
+      "haz": {
+        "title": "HAZ Arquitectura",
+        "description": "Portafolio y servicios para una firma de arquitectura bogotana con más de 30 años de experiencia. Diseño centrado en imagen.",
         "tags": ["Next.js", "TypeScript"]
       }
     }
