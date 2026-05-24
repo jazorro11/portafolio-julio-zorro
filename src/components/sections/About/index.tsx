@@ -4,12 +4,14 @@ import { useTranslations } from 'next-intl';
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 
+const EASE = [0.23, 1, 0.32, 1] as [number, number, number, number];
+
 const revealVariants = {
   hidden: { clipPath: 'inset(0 0 100% 0)', opacity: 0 },
   visible: {
     clipPath: 'inset(0 0 0% 0)',
     opacity: 1,
-    transition: { duration: 0.8, ease: [0.23, 1, 0.32, 1] },
+    transition: { duration: 0.8, ease: EASE },
   },
 };
 

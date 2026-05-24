@@ -2,11 +2,13 @@
 
 import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
-import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { getLenis } from '@/lib/lenis-instance';
 
 // SSR: false — Three.js needs window
 const WebGLScene = dynamic(() => import('./WebGLScene'), { ssr: false });
+
+const EASE = [0.23, 1, 0.32, 1] as [number, number, number, number];
 
 // Stagger each character — Emil rule: 30-80ms between items
 const letterVariants = {
@@ -18,7 +20,7 @@ const letterVariants = {
     transition: {
       delay: 0.3 + i * 0.05,
       duration: 0.7,
-      ease: [0.23, 1, 0.32, 1], // --ease-out-strong
+      ease: EASE,
     },
   }),
 };
@@ -137,6 +139,12 @@ export default function Hero() {
         {/* CTA */}
         <motion.a
           href="#work"
+          onClick={e => {
+            e.preventDefault();
+            const lenis = getLenis();
+            if (lenis) lenis.scrollTo('#work', { offset: -72, duration: 1.2 });
+            else document.querySelector('#work')?.scrollIntoView({ behavior: 'smooth' });
+          }}
           variants={{
             hidden: { opacity: 0, scale: 0.95 },
             visible: {

@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import { Link } from '@/i18n/navigation';
 import LanguageToggle from '../LanguageToggle';
+import { getLenis } from '@/lib/lenis-instance';
 
 export default function Nav() {
   const t = useTranslations('nav');
@@ -23,6 +24,16 @@ export default function Nav() {
     { href: '#work',         label: t('work') },
     { href: '#contact',      label: t('contact') },
   ];
+
+  function handleNavClick(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
+    e.preventDefault();
+    const lenis = getLenis();
+    if (lenis) {
+      lenis.scrollTo(href, { offset: -72, duration: 1.2 });
+    } else {
+      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 
   return (
     <nav
@@ -44,6 +55,7 @@ export default function Nav() {
       {/* Logo / Name */}
       <a
         href="#hero"
+        onClick={e => handleNavClick(e, '#hero')}
         style={{
           fontFamily: 'var(--font-display)',
           fontSize: 'var(--text-sm)',
@@ -62,6 +74,7 @@ export default function Nav() {
           <li key={href}>
             <a
               href={href}
+              onClick={e => handleNavClick(e, href)}
               style={{
                 fontFamily: 'var(--font-mono)',
                 fontSize: 'var(--text-xs)',
