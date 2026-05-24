@@ -1,0 +1,95 @@
+/* Design Tokens — Portafolio Julio Zorro
+   Palette: Deep Space Amber
+   Dark sections (#080810 + #FF8C42): Hero, Capabilities
+   Light sections (#F5F1EB): About, Work, Contact */
+
+:root {
+  /* ── Colors ── */
+  --color-dark: #080810;
+  --color-dark-2: #0d0d1f;
+
+  --color-light: #F5F1EB;
+  --color-light-2: #EAE4D8;
+
+  /* Accent: Burnt Amber — primary identity color */
+  --color-accent: #FF8C42;
+  --color-accent-dim: rgba(255, 140, 66, 0.12);
+  --color-accent-hover: #FF9F5E;
+
+  /* Accent 2: Electric Blue — depth / secondary elements */
+  --color-accent-2: #3B82F6;
+  --color-accent-2-dim: rgba(59, 130, 246, 0.08);
+
+  /* Text on dark sections */
+  --color-text-dark: #FFFFFF;
+  --color-text-dark-secondary: rgba(255, 255, 255, 0.5);
+  --color-text-dark-muted: rgba(255, 255, 255, 0.25);
+
+  /* Text on light sections */
+  --color-text-light: #0A0A0A;
+  --color-text-light-secondary: rgba(10, 10, 10, 0.5);
+  --color-text-light-muted: rgba(10, 10, 10, 0.25);
+
+  /* ── Typography ── */
+  --font-display: 'Satoshi', system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-jetbrains), 'JetBrains Mono', monospace;
+
+  /* Fluid type scale */
+  --text-xs:   clamp(0.7rem,  1.5vw, 0.8rem);
+  --text-sm:   clamp(0.8rem,  1.8vw, 0.95rem);
+  --text-base: clamp(1rem,    2vw,   1.1rem);
+  --text-lg:   clamp(1.1rem,  2.5vw, 1.4rem);
+  --text-xl:   clamp(1.4rem,  3.5vw, 2rem);
+  --text-2xl:  clamp(2rem,    5vw,   3.5rem);
+  --text-3xl:  clamp(3rem,    7vw,   5.5rem);
+  --text-hero: clamp(3.5rem,  9vw,   8rem);
+
+  /* ── Spacing ── */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* ── Layout ── */
+  --container-max:     1280px;
+  --container-padding: clamp(1.5rem, 5vw, 4rem);
+  --section-padding-y: clamp(5rem, 12vw, 10rem);
+
+  /* ── Easing (Emil Design Engineering curves) ── */
+  --ease-out-strong:   cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer:       cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* ── Z-index ── */
+  --z-below:   -1;
+  --z-base:     0;
+  --z-content:  10;
+  --z-nav:     100;
+  --z-cursor: 9999;
+}
+
+/* Dark section theme (Hero, Capabilities) */
+[data-theme="dark"] {
+  --section-bg:            var(--color-dark);
+  --section-bg-2:          var(--color-dark-2);
+  --section-text:          var(--color-text-dark);
+  --section-text-secondary: var(--color-text-dark-secondary);
+  --section-text-muted:    var(--color-text-dark-muted);
+  --section-border:        rgba(255, 255, 255, 0.07);
+}
+
+/* Light section theme (About, Work, Contact) */
+[data-theme="light"] {
+  --section-bg:            var(--color-light);
+  --section-bg-2:          var(--color-light-2);
+  --section-text:          var(--color-text-light);
+  --section-text-secondary: var(--color-text-light-secondary);
+  --section-text-muted:    var(--color-text-light-muted);
+  --section-border:        rgba(10, 10, 10, 0.08);
+}
