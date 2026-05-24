@@ -150,17 +150,39 @@ export default function About() {
               gap: '0.5rem',
             }}
           >
-            <span
-              style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '0.7rem',
-                letterSpacing: '0.14em',
-                textTransform: 'uppercase',
-                color: labelColor,
-              }}
-            >
-              {t(`chapters.${key}.label`)}
-            </span>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span
+                style={{
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: '0.7rem',
+                  letterSpacing: '0.14em',
+                  textTransform: 'uppercase',
+                  color: labelColor,
+                }}
+              >
+                {t(`chapters.${key}.label`)}
+              </span>
+              {key === 'iot' && (
+                <a
+                  href="https://www.nature.com/articles/s41598-024-82344-4"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: '0.62rem',
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(255,140,66,0.6)',
+                    textDecoration: 'none',
+                    transition: 'color 150ms ease',
+                  }}
+                  onMouseEnter={e => (e.currentTarget.style.color = '#FF8C42')}
+                  onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,140,66,0.6)')}
+                >
+                  Nature ↗
+                </a>
+              )}
+            </div>
             <p
               style={{
                 fontFamily: 'var(--font-display)',

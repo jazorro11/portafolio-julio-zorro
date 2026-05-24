@@ -13,21 +13,21 @@
   },
   "about": {
     "label": "About",
-    "heading": "I've debugged firmware at 3am and explained neural nets at 8am.\nBoth taught me the same thing.",
-    "bio": "Electronic engineer from Universidad de los Andes. For five years I co-built an AgriTech startup from the ground up — designing weather stations, writing firmware, running the backend, and turning sensor data into irrigation advice real farmers could act on. I also taught at university: programming, circuits, control systems, AI. Watching a student finally get it never gets old.\n\nNow I build conversational AI agents with LangGraph and the interfaces that make them actually useful. I care about the full stack — not because it's impressive, but because that's how good products get made.",
-    "approach": "Hardware taught me that software lives in the real world. I think in systems, not features — which means I catch problems earlier, build fewer things that break, and ship work I'm not embarrassed by.",
+    "heading": "From satellite firmware on avocado farms to conversational AI.",
+    "bio": "I'm an electronic engineer from Universidad de los Andes. For five years I co-built an AgriTech startup where everyone touched everything. My corner: firmware with finite state machines, transmitting sensor data through low-earth-orbit satellites to reach farms with no cellular coverage, and calculating evapotranspiration from weather data to tell Hass avocado growers exactly when to irrigate. We tested it on a real working farm for over a year. Part of that work ended up published in Nature Scientific Reports in 2024.\n\nWhile building the startup I also taught at Universidad Santo Tomás: programming, control systems, circuits, AI and data engineering. The part I keep coming back to is that moment when someone finally gets something complex you explained simply. Now I'm building conversational AI agents with LangGraph and the interfaces around them. The places that interest me most are the ones where nobody expects AI yet.",
+    "approach": "I come from hardware: firmware that has to survive in a field, sensors that feed real decisions. That background makes me think about what breaks in production, what a farmer actually needs to see on a screen, and whether the system still works when the connection drops.",
     "chapters": {
       "iot": {
         "label": "Hardware & IoT",
-        "body": "Built weather stations and farm software for 5 years at an AgriTech startup. Real sensors, real farmers."
+        "body": "Firmware, LEO satellite connectivity, and evapotranspiration models for Hass avocado farms. Field-tested for over a year. Published in Nature Scientific Reports (2024)."
       },
       "university": {
-        "label": "University",
-        "body": "Professor at Los Andes — programming, AI, circuits. Courses rated among the best."
+        "label": "Santo Tomás",
+        "body": "Taught programming, control systems, circuits, and AI courses in parallel with the startup. Still learning from students as much as they learn from me."
       },
       "now": {
         "label": "Now",
-        "body": "Conversational AI agents and interfaces. Same obsession with usefulness, different medium."
+        "body": "Building conversational AI agents with LangGraph. Focused on agriculture, industry, and education — places where AI shows up and surprises people."
       }
     }
   },
