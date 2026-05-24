@@ -123,7 +123,7 @@ export default function Contact() {
           }}
         >
           {[
-            { label: 'GitHub',   href: 'https://github.com/jzorroperez' },
+            { label: 'GitHub',   href: 'https://github.com/jazorro11' },
             { label: 'LinkedIn', href: 'https://www.linkedin.com/in/juliozorro/' },
           ].map(({ label, href }) => (
             <a
