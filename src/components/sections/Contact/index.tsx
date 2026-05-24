@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
+import { AmbientBackground } from '@/components/ui/AmbientBackground';
 
 export default function Contact() {
   const t = useTranslations('contact');
@@ -31,6 +32,30 @@ export default function Contact() {
           pointerEvents: 'none',
           zIndex: 0,
         }}
+      />
+
+      <AmbientBackground
+        orbs={[
+          {
+            size: 280,
+            color: 'rgba(255,140,66,0.30)',
+            blurPx: 50,
+            top: '-80px',
+            left: 'calc(50% - 140px)',
+            animateTo: { x: 8, y: -12, scale: 1.06 },
+            duration: 5,
+          },
+          {
+            size: 120,
+            color: 'rgba(59,130,246,0.18)',
+            blurPx: 35,
+            bottom: '-10px',
+            left: '10px',
+            animateTo: { x: -8, y: 10, scale: 0.9 },
+            duration: 8,
+          },
+        ]}
+        particles={{ count: 3, colors: ['rgba(255,140,66,0.7)', 'rgba(59,130,246,0.7)'] }}
       />
 
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
@@ -123,7 +148,7 @@ export default function Contact() {
           }}
         >
           {[
-            { label: 'GitHub',   href: 'https://github.com/jzorroperez' },
+            { label: 'GitHub',   href: 'https://github.com/jazorro11' },
             { label: 'LinkedIn', href: 'https://www.linkedin.com/in/juliozorro/' },
           ].map(({ label, href }) => (
             <a

@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
+import { AmbientBackground } from '@/components/ui/AmbientBackground';
 
 const stack = {
   'AI & Agents': ['LangGraph', 'LangChain', 'OpenAI API', 'Anthropic API', 'Python', 'FastAPI'],
@@ -63,6 +64,30 @@ export default function Capabilities() {
           pointerEvents: 'none',
           zIndex: 0,
         }}
+      />
+
+      <AmbientBackground
+        orbs={[
+          {
+            size: 200,
+            color: 'rgba(255,140,66,0.25)',
+            blurPx: 40,
+            top: '-30px',
+            right: '-20px',
+            animateTo: { x: 12, y: -16, scale: 1.08 },
+            duration: 6,
+          },
+          {
+            size: 160,
+            color: 'rgba(59,130,246,0.20)',
+            blurPx: 45,
+            bottom: '-20px',
+            left: '-10px',
+            animateTo: { x: -10, y: 12, scale: 0.92 },
+            duration: 7,
+          },
+        ]}
+        particles={{ count: 4, colors: ['rgba(255,140,66,0.7)', 'rgba(59,130,246,0.7)'] }}
       />
 
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>

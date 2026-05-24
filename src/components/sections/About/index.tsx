@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { AmbientBackground } from '@/components/ui/AmbientBackground';
 
 const EASE = [0.23, 1, 0.32, 1] as [number, number, number, number];
 
@@ -60,6 +61,29 @@ export default function About() {
         alignItems: 'center',
       }}
     >
+      <AmbientBackground
+        orbs={[
+          {
+            size: 220,
+            color: 'rgba(255,140,66,0.12)',
+            blurPx: 60,
+            top: '-40px',
+            left: '-20px',
+            animateTo: { x: 10, y: -14, scale: 1.05 },
+            duration: 7,
+          },
+          {
+            size: 180,
+            color: 'rgba(160,120,80,0.10)',
+            blurPx: 55,
+            bottom: '-30px',
+            right: '-10px',
+            animateTo: { x: -8, y: 10, scale: 0.93 },
+            duration: 9,
+          },
+        ]}
+      />
+
       {/* Left: text */}
       <div style={{ maxWidth: '540px' }}>
         <RevealBlock>
