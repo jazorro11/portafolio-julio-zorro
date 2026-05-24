@@ -5,8 +5,7 @@ import { motion } from 'framer-motion';
 import { AmbientBackground } from '@/components/ui/AmbientBackground';
 import ChatMockup from './ChatMockup';
 
-// Set this to the Vercel URL once agent-web is deployed. Leave empty to hide the button.
-const AGENT_LIVE_URL = '';
+const AGENT_LIVE_URL = 'https://agent-web-web-one.vercel.app';
 
 const secondaryProjects = [
   {
