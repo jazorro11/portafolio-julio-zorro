@@ -33,7 +33,10 @@
   },
   "capabilities": {
     "label": "Stack",
-    "heading": "Con qué trabajo"
+    "heading": "Con qué trabajo",
+    "hardware": {
+      "label": "Hardware · IoT"
+    }
   },
   "work": {
     "label": "Proyectos",
