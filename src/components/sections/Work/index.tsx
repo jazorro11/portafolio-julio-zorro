@@ -13,8 +13,8 @@ const secondaryProjects = [
     tags: ['Astro', 'TypeScript', 'Tailwind'],
     status: 'live' as const,
     color: '#FF8C42',
-    github: 'https://github.com/jazorro11/sinergia-web-page',
-    live: null,
+    github: null,
+    live: 'https://es-sinergia-web.vercel.app/',
   },
   {
     key: 'haz' as const,
