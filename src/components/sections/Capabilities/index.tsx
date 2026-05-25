@@ -11,6 +11,13 @@ const stack = {
   'Tools':       ['Git', 'Vercel', 'Supabase', 'Claude Code', 'Docker'],
 };
 
+const hardwareStack = [
+  { category: 'Microcontrollers', items: ['ESP32', 'STM32', 'ATmega'] },
+  { category: 'Connectivity',     items: ['LoRa', 'LoRaWAN', 'MQTT', 'BLE', 'WiFi', 'I2C', 'SPI', 'UART'] },
+  { category: 'Low Power',        items: ['Deep Sleep', 'RTC Wakeup', 'Battery Mgmt', 'Solar'] },
+  { category: 'Languages',        items: ['C', 'C++', 'MicroPython', 'FreeRTOS'] },
+];
+
 function TechCard({ name, i }: { name: string; i: number }) {
   return (
     <motion.div
@@ -137,6 +144,54 @@ export default function Capabilities() {
                 className="section-label"
                 style={{
                   color: ci === 0 ? 'var(--color-accent)' : 'var(--color-text-dark-muted)',
+                  marginBottom: '1rem',
+                }}
+              >
+                {category}
+              </motion.p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                {items.map((item, i) => (
+                  <TechCard key={item} name={item} i={ci * 6 + i} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Hardware · IoT separator */}
+        <div
+          aria-hidden
+          style={{ borderTop: '1px solid rgba(255,255,255,0.07)', marginBlock: '3rem' }}
+        />
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="section-label"
+          style={{ color: 'var(--color-accent)', marginBottom: '2.5rem' }}
+        >
+          {t('hardware.label')}
+        </motion.p>
+
+        {/* Hardware categories grid */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gap: '2.5rem',
+          }}
+        >
+          {hardwareStack.map(({ category, items }, ci) => (
+            <div key={category}>
+              <motion.p
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: ci * 0.08 }}
+                className="section-label"
+                style={{
+                  color: 'var(--color-text-dark-muted)',
                   marginBottom: '1rem',
                 }}
               >
