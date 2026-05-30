@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { AmbientBackground } from '@/components/ui/AmbientBackground';
+import { fogReveal, growIn, growInStagger } from '@/lib/animations';
 
 const stack = {
   'AI & Agents': ['LangGraph', 'LangChain', 'OpenAI API', 'Anthropic API', 'Python', 'FastAPI'],
@@ -18,15 +18,12 @@ const hardwareStack = [
   { category: 'Languages',        items: ['C', 'C++', 'MicroPython', 'FreeRTOS'] },
 ];
 
-function TechCard({ name, i }: { name: string; i: number }) {
+function TechCard({ name }: { name: string }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: i * 0.04, duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-      whileHover={{ scale: 1.04, borderColor: 'rgba(255,140,66,0.4)' }}
-      whileTap={{ scale: 0.97 }} // Emil: scale(0.97) on press
+      variants={growIn}
+      whileHover={{ scale: 1.04, borderColor: 'rgba(143,168,154,0.4)' }}
+      whileTap={{ scale: 0.97 }}
       style={{
         background: 'rgba(255,255,255,0.04)',
         border: '1px solid rgba(255,255,255,0.08)',
@@ -73,30 +70,6 @@ export default function Capabilities() {
         }}
       />
 
-      <AmbientBackground
-        orbs={[
-          {
-            size: 200,
-            color: 'rgba(255,140,66,0.25)',
-            blurPx: 40,
-            top: '-30px',
-            right: '-20px',
-            animateTo: { x: 12, y: -16, scale: 1.08 },
-            duration: 6,
-          },
-          {
-            size: 160,
-            color: 'rgba(59,130,246,0.20)',
-            blurPx: 45,
-            bottom: '-20px',
-            left: '-10px',
-            animateTo: { x: -10, y: 12, scale: 0.92 },
-            duration: 7,
-          },
-        ]}
-        particles={{ count: 4, colors: ['rgba(255,140,66,0.7)', 'rgba(59,130,246,0.7)'] }}
-      />
-
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         {/* Header */}
         <div style={{ marginBottom: '4rem' }}>
@@ -110,16 +83,18 @@ export default function Capabilities() {
             {t('label')}
           </motion.p>
           <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+            variants={fogReveal}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-10% 0px' }}
             style={{
-              fontFamily: 'var(--font-display)',
+              fontFamily: 'var(--font-heading)',
               fontSize: 'var(--text-3xl)',
-              fontWeight: 800,
-              letterSpacing: '-0.03em',
+              fontWeight: 300,
+              letterSpacing: '-0.02em',
+              lineHeight: 1.05,
               color: 'var(--color-text-dark)',
+              marginBottom: 'clamp(2rem, 5vw, 4rem)',
             }}
           >
             {t('heading')}
@@ -149,11 +124,17 @@ export default function Capabilities() {
               >
                 {category}
               </motion.p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                {items.map((item, i) => (
-                  <TechCard key={item} name={item} i={ci * 6 + i} />
+              <motion.div
+                variants={growInStagger}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}
+              >
+                {items.map((item) => (
+                  <TechCard key={item} name={item} />
                 ))}
-              </div>
+              </motion.div>
             </div>
           ))}
         </div>
@@ -197,11 +178,17 @@ export default function Capabilities() {
               >
                 {category}
               </motion.p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                {items.map((item, i) => (
-                  <TechCard key={item} name={item} i={ci * 6 + i} />
+              <motion.div
+                variants={growInStagger}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}
+              >
+                {items.map((item) => (
+                  <TechCard key={item} name={item} />
                 ))}
-              </div>
+              </motion.div>
             </div>
           ))}
         </div>
