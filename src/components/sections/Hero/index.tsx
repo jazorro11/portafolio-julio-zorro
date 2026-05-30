@@ -5,11 +5,13 @@ import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import { getLenis } from '@/lib/lenis-instance';
 import { fogReveal, fogRevealFast, fogTransition, fogFastTransition } from '@/lib/animations';
+import { useHasHover } from '@/hooks/useHasHover';
 
 const WebGLScene = dynamic(() => import('./WebGLScene'), { ssr: false });
 
 export default function Hero() {
   const t = useTranslations('hero');
+  const hasHover = useHasHover();
 
   return (
     <section
@@ -118,7 +120,7 @@ export default function Hero() {
           animate="visible"
           transition={fogFastTransition(2.0)}
           whileTap={{ scale: 0.97 }}
-          whileHover={{ borderColor: 'var(--color-accent)' }}
+          whileHover={hasHover ? { borderColor: 'var(--color-accent)' } : undefined}
           style={{
             display: 'inline-block',
             fontFamily: 'var(--font-mono)',

@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import { fogReveal, growIn, growInStagger } from '@/lib/animations';
+import { useHasHover } from '@/hooks/useHasHover';
 
 const stack = {
   'AI & Agents': ['LangGraph', 'LangChain', 'OpenAI API', 'Anthropic API', 'Python', 'FastAPI'],
@@ -19,10 +20,12 @@ const hardwareStack = [
 ];
 
 function TechCard({ name }: { name: string }) {
+  const hasHover = useHasHover();
+
   return (
     <motion.div
       variants={growIn}
-      whileHover={{ scale: 1.04, borderColor: 'rgba(143,168,154,0.4)' }}
+      whileHover={hasHover ? { scale: 1.04, borderColor: 'rgba(143,168,154,0.4)' } : undefined}
       whileTap={{ scale: 0.97 }}
       style={{
         background: 'rgba(255,255,255,0.04)',
