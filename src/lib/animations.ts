@@ -1,6 +1,6 @@
 import type { Variants } from 'framer-motion';
 
-const EASE_OUT_STRONG = [0.23, 1, 0.32, 1] as const;
+const EASE_OUT_STRONG: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
 // Fog dissipating — for hero name, main headings
 export const fogReveal: Variants = {
@@ -36,7 +36,6 @@ export const fogRevealFast: Variants = {
   hidden: {
     opacity: 0,
     filter: 'blur(5px)',
-    scale: 0.99,
   },
   visible: {
     opacity: 1,
