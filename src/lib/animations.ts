@@ -84,6 +84,32 @@ export const growInStagger: Variants = {
   },
 };
 
+// Fade in with subtle lift — for section labels, category headings, secondary elements
+export const fadeIn: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 8,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: EASE_OUT_STRONG,
+    },
+  },
+};
+
+export const fadeInStagger: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.06,
+      delayChildren: 0.05,
+    },
+  },
+};
+
 // Transition helpers — merge delay with variant's duration/ease so component-level
 // transition props don't discard the variant-defined duration and ease.
 export function fogTransition(delay: number) {

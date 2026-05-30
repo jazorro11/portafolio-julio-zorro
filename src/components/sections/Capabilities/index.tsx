@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { fogReveal, growIn, growInStagger } from '@/lib/animations';
+import { fogReveal, growIn, growInStagger, fadeIn } from '@/lib/animations';
 import { useHasHover } from '@/hooks/useHasHover';
 
 const stack = {
@@ -77,8 +77,9 @@ export default function Capabilities() {
         {/* Header */}
         <div style={{ marginBottom: '4rem' }}>
           <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+            variants={fadeIn}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
             className="section-label"
             style={{ color: 'var(--color-accent)', marginBottom: '1rem' }}
@@ -115,10 +116,10 @@ export default function Capabilities() {
           {Object.entries(stack).map(([category, items], ci) => (
             <div key={category}>
               <motion.p
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
+                variants={fadeIn}
+                initial="hidden"
+                whileInView="visible"
                 viewport={{ once: true }}
-                transition={{ delay: ci * 0.08 }}
                 className="section-label"
                 style={{
                   color: ci === 0 ? 'var(--color-accent)' : 'var(--color-text-dark-muted)',
@@ -149,8 +150,9 @@ export default function Capabilities() {
         />
 
         <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          variants={fadeIn}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
           className="section-label"
           style={{ color: 'var(--color-accent)', marginBottom: '2.5rem' }}
@@ -169,10 +171,10 @@ export default function Capabilities() {
           {hardwareStack.map(({ category, items }, ci) => (
             <div key={category}>
               <motion.p
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
+                variants={fadeIn}
+                initial="hidden"
+                whileInView="visible"
                 viewport={{ once: true }}
-                transition={{ delay: ci * 0.08 }}
                 className="section-label"
                 style={{
                   color: 'var(--color-text-dark-muted)',
