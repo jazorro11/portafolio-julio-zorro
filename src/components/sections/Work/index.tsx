@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { AmbientBackground } from '@/components/ui/AmbientBackground';
+import { fogReveal } from '@/lib/animations';
 import ChatMockup from './ChatMockup';
 
 const AGENT_LIVE_URL = 'https://agent-web-web-one.vercel.app';
@@ -20,7 +20,7 @@ const secondaryProjects = [
     key: 'haz' as const,
     tags: ['Next.js', 'TypeScript'],
     status: 'live' as const,
-    color: '#3B82F6',
+    color: 'var(--color-accent-2)',
     github: null,
     live: 'https://www.haz-arquitectura.com/',
   },
@@ -92,29 +92,6 @@ export default function Work() {
         minHeight: '100svh',
       }}
     >
-      <AmbientBackground
-        orbs={[
-          {
-            size: 200,
-            color: 'rgba(255,140,66,0.10)',
-            blurPx: 60,
-            top: '-30px',
-            right: '-10px',
-            animateTo: { x: 10, y: -10, scale: 1.04 },
-            duration: 6,
-          },
-          {
-            size: 150,
-            color: 'rgba(160,120,80,0.08)',
-            blurPx: 50,
-            bottom: '-20px',
-            left: '20px',
-            animateTo: { x: -6, y: 8, scale: 0.94 },
-            duration: 8,
-          },
-        ]}
-      />
-
       <div className="container">
         {/* Header */}
         <motion.p
@@ -127,17 +104,18 @@ export default function Work() {
           {t('label')}
         </motion.p>
         <motion.h2
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+          variants={fogReveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-10% 0px' }}
           style={{
-            fontFamily: 'var(--font-display)',
+            fontFamily: 'var(--font-heading)',
             fontSize: 'var(--text-3xl)',
-            fontWeight: 800,
-            letterSpacing: '-0.03em',
+            fontWeight: 300,
+            letterSpacing: '-0.02em',
+            lineHeight: 1.05,
             color: 'var(--color-text-light)',
-            marginBottom: '4rem',
+            marginBottom: 'clamp(2rem, 5vw, 4rem)',
           }}
         >
           {t('heading')}
