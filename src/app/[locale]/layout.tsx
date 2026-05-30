@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
-import { JetBrains_Mono } from 'next/font/google';
+import { Cormorant_Garamond, JetBrains_Mono } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import SmoothScroll from '@/components/ui/SmoothScroll';
@@ -10,6 +10,14 @@ import '../globals.css';
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-jetbrains',
+  display: 'swap',
+});
+
+const cormorantGaramond = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['300', '400', '500'],
+  style: ['normal', 'italic'],
+  variable: '--font-cormorant',
   display: 'swap',
 });
 
@@ -45,7 +53,11 @@ export default async function LocaleLayout({ children, params }: Props) {
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={jetbrainsMono.variable} suppressHydrationWarning>
+    <html
+      lang={locale}
+      className={`${jetbrainsMono.variable} ${cormorantGaramond.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <link rel="preconnect" href="https://api.fontshare.com" />
         <link
