@@ -4,43 +4,9 @@ import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import { getLenis } from '@/lib/lenis-instance';
+import { fogReveal, fogRevealFast } from '@/lib/animations';
 
-// SSR: false — Three.js needs window
 const WebGLScene = dynamic(() => import('./WebGLScene'), { ssr: false });
-
-const EASE = [0.23, 1, 0.32, 1] as [number, number, number, number]; // --ease-out-strong
-
-// Stagger each character — Emil rule: 30-80ms between items
-const letterVariants = {
-  hidden: { opacity: 0, y: 60, skewY: 4 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    skewY: 0,
-    transition: {
-      delay: 0.3 + i * 0.05,
-      duration: 0.7,
-      ease: EASE,
-    },
-  }),
-};
-
-function SplitName({ name }: { name: string }) {
-  return (
-    <span aria-label={name} style={{ display: 'flex', overflow: 'hidden', flexWrap: 'wrap' }}>
-      {name.split('').map((char, i) => (
-        <motion.span
-          key={i}
-          custom={i}
-          variants={letterVariants}
-          style={{ display: 'inline-block', whiteSpace: char === ' ' ? 'pre' : 'normal' }}
-        >
-          {char}
-        </motion.span>
-      ))}
-    </span>
-  );
-}
 
 export default function Hero() {
   const t = useTranslations('hero');
@@ -54,7 +20,6 @@ export default function Hero() {
         background: 'var(--color-dark)',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
         minHeight: '100svh',
         overflow: 'hidden',
       }}
@@ -62,7 +27,7 @@ export default function Hero() {
       {/* WebGL background */}
       <WebGLScene />
 
-      {/* Amber glow — radial gradient accent */}
+      {/* Amber glow — sage replaces blue */}
       <div
         aria-hidden
         style={{
@@ -70,67 +35,69 @@ export default function Hero() {
           inset: 0,
           background:
             'radial-gradient(ellipse 80% 60% at 65% 55%, rgba(255,140,66,0.08) 0%, transparent 70%),' +
-            'radial-gradient(ellipse 40% 40% at 20% 80%, rgba(59,130,246,0.06) 0%, transparent 60%)',
+            'radial-gradient(ellipse 40% 40% at 20% 80%, rgba(143,168,154,0.05) 0%, transparent 60%)',
           zIndex: 1,
           pointerEvents: 'none',
         }}
       />
 
-      {/* Content */}
-      <motion.div
-        initial="hidden"
-        animate="visible"
+      {/* Content — left axis, no centering */}
+      <div
         style={{
           position: 'relative',
           zIndex: 2,
-          textAlign: 'center',
-          padding: '0 var(--container-padding)',
-          maxWidth: '1000px',
+          width: '100%',
+          paddingLeft: 'var(--axis-left)',
+          paddingRight: 'var(--container-padding)',
+          paddingTop: 'var(--section-padding-y)',
+          paddingBottom: 'var(--section-padding-y)',
         }}
       >
         {/* Role label */}
         <motion.p
-          variants={{
-            hidden: { opacity: 0, y: 20 },
-            visible: { opacity: 1, y: 0, transition: { delay: 0.1, duration: 0.5, ease: EASE } },
-          }}
+          variants={fogRevealFast}
+          initial="hidden"
+          animate="visible"
+          transition={{ delay: 0.2 }}
           className="section-label"
           style={{ color: 'var(--color-accent)', marginBottom: '1.5rem' }}
         >
           {t('title')}
         </motion.p>
 
-        {/* Name — letter by letter */}
-        <h1
+        {/* Name — Cormorant Garamond weight 300, fog reveal */}
+        <motion.h1
+          variants={fogReveal}
+          initial="hidden"
+          animate="visible"
+          transition={{ delay: 0.4 }}
           style={{
-            fontFamily: 'var(--font-display)',
+            fontFamily: 'var(--font-heading)',
             fontSize: 'var(--text-hero)',
-            fontWeight: 900,
-            letterSpacing: '-0.04em',
-            lineHeight: 0.9,
+            fontWeight: 300,
+            letterSpacing: '-0.02em',
+            lineHeight: 0.92,
             color: 'var(--color-text-dark)',
-            marginBottom: '2rem',
+            marginBottom: '2.5rem',
+            maxWidth: '14ch',
           }}
         >
-          <SplitName name={t('name')} />
-        </h1>
+          {t('name')}
+        </motion.h1>
 
         {/* Tagline */}
         <motion.p
-          variants={{
-            hidden: { opacity: 0, y: 24 },
-            visible: {
-              opacity: 1,
-              y: 0,
-              transition: { delay: 0.9, duration: 0.6, ease: EASE },
-            },
-          }}
+          variants={fogRevealFast}
+          initial="hidden"
+          animate="visible"
+          transition={{ delay: 1.0 }}
           style={{
             fontSize: 'var(--text-lg)',
+            fontFamily: 'var(--font-display)',
             color: 'var(--color-text-dark-secondary)',
-            maxWidth: '560px',
-            margin: '0 auto 3rem',
-            lineHeight: 1.5,
+            maxWidth: '480px',
+            marginBottom: '3rem',
+            lineHeight: 1.55,
           }}
         >
           {t('tagline')}
@@ -145,15 +112,11 @@ export default function Hero() {
             if (lenis) lenis.scrollTo('#work', { offset: -72, duration: 1.2 });
             else document.querySelector('#work')?.scrollIntoView({ behavior: 'smooth' });
           }}
-          variants={{
-            hidden: { opacity: 0, scale: 0.95 },
-            visible: {
-              opacity: 1,
-              scale: 1,
-              transition: { delay: 1.1, duration: 0.4, ease: EASE },
-            },
-          }}
-          whileTap={{ scale: 0.97 }} // Emil: scale(0.97) on :active, 160ms ease-out
+          variants={fogRevealFast}
+          initial="hidden"
+          animate="visible"
+          transition={{ delay: 1.2 }}
+          whileTap={{ scale: 0.97 }}
           whileHover={{ borderColor: 'var(--color-accent)' }}
           style={{
             display: 'inline-block',
@@ -171,22 +134,21 @@ export default function Hero() {
         >
           {t('cta')} ↓
         </motion.a>
-      </motion.div>
+      </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator — left-axis aligned */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.6, duration: 0.6 }}
+        transition={{ delay: 1.8, duration: 0.8 }}
         style={{
           position: 'absolute',
           bottom: '2.5rem',
-          left: '50%',
-          transform: 'translateX(-50%)',
+          left: 'var(--axis-left)',
           zIndex: 2,
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
+          alignItems: 'flex-start',
           gap: '8px',
         }}
       >
@@ -198,7 +160,7 @@ export default function Hero() {
         </span>
         <motion.div
           animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
+          transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
           style={{
             width: 1,
             height: 40,
@@ -206,6 +168,18 @@ export default function Hero() {
           }}
         />
       </motion.div>
+
+      {/* Mobile: reduce left padding */}
+      <style>{`
+        @media (max-width: 768px) {
+          #hero > div[style] {
+            padding-left: var(--container-padding) !important;
+          }
+          #hero > div[style] h1 {
+            max-width: 100% !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }
