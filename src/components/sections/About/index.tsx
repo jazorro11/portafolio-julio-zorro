@@ -191,13 +191,14 @@ export default function About() {
         <ScrollReveal delay={0.35}>
           <p
             style={{
-              fontSize: 'var(--text-sm)',
-              color: 'var(--color-text-light-muted)',
-              lineHeight: 1.75,
+              fontSize: 'var(--text-base)',
+              color: 'var(--color-text-light-secondary)',
+              lineHeight: 1.8,
               fontStyle: 'italic',
-              borderLeft: '2px solid var(--color-accent)',
-              paddingLeft: '1rem',
+              fontFamily: 'var(--font-heading)',
+              fontWeight: 400,
               marginBottom: '3rem',
+              paddingTop: '0.5rem',
             }}
           >
             {t('approach')}
