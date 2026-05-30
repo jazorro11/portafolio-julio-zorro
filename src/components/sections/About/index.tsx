@@ -82,15 +82,20 @@ function ChapterList() {
                 rel="noopener noreferrer"
                 style={{
                   fontFamily: 'var(--font-mono)',
-                  fontSize: '0.62rem',
-                  letterSpacing: '0.1em',
+                  fontSize: 'var(--text-xs)',
+                  letterSpacing: '0.08em',
                   textTransform: 'uppercase',
-                  color: 'rgba(255,140,66,0.6)',
+                  color: 'var(--color-accent)',
                   textDecoration: 'none',
-                  transition: 'color 150ms ease',
+                  transition: 'opacity 150ms ease',
+                  opacity: 1,
+                  fontWeight: 500,
+                  border: '1px solid rgba(255,140,66,0.35)',
+                  borderRadius: '100px',
+                  padding: '2px 8px',
                 }}
-                onMouseEnter={e => (e.currentTarget.style.color = '#FF8C42')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,140,66,0.6)')}
+                onMouseEnter={e => (e.currentTarget.style.opacity = '0.7')}
+                onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
               >
                 Nature ↗
               </a>
@@ -215,6 +220,7 @@ export default function About() {
           src="/photos/lichen.jpg"
           alt="Lichen with fractal branching structure — inspires complex systems design"
           fill
+          priority
           style={{ objectFit: 'cover', objectPosition: 'center' }}
           sizes="50vw"
         />
