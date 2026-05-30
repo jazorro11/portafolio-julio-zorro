@@ -135,6 +135,7 @@ export default function About() {
     >
       {/* Left: text — anchored to left axis within its column */}
       <div
+        className="about-text"
         style={{
           padding: 'var(--section-padding-y) clamp(2rem, 5vw, 4rem) var(--section-padding-y) var(--axis-left)',
           display: 'flex',
@@ -208,7 +209,7 @@ export default function About() {
       </div>
 
       {/* Right: lichen photo — full height, bleeds to right edge */}
-      <div style={{ position: 'relative', minHeight: '600px' }}>
+      <div style={{ position: 'relative', minHeight: '600px', alignSelf: 'stretch' }}>
         <Image
           src="/photos/lichen.jpg"
           alt="Lichen with fractal branching structure — inspires complex systems design"
@@ -234,7 +235,7 @@ export default function About() {
           #about {
             grid-template-columns: 1fr !important;
           }
-          #about > div:first-child {
+          .about-text {
             padding-left: var(--container-padding) !important;
           }
           #about > div:last-child {
