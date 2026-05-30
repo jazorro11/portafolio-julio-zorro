@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import { getLenis } from '@/lib/lenis-instance';
-import { fogReveal, fogRevealFast } from '@/lib/animations';
+import { fogReveal, fogRevealFast, fogTransition, fogFastTransition } from '@/lib/animations';
 
 const WebGLScene = dynamic(() => import('./WebGLScene'), { ssr: false });
 
@@ -59,7 +59,7 @@ export default function Hero() {
           variants={fogRevealFast}
           initial="hidden"
           animate="visible"
-          transition={{ delay: 0.2 }}
+          transition={fogFastTransition(0.2)}
           className="section-label"
           style={{ color: 'var(--color-accent)', marginBottom: '1.5rem' }}
         >
@@ -71,7 +71,7 @@ export default function Hero() {
           variants={fogReveal}
           initial="hidden"
           animate="visible"
-          transition={{ delay: 0.4 }}
+          transition={fogTransition(0.4)}
           style={{
             fontFamily: 'var(--font-heading)',
             fontSize: 'var(--text-hero)',
@@ -91,7 +91,7 @@ export default function Hero() {
           variants={fogRevealFast}
           initial="hidden"
           animate="visible"
-          transition={{ delay: 1.6 }}
+          transition={fogFastTransition(1.6)}
           style={{
             fontSize: 'var(--text-lg)',
             fontFamily: 'var(--font-display)',
@@ -116,7 +116,7 @@ export default function Hero() {
           variants={fogRevealFast}
           initial="hidden"
           animate="visible"
-          transition={{ delay: 2.0 }}
+          transition={fogFastTransition(2.0)}
           whileTap={{ scale: 0.97 }}
           whileHover={{ borderColor: 'var(--color-accent)' }}
           style={{

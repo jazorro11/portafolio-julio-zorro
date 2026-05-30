@@ -64,7 +64,7 @@ export default function Capabilities() {
         style={{
           position: 'absolute',
           inset: 0,
-          background: 'radial-gradient(ellipse 60% 50% at 80% 30%, rgba(59,130,246,0.07) 0%, transparent 60%)',
+          background: 'radial-gradient(ellipse 60% 50% at 80% 30%, rgba(143,168,154,0.07) 0%, transparent 60%)',
           pointerEvents: 'none',
           zIndex: 0,
         }}

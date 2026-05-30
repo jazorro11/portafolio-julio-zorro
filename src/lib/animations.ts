@@ -20,22 +20,12 @@ export const fogReveal: Variants = {
   },
 };
 
-// Stagger container — wraps children with fogReveal
-export const fogRevealStagger: Variants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.18,
-      delayChildren: 0.1,
-    },
-  },
-};
-
 // Fast fog — for subtitles, secondary paragraphs
 export const fogRevealFast: Variants = {
   hidden: {
     opacity: 0,
     filter: 'blur(5px)',
+    scale: 0.98,
   },
   visible: {
     opacity: 1,
@@ -93,3 +83,13 @@ export const growInStagger: Variants = {
     },
   },
 };
+
+// Transition helpers — merge delay with variant's duration/ease so component-level
+// transition props don't discard the variant-defined duration and ease.
+export function fogTransition(delay: number) {
+  return { delay, duration: 1.4, ease: EASE_OUT_STRONG };
+}
+
+export function fogFastTransition(delay: number) {
+  return { delay, duration: 0.9, ease: EASE_OUT_STRONG };
+}
