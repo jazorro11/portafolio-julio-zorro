@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { AmbientBackground } from '@/components/ui/AmbientBackground';
+import { fogReveal, fogRevealFast } from '@/lib/animations';
 
 export default function Contact() {
   const t = useTranslations('contact');
@@ -34,30 +34,6 @@ export default function Contact() {
         }}
       />
 
-      <AmbientBackground
-        orbs={[
-          {
-            size: 280,
-            color: 'rgba(255,140,66,0.30)',
-            blurPx: 50,
-            top: '-80px',
-            left: 'calc(50% - 140px)',
-            animateTo: { x: 8, y: -12, scale: 1.06 },
-            duration: 5,
-          },
-          {
-            size: 120,
-            color: 'rgba(59,130,246,0.18)',
-            blurPx: 35,
-            bottom: '-10px',
-            left: '10px',
-            animateTo: { x: -8, y: 10, scale: 0.9 },
-            duration: 8,
-          },
-        ]}
-        particles={{ count: 3, colors: ['rgba(255,140,66,0.7)', 'rgba(59,130,246,0.7)'] }}
-      />
-
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <motion.p
           initial={{ opacity: 0 }}
@@ -70,19 +46,18 @@ export default function Contact() {
         </motion.p>
 
         <motion.h2
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
+          variants={fogReveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-10% 0px' }}
           style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: 'var(--text-hero)',
-            fontWeight: 900,
-            letterSpacing: '-0.04em',
-            lineHeight: 0.9,
+            fontFamily: 'var(--font-heading)',
+            fontSize: 'var(--text-3xl)',
+            fontWeight: 300,
+            letterSpacing: '-0.02em',
+            lineHeight: 1.05,
             color: 'var(--color-text-dark)',
-            marginBottom: '1.5rem',
-            hyphens: 'auto',
+            marginBottom: 'clamp(1.5rem, 3vw, 2.5rem)',
           }}
         >
           {t('heading')}
@@ -106,10 +81,10 @@ export default function Contact() {
         <motion.a
           className="email-link"
           href={`mailto:${email}`}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={fogRevealFast}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
-          transition={{ delay: 0.3, duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
           whileHover={{ color: 'var(--color-accent)' }}
           style={{
             fontFamily: 'var(--font-display)',
@@ -135,10 +110,10 @@ export default function Contact() {
 
         {/* Social links */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          variants={fogRevealFast}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
           style={{
             display: 'flex',
             gap: '2rem',

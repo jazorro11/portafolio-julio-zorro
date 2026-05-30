@@ -1,6 +1,6 @@
 /* Design Tokens — Portafolio Julio Zorro
-   Palette: Deep Space Amber
-   Dark sections (#080810 + #FF8C42): Hero, Capabilities
+   Palette: Naturalist Engineer
+   Dark sections (#080810 + #FF8C42 + #8FA89A): Hero, Capabilities
    Light sections (#F5F1EB): About, Work, Contact */
 
 :root {
@@ -16,9 +16,10 @@
   --color-accent-dim: rgba(255, 140, 66, 0.12);
   --color-accent-hover: #FF9F5E;
 
-  /* Accent 2: Electric Blue — depth / secondary elements */
-  --color-accent-2: #3B82F6;
-  --color-accent-2-dim: rgba(59, 130, 246, 0.08);
+  /* Accent 2: Sage / Lichen — natura meets AI, replaces Electric Blue */
+  --color-accent-2: #8FA89A;
+  --color-accent-2-dim: rgba(143, 168, 154, 0.10);
+  --color-accent-2-hover: #A3BDB5;
 
   /* Text on dark sections */
   --color-text-dark: #FFFFFF;
@@ -32,6 +33,7 @@
 
   /* ── Typography ── */
   --font-display: 'Satoshi', system-ui, -apple-system, sans-serif;
+  --font-heading: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
   --font-mono: var(--font-jetbrains), 'JetBrains Mono', monospace;
 
   /* Fluid type scale */
@@ -60,11 +62,12 @@
   --container-max:     1280px;
   --container-padding: clamp(1.5rem, 5vw, 4rem);
   --section-padding-y: clamp(5rem, 12vw, 10rem);
+  --axis-left:         clamp(2rem, 15vw, 16rem);
 
   /* ── Easing (Emil Design Engineering curves) ── */
-  --ease-out-strong:   cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-out-strong:    cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
-  --ease-drawer:       cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-drawer:        cubic-bezier(0.32, 0.72, 0, 1);
 
   /* ── Z-index ── */
   --z-below:   -1;

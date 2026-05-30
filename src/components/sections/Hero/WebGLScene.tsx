@@ -27,9 +27,9 @@ export default function WebGLScene() {
     const positions = new Float32Array(count * 3);
     const colors = new Float32Array(count * 3);
 
-    // Deep Space Amber: #FF8C42 and #3B82F6
+    // Deep Space Amber: #FF8C42 and sage #8FA89A
     const amber = new THREE.Color('#FF8C42');
-    const blue  = new THREE.Color('#3B82F6');
+    const blue  = new THREE.Color('#8FA89A');
     const white = new THREE.Color('#FFFFFF');
 
     for (let i = 0; i < count; i++) {

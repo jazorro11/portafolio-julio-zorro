@@ -1,34 +1,10 @@
 'use client';
 
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { AmbientBackground } from '@/components/ui/AmbientBackground';
-
-const EASE = [0.23, 1, 0.32, 1] as [number, number, number, number];
-
-const revealVariants = {
-  hidden: { clipPath: 'inset(0 0 100% 0)', opacity: 0 },
-  visible: { clipPath: 'inset(0 0 0% 0)', opacity: 1 },
-};
-
-function RevealBlock({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-10% 0px' });
-
-  return (
-    <div ref={ref} style={{ overflow: 'hidden' }}>
-      <motion.div
-        initial="hidden"
-        animate={inView ? 'visible' : 'hidden'}
-        variants={revealVariants}
-        transition={{ delay, duration: 0.8, ease: EASE }}
-      >
-        {children}
-      </motion.div>
-    </div>
-  );
-}
+import { fogReveal, unfurlReveal, growIn, growInStagger } from '@/lib/animations';
 
 const chapters: Array<{
   key: 'iot' | 'university' | 'now';
@@ -42,10 +18,112 @@ const chapters: Array<{
   { key: 'now',        bg: '#FF8C42', textColor: 'rgba(8,8,16,0.85)',      labelColor: 'rgba(8,8,16,0.5)' },
 ];
 
+function ScrollReveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-10% 0px' });
+
+  return (
+    <div ref={ref} style={{ overflow: 'hidden' }}>
+      <motion.div
+        initial="hidden"
+        animate={inView ? 'visible' : 'hidden'}
+        variants={unfurlReveal}
+        transition={{ delay }}
+      >
+        {children}
+      </motion.div>
+    </div>
+  );
+}
+
+function ChapterList() {
+  const t = useTranslations('about');
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-10% 0px' });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial="hidden"
+      animate={inView ? 'visible' : 'hidden'}
+      variants={growInStagger}
+      style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
+    >
+      {chapters.map(({ key, bg, textColor, labelColor, border }) => (
+        <motion.div
+          key={key}
+          variants={growIn}
+          style={{
+            background: bg,
+            border: border ?? 'none',
+            borderRadius: '14px',
+            padding: '1.5rem 1.75rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.5rem',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <span
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: '0.7rem',
+                letterSpacing: '0.14em',
+                textTransform: 'uppercase',
+                color: labelColor,
+              }}
+            >
+              {t(`chapters.${key}.label`)}
+            </span>
+            {key === 'iot' && (
+              <a
+                href="https://www.nature.com/articles/s41598-024-82344-4"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: 'var(--text-xs)',
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                  color: 'var(--color-accent)',
+                  textDecoration: 'none',
+                  transition: 'opacity 150ms ease',
+                  opacity: 1,
+                  fontWeight: 500,
+                  border: '1px solid rgba(255,140,66,0.35)',
+                  borderRadius: '100px',
+                  padding: '2px 8px',
+                }}
+                onMouseEnter={e => (e.currentTarget.style.opacity = '0.7')}
+                onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+              >
+                Nature ↗
+              </a>
+            )}
+          </div>
+          <p
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: 'var(--text-sm)',
+              fontWeight: 400,
+              lineHeight: 1.65,
+              color: textColor,
+              margin: 0,
+            }}
+          >
+            {t(`chapters.${key}.body`)}
+          </p>
+        </motion.div>
+      ))}
+    </motion.div>
+  );
+}
+
 export default function About() {
   const t = useTranslations('about');
+  const headingRef = useRef<HTMLDivElement>(null);
+  const headingInView = useInView(headingRef, { once: true, margin: '-10% 0px' });
 
-  // Split bio on double newline for two-paragraph rendering
   const bioParagraphs = t('bio').split('\n\n');
 
   return (
@@ -54,66 +132,54 @@ export default function About() {
       data-theme="light"
       style={{
         background: 'var(--color-light)',
-        padding: 'var(--section-padding-y) var(--container-padding)',
         display: 'grid',
         gridTemplateColumns: '1fr 1fr',
-        gap: 'clamp(2rem, 5vw, 5rem)',
-        alignItems: 'center',
+        minHeight: '100svh',
+        overflow: 'hidden',
       }}
     >
-      <AmbientBackground
-        orbs={[
-          {
-            size: 220,
-            color: 'rgba(255,140,66,0.12)',
-            blurPx: 60,
-            top: '-40px',
-            left: '-20px',
-            animateTo: { x: 10, y: -14, scale: 1.05 },
-            duration: 7,
-          },
-          {
-            size: 180,
-            color: 'rgba(160,120,80,0.10)',
-            blurPx: 55,
-            bottom: '-30px',
-            right: '-10px',
-            animateTo: { x: -8, y: 10, scale: 0.93 },
-            duration: 9,
-          },
-        ]}
-      />
-
-      {/* Left: text */}
-      <div style={{ maxWidth: '540px' }}>
-        <RevealBlock>
+      {/* Left: text — anchored to left axis within its column */}
+      <div
+        className="about-text"
+        style={{
+          padding: 'var(--section-padding-y) clamp(2rem, 5vw, 4rem) var(--section-padding-y) var(--axis-left)',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+        }}
+      >
+        <ScrollReveal>
           <p
             className="section-label"
             style={{ color: 'var(--color-text-light-secondary)', marginBottom: '1.5rem' }}
           >
             {t('label')}
           </p>
-        </RevealBlock>
+        </ScrollReveal>
 
-        <RevealBlock delay={0.08}>
-          <h2
+        {/* Heading — Cormorant Garamond weight 300, fog reveal */}
+        <div ref={headingRef}>
+          <motion.h2
+            initial="hidden"
+            animate={headingInView ? 'visible' : 'hidden'}
+            variants={fogReveal}
             style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(1.6rem, 3.5vw, 2.6rem)',
-              fontWeight: 800,
-              letterSpacing: '-0.025em',
-              lineHeight: 1.15,
+              fontFamily: 'var(--font-heading)',
+              fontSize: 'clamp(2rem, 4.5vw, 3.5rem)',
+              fontWeight: 300,
+              letterSpacing: '-0.01em',
+              lineHeight: 1.1,
               color: 'var(--color-text-light)',
               marginBottom: '2rem',
               whiteSpace: 'pre-line',
             }}
           >
             {t('heading')}
-          </h2>
-        </RevealBlock>
+          </motion.h2>
+        </div>
 
         {bioParagraphs.map((para, i) => (
-          <RevealBlock key={i} delay={0.16 + i * 0.08}>
+          <ScrollReveal key={i} delay={0.1 + i * 0.08}>
             <p
               style={{
                 fontSize: 'var(--text-base)',
@@ -124,105 +190,64 @@ export default function About() {
             >
               {para}
             </p>
-          </RevealBlock>
+          </ScrollReveal>
         ))}
 
-        <RevealBlock delay={0.35}>
+        <ScrollReveal delay={0.35}>
           <p
             style={{
-              fontSize: 'var(--text-sm)',
-              color: 'var(--color-text-light-muted)',
-              lineHeight: 1.75,
+              fontSize: 'var(--text-base)',
+              color: 'var(--color-text-light-secondary)',
+              lineHeight: 1.8,
               fontStyle: 'italic',
-              borderLeft: '2px solid var(--color-accent)',
-              paddingLeft: '1rem',
+              fontFamily: 'var(--font-heading)',
+              fontWeight: 400,
+              marginBottom: '3rem',
+              paddingTop: '0.5rem',
             }}
           >
             {t('approach')}
           </p>
-        </RevealBlock>
+        </ScrollReveal>
+
+        {/* Chapter cards */}
+        <ChapterList />
       </div>
 
-      {/* Right: story chapters — three blocks with real content */}
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '10px',
-          alignSelf: 'stretch',
-          justifyContent: 'center',
-        }}
-      >
-        {chapters.map(({ key, bg, textColor, labelColor, border }, i) => (
-          <motion.div
-            key={key}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-10%' }}
-            transition={{ delay: 0.08 * i, duration: 0.4, ease: EASE }}
-            style={{
-              background: bg,
-              border: border ?? 'none',
-              borderRadius: '14px',
-              padding: '1.5rem 1.75rem',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '0.5rem',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span
-                style={{
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '0.7rem',
-                  letterSpacing: '0.14em',
-                  textTransform: 'uppercase',
-                  color: labelColor,
-                }}
-              >
-                {t(`chapters.${key}.label`)}
-              </span>
-              {key === 'iot' && (
-                <a
-                  href="https://www.nature.com/articles/s41598-024-82344-4"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: '0.62rem',
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                    color: 'rgba(255,140,66,0.6)',
-                    textDecoration: 'none',
-                    transition: 'color 150ms ease',
-                  }}
-                  onMouseEnter={e => (e.currentTarget.style.color = '#FF8C42')}
-                  onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,140,66,0.6)')}
-                >
-                  Nature ↗
-                </a>
-              )}
-            </div>
-            <p
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 'var(--text-sm)',
-                fontWeight: 400,
-                lineHeight: 1.65,
-                color: textColor,
-                margin: 0,
-              }}
-            >
-              {t(`chapters.${key}.body`)}
-            </p>
-          </motion.div>
-        ))}
+      {/* Right: lichen photo — full height, bleeds to right edge */}
+      <div style={{ position: 'relative', minHeight: '600px', alignSelf: 'stretch' }}>
+        <Image
+          src="/photos/lichen.jpg"
+          alt="Lichen with fractal branching structure — inspires complex systems design"
+          fill
+          priority
+          style={{ objectFit: 'cover', objectPosition: 'center' }}
+          sizes="50vw"
+        />
+        {/* Left-edge gradient fade to blend with text column */}
+        <div
+          aria-hidden
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(to right, var(--color-light) 0%, transparent 18%)',
+            zIndex: 1,
+          }}
+        />
       </div>
 
-      {/* Mobile: stack vertically */}
+      {/* Mobile: stack vertically, photo below text */}
       <style>{`
         @media (max-width: 768px) {
-          #about { grid-template-columns: 1fr !important; }
+          #about {
+            grid-template-columns: 1fr !important;
+          }
+          .about-text {
+            padding-left: var(--container-padding) !important;
+          }
+          #about > div:last-child {
+            min-height: 360px !important;
+          }
         }
       `}</style>
     </section>
