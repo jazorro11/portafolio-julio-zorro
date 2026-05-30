@@ -43,6 +43,7 @@ export default function Hero() {
 
       {/* Content — left axis, no centering */}
       <div
+        className="hero-content"
         style={{
           position: 'relative',
           zIndex: 2,
@@ -90,7 +91,7 @@ export default function Hero() {
           variants={fogRevealFast}
           initial="hidden"
           animate="visible"
-          transition={{ delay: 1.0 }}
+          transition={{ delay: 1.6 }}
           style={{
             fontSize: 'var(--text-lg)',
             fontFamily: 'var(--font-display)',
@@ -115,7 +116,7 @@ export default function Hero() {
           variants={fogRevealFast}
           initial="hidden"
           animate="visible"
-          transition={{ delay: 1.2 }}
+          transition={{ delay: 2.0 }}
           whileTap={{ scale: 0.97 }}
           whileHover={{ borderColor: 'var(--color-accent)' }}
           style={{
@@ -140,7 +141,7 @@ export default function Hero() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.8, duration: 0.8 }}
+        transition={{ delay: 2.4, duration: 0.8 }}
         style={{
           position: 'absolute',
           bottom: '2.5rem',
@@ -172,10 +173,10 @@ export default function Hero() {
       {/* Mobile: reduce left padding */}
       <style>{`
         @media (max-width: 768px) {
-          #hero > div[style] {
+          .hero-content {
             padding-left: var(--container-padding) !important;
           }
-          #hero > div[style] h1 {
+          .hero-content h1 {
             max-width: 100% !important;
           }
         }
