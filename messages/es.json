@@ -49,17 +49,17 @@
       "agent": {
         "title": "Agente Conversacional",
         "description": "Agente conversacional multi-turno construido con LangGraph. Memoria, uso de herramientas y razonamiento estructurado orquestados en un solo grafo.",
-        "tags": ["LangGraph", "Python", "AI"]
+        "tags": "LangGraph · FastAPI · PostgreSQL"
       },
       "sinergia": {
         "title": "Estudio Sinergia",
         "description": "Sitio de marketing para un estudio creativo. Rápido, accesible y enfocado en conversión. La arquitectura de islas de Astro lo mantiene casi sin JS por defecto.",
-        "tags": ["Astro", "TypeScript", "Tailwind"]
+        "tags": "Astro · TypeScript · Tailwind"
       },
       "haz": {
         "title": "HAZ Arquitectura",
         "description": "Portafolio y servicios para una firma de arquitectura bogotana con más de 30 años de experiencia. Diseño centrado en imagen.",
-        "tags": ["Next.js", "TypeScript"]
+        "tags": "Next.js · TypeScript"
       }
     }
   },

@@ -1,322 +1,269 @@
 'use client';
 
+import { useRef } from 'react';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { AmbientBackground } from '@/components/ui/AmbientBackground';
+import { useGSAP } from '@gsap/react';
+import { gsap, ScrollTrigger, SplitText } from '@/lib/gsap-config';
 import ChatMockup from './ChatMockup';
 
-const AGENT_LIVE_URL = 'https://agent-web-web-one.vercel.app';
-
-const secondaryProjects = [
-  {
-    key: 'sinergia' as const,
-    tags: ['Astro', 'TypeScript', 'Tailwind'],
-    status: 'live' as const,
-    color: '#FF8C42',
-    github: null,
-    live: 'https://es-sinergia-web.vercel.app/',
-  },
-  {
-    key: 'haz' as const,
-    tags: ['Next.js', 'TypeScript'],
-    status: 'live' as const,
-    color: '#3B82F6',
-    github: null,
-    live: 'https://www.haz-arquitectura.com/',
-  },
-];
-
-function TagPill({ label, light = false }: { label: string; light?: boolean }) {
-  return (
-    <span
-      style={{
-        fontFamily: 'var(--font-mono)',
-        fontSize: '11px',
-        color: light ? 'rgba(255,255,255,0.35)' : 'var(--color-text-light-secondary)',
-        border: `1px solid ${light ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'}`,
-        borderRadius: '6px',
-        padding: '3px 10px',
-      }}
-    >
-      {label}
-    </span>
-  );
-}
-
-function LinkButton({
-  href,
-  children,
-  light = false,
-}: {
-  href: string;
-  children: React.ReactNode;
-  light?: boolean;
-}) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      style={{
-        fontFamily: 'var(--font-mono)',
-        fontSize: 'var(--text-xs)',
-        letterSpacing: '0.08em',
-        textTransform: 'uppercase',
-        color: light ? 'var(--color-accent)' : 'var(--color-text-light-secondary)',
-        textDecoration: 'none',
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: '5px',
-        transition: 'color 180ms ease',
-      }}
-      onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-accent)')}
-      onMouseLeave={e =>
-        (e.currentTarget.style.color = light ? 'var(--color-accent)' : 'var(--color-text-light-secondary)')
-      }
-    >
-      {children}
-    </a>
-  );
-}
-
 export default function Work() {
+  const sectionRef  = useRef<HTMLElement>(null);
+  const featuredRef = useRef<HTMLDivElement>(null);
+  const counterRef  = useRef<HTMLSpanElement>(null);
   const t = useTranslations('work');
+
+  useGSAP(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
+    // Featured title reveal
+    const split = new SplitText(featuredRef.current!.querySelector('.specimen-title'), {
+      type: 'lines',
+    });
+    gsap.from(split.lines, {
+      opacity: 0, y: 30, duration: 0.8, ease: 'power4.out', stagger: 0.1,
+      scrollTrigger: {
+        trigger: featuredRef.current,
+        start: 'top 75%',
+        once: true,
+        onEnter: () => {
+          // Counter animation ESP-001
+          const obj = { val: 0 };
+          gsap.to(obj, {
+            val: 1, duration: 0.6, ease: 'power2.out',
+            onUpdate: () => {
+              if (counterRef.current)
+                counterRef.current.textContent = `ESP-00${Math.round(obj.val)}`;
+            },
+          });
+        },
+      },
+    });
+
+    // Batch reveal for all specimen items
+    ScrollTrigger.batch('.specimen-item', {
+      onEnter: (batch) => gsap.fromTo(batch,
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.9, ease: 'power4.out', stagger: 0.12 }
+      ),
+      start: 'top 85%',
+      once: true,
+    });
+
+    return () => split.revert();
+  }, { scope: sectionRef });
 
   return (
     <section
       id="work"
-      data-theme="light"
-      style={{
-        background: 'var(--color-light)',
-        padding: 'var(--section-padding-y) var(--container-padding)',
-        minHeight: '100svh',
-      }}
+      ref={sectionRef}
+      data-theme="dark"
+      className="with-grain"
+      style={{ position: 'relative', background: 'var(--bg-deep)' }}
     >
-      <AmbientBackground
-        orbs={[
-          {
-            size: 200,
-            color: 'rgba(255,140,66,0.10)',
-            blurPx: 60,
-            top: '-30px',
-            right: '-10px',
-            animateTo: { x: 10, y: -10, scale: 1.04 },
-            duration: 6,
-          },
-          {
-            size: 150,
-            color: 'rgba(160,120,80,0.08)',
-            blurPx: 50,
-            bottom: '-20px',
-            left: '20px',
-            animateTo: { x: -6, y: 8, scale: 0.94 },
-            duration: 8,
-          },
-        ]}
-      />
-
-      <div className="container">
-        {/* Header */}
-        <p
-          className="section-label"
-          style={{ color: 'var(--color-text-light-secondary)', marginBottom: '0.75rem' }}
-        >
-          {t('label')}
+      {/* Sticky photo header */}
+      <div style={{ position: 'sticky', top: 0, zIndex: 0, height: 'clamp(40vh, 50vh, 55vh)', overflow: 'hidden' }}>
+        <Image
+          src="/photos/specimen-work.jpg"
+          alt="Millipede coiled on green moss — field specimen, Bioma Digital collection"
+          fill
+          style={{ objectFit: 'cover', objectPosition: 'center 60%' }}
+          sizes="100vw"
+        />
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(to bottom, transparent 0%, rgba(9,13,9,0.3) 60%, #090d09 100%)',
+        }} />
+        {/* SpecimenLabel */}
+        <p style={{
+          position: 'absolute', bottom: '2rem', left: 'var(--container-padding)',
+          fontFamily: 'var(--font-mono)', fontSize: '11px', letterSpacing: '0.18em',
+          color: 'var(--text-technical)', zIndex: 2,
+        }}>
+          ESPECÍMENES DIGITALES — CAMPO 2019–2025
+          <br />
+          9°01′N 79°31′W &nbsp;/&nbsp; 3 REGISTROS CATALOGADOS
         </p>
-        <h2
-          style={{
+      </div>
+
+      {/* Content over sticky */}
+      <div style={{ position: 'relative', zIndex: 1, background: 'var(--bg-deep)' }}>
+
+        {/* Intro */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 2fr',
+          gap: 'clamp(2rem, 5vw, 6rem)',
+          padding: 'clamp(3rem, 6vw, 5rem) var(--container-padding)',
+          maxWidth: 'var(--container-max)',
+        }}>
+          <h2 style={{
             fontFamily: 'var(--font-display)',
-            fontSize: 'var(--text-3xl)',
-            fontWeight: 800,
-            letterSpacing: '-0.03em',
-            color: 'var(--color-text-light)',
-            marginBottom: '4rem',
-          }}
-        >
-          {t('heading')}
-        </h2>
+            fontStyle: 'italic',
+            fontSize: 'clamp(3.5rem, 7vw, 6rem)',
+            fontWeight: 400,
+            lineHeight: 0.9,
+            color: 'var(--text-primary)',
+          }}>
+            {t('label')}
+          </h2>
+          <p style={{
+            fontFamily: 'var(--font-body)',
+            fontSize: 'clamp(1rem, 1.8vw, 1.15rem)',
+            color: 'rgba(242,237,230,0.65)',
+            maxWidth: '52ch',
+            alignSelf: 'end',
+          }}>
+            Three projects. Each one a field record: what was observed, what was built, what shipped.
+          </p>
+        </div>
 
-        {/* ── Hero project: LangGraph Agent ── */}
+        {/* Specimen 01 — Featured */}
         <div
+          ref={featuredRef}
+          className="specimen-item"
           style={{
-            background: '#080810',
-            borderRadius: '20px',
-            padding: 'clamp(2rem, 5vw, 3rem)',
-            marginBottom: '1.5rem',
+            margin: '0 var(--container-padding)',
+            padding: 'clamp(2rem, 4vw, 3rem)',
+            background: 'var(--bg-surface)',
+            border: '1px solid rgba(122,173,94,0.12)',
+            borderRadius: '3px',
             display: 'grid',
-            gridTemplateColumns: '1fr minmax(0, 460px)',
-            gap: 'clamp(2rem, 4vw, 3rem)',
-            alignItems: 'center',
-            overflow: 'hidden',
-            position: 'relative',
+            gridTemplateColumns: '1fr 1fr',
+            gap: 'clamp(2rem, 4vw, 4rem)',
+            marginBottom: 'var(--space-4)',
           }}
         >
-          {/* Amber glow */}
-          <div
-            aria-hidden
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background:
-                'radial-gradient(ellipse 60% 80% at 85% 50%, rgba(255,140,66,0.08) 0%, transparent 60%)',
-              pointerEvents: 'none',
-            }}
-          />
-
-          {/* Text */}
-          <div style={{ position: 'relative', zIndex: 1 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1.25rem', flexWrap: 'wrap' }}>
-              <span className="section-label" style={{ color: '#FF8C42' }}>
-                AI · Featured
-              </span>
-              <span
-                style={{
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '10px',
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
-                  color: 'rgba(255,140,66,0.55)',
-                  border: '1px solid rgba(255,140,66,0.2)',
-                  borderRadius: '4px',
-                  padding: '2px 7px',
-                }}
-              >
-                {t('wip')}
-              </span>
-            </div>
-
+          <div>
+            <span
+              ref={counterRef}
+              style={{
+                display: 'block',
+                fontFamily: 'var(--font-mono)',
+                fontSize: '11px',
+                letterSpacing: '0.18em',
+                color: 'var(--text-technical)',
+                marginBottom: 'var(--space-3)',
+              }}
+            >
+              ESP-000
+            </span>
             <h3
+              className="specimen-title"
               style={{
                 fontFamily: 'var(--font-display)',
-                fontSize: 'var(--text-2xl)',
-                fontWeight: 800,
-                letterSpacing: '-0.02em',
-                color: '#FFFFFF',
-                marginBottom: '1rem',
+                fontSize: 'clamp(2rem, 3.5vw, 3rem)',
+                fontWeight: 400,
+                color: 'var(--text-primary)',
+                marginBottom: 'var(--space-4)',
+                lineHeight: 1.1,
               }}
             >
               {t('projects.agent.title')}
             </h3>
-
-            <p
-              style={{
-                fontSize: 'var(--text-base)',
-                color: 'rgba(255,255,255,0.5)',
-                lineHeight: 1.7,
-                marginBottom: '1.5rem',
-                maxWidth: '400px',
-              }}
-            >
+            <p style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-technical)', marginBottom: 'var(--space-3)' }}>
+              Type: Conversational AI System &nbsp;·&nbsp; Status: Beta
+            </p>
+            <p style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: 'var(--text-base)',
+              lineHeight: 1.7,
+              color: 'rgba(242,237,230,0.7)',
+              maxWidth: '45ch',
+              marginBottom: 'var(--space-6)',
+            }}>
               {t('projects.agent.description')}
             </p>
-
-            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
-              {['LangGraph', 'Python', 'AI'].map(tag => (
-                <TagPill key={tag} label={tag} light />
-              ))}
-            </div>
-
-            <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-              <LinkButton href="https://github.com/jazorro11/agent-web" light>
-                {t('viewCode')} ↗
-              </LinkButton>
-              {AGENT_LIVE_URL && (
-                <LinkButton href={AGENT_LIVE_URL} light>
-                  {t('liveDemo')} ↗
-                </LinkButton>
-              )}
-            </div>
+            <p style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-technical)', marginBottom: 'var(--space-6)' }}>
+              {t('projects.agent.tags')}
+            </p>
+            <a
+              href="#"
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: '11px',
+                color: 'var(--accent-lichen)',
+                textDecoration: 'none',
+                borderBottom: '1px solid var(--accent-lichen)',
+                paddingBottom: '1px',
+              }}
+            >
+              {t('viewCode')} ↗
+            </a>
           </div>
-
-          {/* Live chat mockup */}
-          <div style={{ position: 'relative', zIndex: 1 }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
             <ChatMockup />
           </div>
         </div>
 
-        {/* ── Secondary projects grid ── */}
+        {/* Specimen 02 — Sinergia */}
         <div
+          className="specimen-item"
           style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: '1.5rem',
+            margin: '0 var(--container-padding)',
+            padding: 'clamp(2rem, 4vw, 3rem) 0',
+            borderTop: '1px solid rgba(122,173,94,0.1)',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+            gap: 'clamp(2rem, 4vw, 4rem)',
           }}
         >
-          {secondaryProjects.map(({ key, tags, color, github, live }, i) => (
-            <div
-              key={key}
-              style={{
-                background: 'var(--color-light-2)',
-                border: '1px solid rgba(0,0,0,0.06)',
-                borderRadius: '16px',
-                padding: '2rem',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '0.75rem',
-              }}
-            >
-              {/* Accent line */}
-              <div
-                style={{ width: 32, height: 3, background: color, borderRadius: '2px' }}
-              />
+          <div>
+            <span style={{ display: 'block', fontFamily: 'var(--font-mono)', fontSize: '11px', letterSpacing: '0.18em', color: 'var(--text-technical)', marginBottom: 'var(--space-3)' }}>ESP-002</span>
+            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.4rem, 2.5vw, 2rem)', fontWeight: 400, color: 'var(--text-primary)', marginBottom: 'var(--space-3)', lineHeight: 1.15 }}>
+              {t('projects.sinergia.title')}
+            </h3>
+            <p style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-base)', lineHeight: 1.7, color: 'rgba(242,237,230,0.65)', maxWidth: '40ch' }}>
+              {t('projects.sinergia.description')}
+            </p>
+          </div>
+          <div style={{ textAlign: 'right', flexShrink: 0 }}>
+            <p style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-technical)', marginBottom: 'var(--space-4)' }}>
+              {t('projects.sinergia.tags')}
+            </p>
+            <a href="https://estudio-sinergia.vercel.app" target="_blank" rel="noopener noreferrer"
+              style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--accent-lichen)', textDecoration: 'none', borderBottom: '1px solid var(--accent-lichen)' }}>
+              {t('liveDemo')} ↗
+            </a>
+          </div>
+        </div>
 
-              <h3
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: 'var(--text-xl)',
-                  fontWeight: 700,
-                  letterSpacing: '-0.02em',
-                  color: 'var(--color-text-light)',
-                }}
-              >
-                {t(`projects.${key}.title`)}
-              </h3>
-
-              <p
-                style={{
-                  fontSize: 'var(--text-sm)',
-                  color: 'var(--color-text-light-secondary)',
-                  lineHeight: 1.65,
-                  flex: 1,
-                }}
-              >
-                {t(`projects.${key}.description`)}
-              </p>
-
-              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.25rem' }}>
-                {tags.map(tag => (
-                  <TagPill key={tag} label={tag} />
-                ))}
-              </div>
-
-              {/* Links */}
-              <div style={{ display: 'flex', gap: '1.5rem', marginTop: '0.5rem' }}>
-                {github && (
-                  <LinkButton href={github}>
-                    {t('viewCode')} ↗
-                  </LinkButton>
-                )}
-                {live && (
-                  <LinkButton href={live}>
-                    {t('viewProject')} ↗
-                  </LinkButton>
-                )}
-              </div>
-            </div>
-          ))}
+        {/* Specimen 03 — HAZ */}
+        <div
+          className="specimen-item"
+          style={{
+            margin: '0 var(--container-padding)',
+            padding: 'clamp(2rem, 4vw, 3rem) 0',
+            borderTop: '1px solid rgba(122,173,94,0.1)',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+            gap: 'clamp(2rem, 4vw, 4rem)',
+            flexDirection: 'row-reverse',
+            paddingBottom: 'var(--section-padding-y)',
+          }}
+        >
+          <div>
+            <span style={{ display: 'block', fontFamily: 'var(--font-mono)', fontSize: '11px', letterSpacing: '0.18em', color: 'var(--text-technical)', marginBottom: 'var(--space-3)' }}>ESP-003</span>
+            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.4rem, 2.5vw, 2rem)', fontWeight: 400, color: 'var(--text-primary)', marginBottom: 'var(--space-3)', lineHeight: 1.15 }}>
+              {t('projects.haz.title')}
+            </h3>
+            <p style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-base)', lineHeight: 1.7, color: 'rgba(242,237,230,0.65)', maxWidth: '40ch' }}>
+              {t('projects.haz.description')}
+            </p>
+          </div>
+          <div style={{ textAlign: 'left', flexShrink: 0 }}>
+            <p style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--accent-cork)', marginBottom: 'var(--space-4)' }}>
+              {t('projects.haz.tags')}
+            </p>
+            <a href="#" style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--accent-cork)', textDecoration: 'none', borderBottom: '1px solid var(--accent-cork)' }}>
+              {t('viewProject')} ↗
+            </a>
+          </div>
         </div>
       </div>
-
-      {/* Mobile: stack columns */}
-      <style>{`
-        @media (max-width: 768px) {
-          #work [style*="grid-template-columns: 1fr minmax"] {
-            grid-template-columns: 1fr !important;
-          }
-          #work [style*="repeat(2, 1fr)"] {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
     </section>
   );
 }
