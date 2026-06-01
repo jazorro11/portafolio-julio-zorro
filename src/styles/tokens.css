@@ -1,38 +1,27 @@
-/* Design Tokens — Portafolio Julio Zorro
-   Palette: Deep Space Amber
-   Dark sections (#080810 + #FF8C42): Hero, Capabilities
-   Light sections (#F5F1EB): About, Work, Contact */
+/* Design Tokens — Bioma Digital
+   Reference: Atlas de Colombia / IGAC
+   All sections dark: data-theme="dark" only */
 
 :root {
   /* ── Colors ── */
-  --color-dark: #080810;
-  --color-dark-2: #0d0d1f;
+  --bg-deep:          #090d09;
+  --bg-surface:       #111710;
+  --accent-lichen:    #7aad5e;
+  --accent-cork:      #c8a96e;
+  --text-primary:     #f2ede6;
+  --text-technical:   #5a7a5a;
+  --text-muted:       #3a4a3a;
 
-  --color-light: #F5F1EB;
-  --color-light-2: #EAE4D8;
-
-  /* Accent: Burnt Amber — primary identity color */
-  --color-accent: #FF8C42;
-  --color-accent-dim: rgba(255, 140, 66, 0.12);
-  --color-accent-hover: #FF9F5E;
-
-  /* Accent 2: Electric Blue — depth / secondary elements */
-  --color-accent-2: #3B82F6;
-  --color-accent-2-dim: rgba(59, 130, 246, 0.08);
-
-  /* Text on dark sections */
-  --color-text-dark: #FFFFFF;
-  --color-text-dark-secondary: rgba(255, 255, 255, 0.5);
-  --color-text-dark-muted: rgba(255, 255, 255, 0.25);
-
-  /* Text on light sections */
-  --color-text-light: #0A0A0A;
-  --color-text-light-secondary: rgba(10, 10, 10, 0.5);
-  --color-text-light-muted: rgba(10, 10, 10, 0.25);
+  /* Legacy aliases — used in SmoothScroll, Nav, Cursor until those are updated */
+  --color-dark:       #090d09;
+  --color-accent:     #7aad5e;
+  --color-text-dark:  #f2ede6;
+  --color-text-dark-secondary: #5a7a5a;
 
   /* ── Typography ── */
-  --font-display: 'Satoshi', system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-jetbrains), 'JetBrains Mono', monospace;
+  --font-display: var(--font-gloock), Georgia, serif;
+  --font-body:    var(--font-archivo), system-ui, sans-serif;
+  --font-mono:    var(--font-jetbrains), 'JetBrains Mono', monospace;
 
   /* Fluid type scale */
   --text-xs:   clamp(0.7rem,  1.5vw, 0.8rem);
@@ -61,10 +50,10 @@
   --container-padding: clamp(1.5rem, 5vw, 4rem);
   --section-padding-y: clamp(5rem, 12vw, 10rem);
 
-  /* ── Easing (Emil Design Engineering curves) ── */
-  --ease-out-strong:   cubic-bezier(0.23, 1, 0.32, 1);
+  /* ── Easing ── */
+  --ease-out-strong:    cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
-  --ease-drawer:       cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-drawer:        cubic-bezier(0.32, 0.72, 0, 1);
 
   /* ── Z-index ── */
   --z-below:   -1;
@@ -74,22 +63,11 @@
   --z-cursor: 9999;
 }
 
-/* Dark section theme (Hero, Capabilities) */
 [data-theme="dark"] {
-  --section-bg:            var(--color-dark);
-  --section-bg-2:          var(--color-dark-2);
-  --section-text:          var(--color-text-dark);
-  --section-text-secondary: var(--color-text-dark-secondary);
-  --section-text-muted:    var(--color-text-dark-muted);
-  --section-border:        rgba(255, 255, 255, 0.07);
-}
-
-/* Light section theme (About, Work, Contact) */
-[data-theme="light"] {
-  --section-bg:            var(--color-light);
-  --section-bg-2:          var(--color-light-2);
-  --section-text:          var(--color-text-light);
-  --section-text-secondary: var(--color-text-light-secondary);
-  --section-text-muted:    var(--color-text-light-muted);
-  --section-border:        rgba(10, 10, 10, 0.08);
+  --section-bg:             var(--bg-deep);
+  --section-bg-2:           var(--bg-surface);
+  --section-text:           var(--text-primary);
+  --section-text-secondary: var(--text-technical);
+  --section-text-muted:     var(--text-muted);
+  --section-border:         rgba(122, 173, 94, 0.1);
 }
