@@ -19,10 +19,10 @@ export default function Nav() {
   }, []);
 
   const links = [
-    { href: '#about',        label: t('about') },
-    { href: '#capabilities', label: t('capabilities') },
-    { href: '#work',         label: t('work') },
-    { href: '#contact',      label: t('contact') },
+    { href: '#about',    label: t('about') },
+    { href: '#stack',    label: t('capabilities') },
+    { href: '#work',     label: t('work') },
+    { href: '#contact',  label: t('contact') },
   ];
 
   function handleNavClick(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
