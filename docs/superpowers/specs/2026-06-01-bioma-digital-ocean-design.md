@@ -191,7 +191,7 @@ Se agregan a `src/styles/tokens.css` sin romper los existentes:
 
 ### Asset 1: Astronauta (sección Proyectos)
 
-> "A cute cartoon astronaut character in illustrated 2D style, white spacesuit with gold visor reflecting bioluminescent light, floating in dark deep ocean water, holding a small flashlight/lantern. Transparent background. Style: flat illustration with soft glow effects, similar to a children's science book illustration. Color palette: white suit, gold visor, cyan and purple bioluminescent glow surrounding. No background, WebP format, facing slightly left, full body visible."
+> "A cute cartoon astronaut character in illustrated 2D style, white spacesuit with dark tinted visor (deep black/dark navy, slightly reflective), floating in dark deep ocean water, holding a small flashlight/lantern. Transparent background. Style: flat illustration with soft glow effects, similar to a children's science book illustration. Color palette: white suit, dark visor with subtle cyan bioluminescent reflection, cyan and purple bioluminescent glow surrounding. No background, WebP format, facing slightly left, full body visible."
 
 **Destino:** `public/assets/astronaut.webp`  
 **Uso:** `next/image`, width 280px, posición bottom-left zona izquierda
