@@ -73,9 +73,17 @@ El Provider envuelve toda la página y expone `depthProgress` via GSAP ScrollTri
 **Animación de carga:**
 1. Bote aparece con fade-in (0.6s)
 2. Caña SVG se tensa (0.4s)
-3. Anzuelo cae al agua con bounce (1.2s, `back.out(1.2)`)
+3. Anzuelo cae al agua con gravedad (1.4s, `power3.out`) — sin rebote, se asienta
 
 **Contenido:** Nombre (animación letra a letra existente), rol, tagline, CTA. Todo en zona derecha (left: 38%+).
+
+**CTA "Ver proyectos" — bypass del pin:** Al hacer clic, el CTA ejecuta:
+```ts
+gsap.to(heroPinTrigger, { progress: 1, duration: 0.3, ease: "power3.out",
+  onComplete: () => lenis.scrollTo('#work', { duration: 0.8 })
+})
+```
+La animación del hook completa en 0.3s y luego Lenis navega suavemente a la sección Work. El usuario nunca queda atrapado.
 
 **Tokens:** `--ocean-surface: #0a1628`
 
@@ -151,11 +159,11 @@ Hover: `scale(1.05)`, glow intensifica. Animación entrada: stagger 0.04s desde 
 **Animación de llegada** (ScrollTrigger, `once: true`, trigger `top 70%`):
 1. Hook desciende hasta el cofre (GSAP `top` → posición cofre, 0.5s)
 2. Cofre vibra: `y: -4px → 0` (0.3s)
-3. Tapa se abre: `rotateX: -35deg` con `back.out(1.4)` (0.5s)
+3. Tapa se abre: `rotateX: -35deg` con `power4.out` (0.6s) — rotación resistida, sin resorte
 4. Glow interior aparece (0.4s, simultáneo con tapa)
 5. Formulario/links hacen fade-in (0.3s delay)
 
-**Formulario:** minimalista, inputs con `border: 1px solid rgba(255,50,180,0.2)`, fondo translúcido. Links: GitHub, LinkedIn, Email con iconos SVG inline.
+**Contenido del cofre:** tres enlaces directos — GitHub, LinkedIn, Email — como anchor elements estilizados con iconos SVG inline, borde bioluminiscente y glow on-hover. Sin formulario. El cofre se abre y aparecen los 3 links con stagger fade-in (0.08s entre cada uno). Cero fricción, máxima conversión.
 
 **Tokens:** `--ocean-trench: #010310`
 
@@ -163,24 +171,24 @@ Hover: `scale(1.05)`, glow intensifica. Animación entrada: stagger 0.04s desde 
 
 ## Paleta Extendida — Nuevos Tokens CSS
 
-Se agregan a `src/styles/tokens.css` sin romper los existentes:
+Se agregan a `src/styles/tokens.css` sin romper los existentes. **Usar OKLCH** para evitar colores garish en extremos de luminosidad (ley de diseño: reducir chroma cuando L se acerca a 0 o 100).
 
 ```css
-/* Ocean depth backgrounds */
---ocean-surface:  #0a1628;
---ocean-shallow:  #071a3e;
---ocean-reef:     #04102a;
---ocean-abyss:    #02071a;
---ocean-trench:   #010310;
+/* Ocean depth backgrounds — near-black con tint azul, chroma mínima */
+--ocean-surface:  oklch(12% 0.02 250);
+--ocean-shallow:  oklch(9%  0.03 258);
+--ocean-reef:     oklch(7%  0.025 262);
+--ocean-abyss:    oklch(5%  0.018 265);
+--ocean-trench:   oklch(3%  0.01  268);
 
-/* Bioluminescent accents */
---bio-cyan:       #00E5C8;
---bio-magenta:    #B832DC;
---bio-deep-blue:  #3050FF;
---bio-pink:       #FF32B4;
+/* Bioluminescent accents — chroma controlada, nunca a tope */
+--bio-cyan:       oklch(80% 0.14 185);
+--bio-magenta:    oklch(55% 0.22 310);
+--bio-deep-blue:  oklch(45% 0.18 265);
+--bio-pink:       oklch(58% 0.24 330);
 
 /* Thread */
---thread-color:   rgba(255, 140, 66, 0.5);
+--thread-color:        oklch(68% 0.18 48 / 0.5);  /* amber semitransparente */
 --thread-left-desktop: 32%;
 --thread-left-mobile:  12px;
 ```
@@ -266,7 +274,7 @@ Sin esta integración el pin del Hero y el scrub se desincronizarán del scroll 
 
 - `will-change: transform` en hook y capas paralácticas
 - `gsap.context()` en cada componente, `kill()` en cleanup
-- `matchMedia("(max-width: 768px)")` para reducir animaciones mobile
+- `matchMedia("(max-width: 768px)")` para reducir animaciones mobile. **Hero pin en mobile: `end: "+=100vh"`** (reducir de 200vh a 100vh — el pin a pantalla completa en móvil se siente roto)
 - `prefers-reduced-motion`: desactiva todo GSAP excepto fade-ins
 - Coral glow desactivado en mobile
 - WebP con `next/image` lazy loading
