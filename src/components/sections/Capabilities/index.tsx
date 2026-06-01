@@ -1,7 +1,6 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { motion } from 'framer-motion';
 import { AmbientBackground } from '@/components/ui/AmbientBackground';
 
 const stack = {
@@ -18,15 +17,9 @@ const hardwareStack = [
   { category: 'Languages',        items: ['C', 'C++', 'MicroPython', 'FreeRTOS'] },
 ];
 
-function TechCard({ name, i }: { name: string; i: number }) {
+function TechCard({ name }: { name: string }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: i * 0.04, duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-      whileHover={{ scale: 1.04, borderColor: 'rgba(255,140,66,0.4)' }}
-      whileTap={{ scale: 0.97 }} // Emil: scale(0.97) on press
+    <div
       style={{
         background: 'rgba(255,255,255,0.04)',
         border: '1px solid rgba(255,255,255,0.08)',
@@ -41,7 +34,7 @@ function TechCard({ name, i }: { name: string; i: number }) {
       }}
     >
       {name}
-    </motion.div>
+    </div>
   );
 }
 
@@ -100,20 +93,13 @@ export default function Capabilities() {
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         {/* Header */}
         <div style={{ marginBottom: '4rem' }}>
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+          <p
             className="section-label"
             style={{ color: 'var(--color-accent)', marginBottom: '1rem' }}
           >
             {t('label')}
-          </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+          </p>
+          <h2
             style={{
               fontFamily: 'var(--font-display)',
               fontSize: 'var(--text-3xl)',
@@ -123,7 +109,7 @@ export default function Capabilities() {
             }}
           >
             {t('heading')}
-          </motion.h2>
+          </h2>
         </div>
 
         {/* Categories grid */}
@@ -136,11 +122,7 @@ export default function Capabilities() {
         >
           {Object.entries(stack).map(([category, items], ci) => (
             <div key={category}>
-              <motion.p
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: ci * 0.08 }}
+              <p
                 className="section-label"
                 style={{
                   color: ci === 0 ? 'var(--color-accent)' : 'var(--color-text-dark-muted)',
@@ -148,10 +130,10 @@ export default function Capabilities() {
                 }}
               >
                 {category}
-              </motion.p>
+              </p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                {items.map((item, i) => (
-                  <TechCard key={item} name={item} i={ci * 6 + i} />
+                {items.map((item) => (
+                  <TechCard key={item} name={item} />
                 ))}
               </div>
             </div>
@@ -164,15 +146,12 @@ export default function Capabilities() {
           style={{ borderTop: '1px solid rgba(255,255,255,0.07)', marginBlock: '3rem' }}
         />
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+        <p
           className="section-label"
           style={{ color: 'var(--color-accent)', marginBottom: '2.5rem' }}
         >
           {t('hardware.label')}
-        </motion.p>
+        </p>
 
         {/* Hardware categories grid */}
         <div
@@ -182,13 +161,9 @@ export default function Capabilities() {
             gap: '2.5rem',
           }}
         >
-          {hardwareStack.map(({ category, items }, ci) => (
+          {hardwareStack.map(({ category, items }) => (
             <div key={category}>
-              <motion.p
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: ci * 0.08 }}
+              <p
                 className="section-label"
                 style={{
                   color: 'var(--color-text-dark-muted)',
@@ -196,10 +171,10 @@ export default function Capabilities() {
                 }}
               >
                 {category}
-              </motion.p>
+              </p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                {items.map((item, i) => (
-                  <TechCard key={item} name={item} i={ci * 6 + i} />
+                {items.map((item) => (
+                  <TechCard key={item} name={item} />
                 ))}
               </div>
             </div>

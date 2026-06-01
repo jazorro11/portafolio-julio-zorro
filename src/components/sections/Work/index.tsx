@@ -1,7 +1,6 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { motion } from 'framer-motion';
 import { AmbientBackground } from '@/components/ui/AmbientBackground';
 import ChatMockup from './ChatMockup';
 
@@ -117,20 +116,13 @@ export default function Work() {
 
       <div className="container">
         {/* Header */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+        <p
           className="section-label"
           style={{ color: 'var(--color-text-light-secondary)', marginBottom: '0.75rem' }}
         >
           {t('label')}
-        </motion.p>
-        <motion.h2
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+        </p>
+        <h2
           style={{
             fontFamily: 'var(--font-display)',
             fontSize: 'var(--text-3xl)',
@@ -141,14 +133,10 @@ export default function Work() {
           }}
         >
           {t('heading')}
-        </motion.h2>
+        </h2>
 
         {/* ── Hero project: LangGraph Agent ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
+        <div
           style={{
             background: '#080810',
             borderRadius: '20px',
@@ -243,7 +231,7 @@ export default function Work() {
           <div style={{ position: 'relative', zIndex: 1 }}>
             <ChatMockup />
           </div>
-        </motion.div>
+        </div>
 
         {/* ── Secondary projects grid ── */}
         <div
@@ -254,12 +242,8 @@ export default function Work() {
           }}
         >
           {secondaryProjects.map(({ key, tags, color, github, live }, i) => (
-            <motion.div
+            <div
               key={key}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.08 * i, duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
               style={{
                 background: 'var(--color-light-2)',
                 border: '1px solid rgba(0,0,0,0.06)',
@@ -317,7 +301,7 @@ export default function Work() {
                   </LinkButton>
                 )}
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

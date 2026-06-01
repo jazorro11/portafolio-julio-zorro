@@ -1,6 +1,7 @@
 'use client';
 
-import { motion, useReducedMotion } from 'framer-motion';
+import { useEffect, useRef } from 'react';
+import { gsap } from '@/lib/gsap-config';
 
 interface OrbConfig {
   size: number;
@@ -34,10 +35,59 @@ const PARTICLE_PATHS = [
 ];
 
 export function AmbientBackground({ orbs, particles }: AmbientBackgroundProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced || !containerRef.current) return;
+
+    const container = containerRef.current;
+    const orbEls = container.querySelectorAll<HTMLElement>('[data-orb]');
+    const particleEls = container.querySelectorAll<HTMLElement>('[data-particle]');
+
+    const tweens: gsap.core.Tween[] = [];
+
+    orbEls.forEach((el, i) => {
+      const orb = orbs[i];
+      if (!orb) return;
+      tweens.push(
+        gsap.to(el, {
+          x: orb.animateTo.x,
+          y: orb.animateTo.y,
+          scale: orb.animateTo.scale,
+          duration: orb.duration,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+        })
+      );
+    });
+
+    particleEls.forEach((el, i) => {
+      const path = PARTICLE_PATHS[i % PARTICLE_PATHS.length];
+      tweens.push(
+        gsap.to(el, {
+          keyframes: path.x.map((xVal, ki) => ({
+            x: xVal,
+            y: path.y[ki],
+            opacity: [0.7, 1, 0.5, 0.7][ki],
+            duration: (4.5 + i * 0.3) / path.x.length,
+          })),
+          repeat: -1,
+          ease: 'sine.inOut',
+          delay: i * 0.4,
+        })
+      );
+    });
+
+    return () => {
+      tweens.forEach(t => t.kill());
+    };
+  }, [orbs, particles]);
 
   return (
     <div
+      ref={containerRef}
       aria-hidden="true"
       style={{
         position: 'absolute',
@@ -48,23 +98,9 @@ export function AmbientBackground({ orbs, particles }: AmbientBackgroundProps) {
       }}
     >
       {orbs.map((orb, i) => (
-        <motion.div
+        <div
           key={`orb-${orb.color}-${orb.top ?? ''}-${orb.left ?? ''}-${orb.right ?? ''}`}
-          animate={
-            shouldReduceMotion
-              ? {}
-              : { x: orb.animateTo.x, y: orb.animateTo.y, scale: orb.animateTo.scale }
-          }
-          transition={
-            shouldReduceMotion
-              ? {}
-              : {
-                  duration: orb.duration,
-                  repeat: Infinity,
-                  repeatType: 'mirror',
-                  ease: 'easeInOut',
-                }
-          }
+          data-orb
           style={{
             position: 'absolute',
             width: orb.size,
@@ -82,20 +118,12 @@ export function AmbientBackground({ orbs, particles }: AmbientBackgroundProps) {
       ))}
 
       {particles &&
-        !shouldReduceMotion &&
         Array.from({ length: particles.count }).map((_, i) => {
-          const path = PARTICLE_PATHS[i % PARTICLE_PATHS.length];
           const color = particles.colors[i % particles.colors.length];
           return (
-            <motion.div
+            <div
               key={`p-${i}`}
-              animate={{ x: path.x, y: path.y, opacity: [0.7, 1, 0.5, 0.7] }}
-              transition={{
-                duration: 4.5 + i * 0.3,
-                repeat: Infinity,
-                ease: 'easeInOut',
-                delay: i * 0.4,
-              }}
+              data-particle
               style={{
                 position: 'absolute',
                 width: 3,
@@ -105,6 +133,7 @@ export function AmbientBackground({ orbs, particles }: AmbientBackgroundProps) {
                 left: `${15 + (i * 17) % 70}%`,
                 top: `${20 + (i * 23) % 60}%`,
                 willChange: 'transform',
+                opacity: 0.7,
               }}
             />
           );

@@ -1,34 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
 import { AmbientBackground } from '@/components/ui/AmbientBackground';
-
-const EASE = [0.23, 1, 0.32, 1] as [number, number, number, number];
-
-const revealVariants = {
-  hidden: { clipPath: 'inset(0 0 100% 0)', opacity: 0 },
-  visible: { clipPath: 'inset(0 0 0% 0)', opacity: 1 },
-};
-
-function RevealBlock({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-10% 0px' });
-
-  return (
-    <div ref={ref} style={{ overflow: 'hidden' }}>
-      <motion.div
-        initial="hidden"
-        animate={inView ? 'visible' : 'hidden'}
-        variants={revealVariants}
-        transition={{ delay, duration: 0.8, ease: EASE }}
-      >
-        {children}
-      </motion.div>
-    </div>
-  );
-}
 
 const chapters: Array<{
   key: 'iot' | 'university' | 'now';
@@ -86,61 +59,54 @@ export default function About() {
 
       {/* Left: text */}
       <div style={{ maxWidth: '540px' }}>
-        <RevealBlock>
-          <p
-            className="section-label"
-            style={{ color: 'var(--color-text-light-secondary)', marginBottom: '1.5rem' }}
-          >
-            {t('label')}
-          </p>
-        </RevealBlock>
+        <p
+          className="section-label"
+          style={{ color: 'var(--color-text-light-secondary)', marginBottom: '1.5rem' }}
+        >
+          {t('label')}
+        </p>
 
-        <RevealBlock delay={0.08}>
-          <h2
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(1.6rem, 3.5vw, 2.6rem)',
-              fontWeight: 800,
-              letterSpacing: '-0.025em',
-              lineHeight: 1.15,
-              color: 'var(--color-text-light)',
-              marginBottom: '2rem',
-              whiteSpace: 'pre-line',
-            }}
-          >
-            {t('heading')}
-          </h2>
-        </RevealBlock>
+        <h2
+          style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: 'clamp(1.6rem, 3.5vw, 2.6rem)',
+            fontWeight: 800,
+            letterSpacing: '-0.025em',
+            lineHeight: 1.15,
+            color: 'var(--color-text-light)',
+            marginBottom: '2rem',
+            whiteSpace: 'pre-line',
+          }}
+        >
+          {t('heading')}
+        </h2>
 
         {bioParagraphs.map((para, i) => (
-          <RevealBlock key={i} delay={0.16 + i * 0.08}>
-            <p
-              style={{
-                fontSize: 'var(--text-base)',
-                color: 'var(--color-text-light-secondary)',
-                lineHeight: 1.8,
-                marginBottom: i < bioParagraphs.length - 1 ? '1.25rem' : '2rem',
-              }}
-            >
-              {para}
-            </p>
-          </RevealBlock>
-        ))}
-
-        <RevealBlock delay={0.35}>
           <p
+            key={i}
             style={{
-              fontSize: 'var(--text-sm)',
-              color: 'var(--color-text-light-muted)',
-              lineHeight: 1.75,
-              fontStyle: 'italic',
-              borderLeft: '2px solid var(--color-accent)',
-              paddingLeft: '1rem',
+              fontSize: 'var(--text-base)',
+              color: 'var(--color-text-light-secondary)',
+              lineHeight: 1.8,
+              marginBottom: i < bioParagraphs.length - 1 ? '1.25rem' : '2rem',
             }}
           >
-            {t('approach')}
+            {para}
           </p>
-        </RevealBlock>
+        ))}
+
+        <p
+          style={{
+            fontSize: 'var(--text-sm)',
+            color: 'var(--color-text-light-muted)',
+            lineHeight: 1.75,
+            fontStyle: 'italic',
+            borderLeft: '2px solid var(--color-accent)',
+            paddingLeft: '1rem',
+          }}
+        >
+          {t('approach')}
+        </p>
       </div>
 
       {/* Right: story chapters — three blocks with real content */}
@@ -153,13 +119,9 @@ export default function About() {
           justifyContent: 'center',
         }}
       >
-        {chapters.map(({ key, bg, textColor, labelColor, border }, i) => (
-          <motion.div
+        {chapters.map(({ key, bg, textColor, labelColor, border }) => (
+          <div
             key={key}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-10%' }}
-            transition={{ delay: 0.08 * i, duration: 0.4, ease: EASE }}
             style={{
               background: bg,
               border: border ?? 'none',
@@ -215,7 +177,7 @@ export default function About() {
             >
               {t(`chapters.${key}.body`)}
             </p>
-          </motion.div>
+          </div>
         ))}
       </div>
 

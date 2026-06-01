@@ -1,7 +1,6 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { motion } from 'framer-motion';
 import { AmbientBackground } from '@/components/ui/AmbientBackground';
 
 export default function Contact() {
@@ -59,21 +58,14 @@ export default function Contact() {
       />
 
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+        <p
           className="section-label"
           style={{ color: 'var(--color-accent)', marginBottom: '1.5rem' }}
         >
           {t('label')}
-        </motion.p>
+        </p>
 
-        <motion.h2
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
+        <h2
           style={{
             fontFamily: 'var(--font-display)',
             fontSize: 'var(--text-hero)',
@@ -86,13 +78,9 @@ export default function Contact() {
           }}
         >
           {t('heading')}
-        </motion.h2>
+        </h2>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
+        <p
           style={{
             fontSize: 'var(--text-base)',
             color: 'var(--color-text-dark-secondary)',
@@ -100,17 +88,12 @@ export default function Contact() {
           }}
         >
           {t('available')}
-        </motion.p>
+        </p>
 
         {/* Email — clip-path reveal on hover */}
-        <motion.a
+        <a
           className="email-link"
           href={`mailto:${email}`}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3, duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-          whileHover={{ color: 'var(--color-accent)' }}
           style={{
             fontFamily: 'var(--font-display)',
             fontSize: 'var(--text-2xl)',
@@ -124,21 +107,19 @@ export default function Contact() {
             transition: 'color 200ms ease, border-color 200ms ease',
           }}
           onMouseEnter={e => {
+            (e.currentTarget as HTMLAnchorElement).style.color = 'var(--color-accent)';
             (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(255,140,66,0.4)';
           }}
           onMouseLeave={e => {
+            (e.currentTarget as HTMLAnchorElement).style.color = 'var(--color-text-dark)';
             (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(255,255,255,0.12)';
           }}
         >
           {email}
-        </motion.a>
+        </a>
 
         {/* Social links */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
+        <div
           style={{
             display: 'flex',
             gap: '2rem',
@@ -171,7 +152,7 @@ export default function Contact() {
               {label} ↗
             </a>
           ))}
-        </motion.div>
+        </div>
       </div>
 
       <style>{`

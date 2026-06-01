@@ -2,41 +2,21 @@
 
 import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
-import { motion } from 'framer-motion';
 import { getLenis } from '@/lib/lenis-instance';
 
 // SSR: false — Three.js needs window
 const WebGLScene = dynamic(() => import('./WebGLScene'), { ssr: false });
 
-const EASE = [0.23, 1, 0.32, 1] as [number, number, number, number]; // --ease-out-strong
-
-// Stagger each character — Emil rule: 30-80ms between items
-const letterVariants = {
-  hidden: { opacity: 0, y: 60, skewY: 4 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    skewY: 0,
-    transition: {
-      delay: 0.3 + i * 0.05,
-      duration: 0.7,
-      ease: EASE,
-    },
-  }),
-};
-
 function SplitName({ name }: { name: string }) {
   return (
     <span aria-label={name} style={{ display: 'flex', overflow: 'hidden', flexWrap: 'wrap' }}>
       {name.split('').map((char, i) => (
-        <motion.span
+        <span
           key={i}
-          custom={i}
-          variants={letterVariants}
           style={{ display: 'inline-block', whiteSpace: char === ' ' ? 'pre' : 'normal' }}
         >
           {char}
-        </motion.span>
+        </span>
       ))}
     </span>
   );
@@ -77,9 +57,7 @@ export default function Hero() {
       />
 
       {/* Content */}
-      <motion.div
-        initial="hidden"
-        animate="visible"
+      <div
         style={{
           position: 'relative',
           zIndex: 2,
@@ -89,16 +67,12 @@ export default function Hero() {
         }}
       >
         {/* Role label */}
-        <motion.p
-          variants={{
-            hidden: { opacity: 0, y: 20 },
-            visible: { opacity: 1, y: 0, transition: { delay: 0.1, duration: 0.5, ease: EASE } },
-          }}
+        <p
           className="section-label"
           style={{ color: 'var(--color-accent)', marginBottom: '1.5rem' }}
         >
           {t('title')}
-        </motion.p>
+        </p>
 
         {/* Name — letter by letter */}
         <h1
@@ -116,15 +90,7 @@ export default function Hero() {
         </h1>
 
         {/* Tagline */}
-        <motion.p
-          variants={{
-            hidden: { opacity: 0, y: 24 },
-            visible: {
-              opacity: 1,
-              y: 0,
-              transition: { delay: 0.9, duration: 0.6, ease: EASE },
-            },
-          }}
+        <p
           style={{
             fontSize: 'var(--text-lg)',
             color: 'var(--color-text-dark-secondary)',
@@ -134,10 +100,10 @@ export default function Hero() {
           }}
         >
           {t('tagline')}
-        </motion.p>
+        </p>
 
         {/* CTA */}
-        <motion.a
+        <a
           href="#work"
           onClick={e => {
             e.preventDefault();
@@ -145,16 +111,6 @@ export default function Hero() {
             if (lenis) lenis.scrollTo('#work', { offset: -72, duration: 1.2 });
             else document.querySelector('#work')?.scrollIntoView({ behavior: 'smooth' });
           }}
-          variants={{
-            hidden: { opacity: 0, scale: 0.95 },
-            visible: {
-              opacity: 1,
-              scale: 1,
-              transition: { delay: 1.1, duration: 0.4, ease: EASE },
-            },
-          }}
-          whileTap={{ scale: 0.97 }} // Emil: scale(0.97) on :active, 160ms ease-out
-          whileHover={{ borderColor: 'var(--color-accent)' }}
           style={{
             display: 'inline-block',
             fontFamily: 'var(--font-mono)',
@@ -168,16 +124,15 @@ export default function Hero() {
             textDecoration: 'none',
             transition: 'border-color 200ms ease',
           }}
+          onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--color-accent)')}
+          onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(255,140,66,0.4)')}
         >
           {t('cta')} ↓
-        </motion.a>
-      </motion.div>
+        </a>
+      </div>
 
       {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.6, duration: 0.6 }}
+      <div
         style={{
           position: 'absolute',
           bottom: '2.5rem',
@@ -196,16 +151,14 @@ export default function Hero() {
         >
           scroll
         </span>
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
+        <div
           style={{
             width: 1,
             height: 40,
             background: 'linear-gradient(to bottom, rgba(255,140,66,0.6), transparent)',
           }}
         />
-      </motion.div>
+      </div>
     </section>
   );
 }
