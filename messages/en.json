@@ -63,6 +63,29 @@
       }
     }
   },
+  "services": {
+    "label": "Collaboration Systems",
+    "heading": "Have a system in mind?",
+    "cta": "Start a conversation",
+    "items": {
+      "ai": {
+        "title": "AI Engineering",
+        "description": "LangGraph and LangChain agents with memory, tool use, and structured reasoning. From prototype to production API."
+      },
+      "fullstack": {
+        "title": "Full Stack Development",
+        "description": "Complete web applications with Next.js, React, and TypeScript. Backend with Node.js, Python, and PostgreSQL. Clean architecture, real performance."
+      },
+      "interfaces": {
+        "title": "Interactive Interfaces",
+        "description": "Animated interfaces with GSAP, Three.js, and WebGL. Motion that earns its presence. Portfolios, landing pages, product experiences."
+      },
+      "consulting": {
+        "title": "Technical Consulting & Prototypes",
+        "description": "AI system architecture, stack review, and rapid proof of concepts. For teams that need to validate before they build."
+      }
+    }
+  },
   "contact": {
     "label": "Contact",
     "heading": "Let's build something.",

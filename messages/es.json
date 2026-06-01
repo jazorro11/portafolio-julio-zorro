@@ -63,6 +63,29 @@
       }
     }
   },
+  "services": {
+    "label": "Sistemas de Colaboración",
+    "heading": "¿Tienes un sistema en mente?",
+    "cta": "Iniciar conversación",
+    "items": {
+      "ai": {
+        "title": "AI Engineering",
+        "description": "Agentes con LangGraph y LangChain: memoria, herramientas y razonamiento estructurado. Del prototipo a la API en producción."
+      },
+      "fullstack": {
+        "title": "Full Stack Development",
+        "description": "Aplicaciones web completas con Next.js, React y TypeScript. Backend con Node.js, Python y PostgreSQL. Arquitectura limpia, performance real."
+      },
+      "interfaces": {
+        "title": "Interfaces Interactivas",
+        "description": "Interfaces animadas con GSAP, Three.js y WebGL. Movimiento con propósito. Portafolios, landing pages, experiencias de producto."
+      },
+      "consulting": {
+        "title": "Consultoría Técnica y Prototipos",
+        "description": "Arquitectura de sistemas AI, revisión de stack y pruebas de concepto rápidas. Para equipos que necesitan validar antes de construir."
+      }
+    }
+  },
   "contact": {
     "label": "Contacto",
     "heading": "Construyamos algo.",
