@@ -120,6 +120,6 @@
 
 /* Focus visible — applies to all interactive elements site-wide */
 :focus-visible {
-  outline: var(--focus-ring);
-  outline-offset: 3px;
+  outline: none;
+  box-shadow: var(--focus-ring);
 }
