@@ -3,6 +3,77 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
+const vertexShader = `
+  void main() {
+    gl_Position = vec4(position, 1.0);
+  }
+`;
+
+const fragmentShader = `
+  uniform float uTime;
+  uniform vec2  uMouse;
+  uniform vec2  uResolution;
+
+  float hash(vec2 p) {
+    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+  }
+
+  float noise(vec2 p) {
+    vec2 i = floor(p);
+    vec2 f = fract(p);
+    f = f * f * (3.0 - 2.0 * f);
+    return mix(
+      mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x),
+      mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x),
+      f.y
+    );
+  }
+
+  float fbm(vec2 p) {
+    float v = 0.0;
+    float amp = 0.5;
+    for (int i = 0; i < 5; i++) {
+      v += amp * noise(p);
+      p  = p * 2.1 + vec2(1.7, 9.2);
+      amp *= 0.5;
+    }
+    return v;
+  }
+
+  void main() {
+    vec2 uv = (gl_FragCoord.xy - 0.5 * uResolution) / min(uResolution.x, uResolution.y);
+
+    // Subtle mouse distortion
+    vec2 mouse = uMouse - 0.5;
+    uv += mouse * 0.08 * (1.0 - length(uv));
+
+    float t = uTime * 0.12;
+
+    float n1 = fbm(uv * 2.8 + vec2(t, t * 0.6));
+    float n2 = fbm(uv * 4.5 - vec2(t * 0.4, t * 0.25) + n1 * 0.7);
+    float n3 = fbm(uv * 7.0 + n2 * 0.5 + vec2(t * 0.2));
+
+    // Palette: #090d09 dark → #3a5a2a moss → #7aad5e lichen
+    vec3 dark   = vec3(0.035, 0.051, 0.035);
+    vec3 moss   = vec3(0.227, 0.353, 0.165);
+    vec3 lichen = vec3(0.478, 0.678, 0.369);
+
+    vec3 color = mix(dark, moss,   smoothstep(0.28, 0.55, n1));
+    color      = mix(color, lichen, smoothstep(0.55, 0.85, n2) * 0.55);
+    color      = mix(color, dark,   smoothstep(0.75, 1.0,  n3) * 0.3);
+
+    // Radial vignette
+    float vignette = 1.0 - smoothstep(0.4, 1.3, length(uv * 1.1));
+    color *= vignette;
+
+    // Breathing pulse: ±3% amplitude over ~6s
+    float pulse = 1.0 + 0.03 * sin(uTime * 1.05);
+    color *= pulse;
+
+    gl_FragColor = vec4(color, 1.0);
+  }
+`;
+
 export default function WebGLScene() {
   const mountRef = useRef<HTMLDivElement>(null);
 
@@ -10,95 +81,50 @@ export default function WebGLScene() {
     const el = mountRef.current;
     if (!el) return;
 
-    // Scene setup
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, el.clientWidth / el.clientHeight, 0.1, 100);
-    camera.position.z = 2;
+    const scene    = new THREE.Scene();
+    const camera   = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10);
+    camera.position.z = 1;
 
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     renderer.setSize(el.clientWidth, el.clientHeight);
-    renderer.setClearColor(0x000000, 0);
+    renderer.setClearColor(0x090d09, 1);
     el.appendChild(renderer.domElement);
 
-    // Particle field — Deep Space Amber colors
-    const count = 1200;
-    const geo = new THREE.BufferGeometry();
-    const positions = new Float32Array(count * 3);
-    const colors = new Float32Array(count * 3);
+    const uniforms = {
+      uTime:       { value: 0 },
+      uMouse:      { value: new THREE.Vector2(0.5, 0.5) },
+      uResolution: { value: new THREE.Vector2(el.clientWidth, el.clientHeight) },
+    };
 
-    // Deep Space Amber: #FF8C42 and #3B82F6
-    const amber = new THREE.Color('#FF8C42');
-    const blue  = new THREE.Color('#3B82F6');
-    const white = new THREE.Color('#FFFFFF');
-
-    for (let i = 0; i < count; i++) {
-      positions[i * 3]     = (Math.random() - 0.5) * 6;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 6;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 4;
-
-      // Mix: mostly white/dim, some amber, few blue
-      const r = Math.random();
-      const c = r < 0.05 ? amber : r < 0.12 ? blue : white;
-      colors[i * 3]     = c.r;
-      colors[i * 3 + 1] = c.g;
-      colors[i * 3 + 2] = c.b;
-    }
-
-    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-    // Circular sprite texture — avoids square default
-    const spriteCanvas = document.createElement('canvas');
-    spriteCanvas.width = 32;
-    spriteCanvas.height = 32;
-    const ctx = spriteCanvas.getContext('2d')!;
-    const grad = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
-    grad.addColorStop(0, 'rgba(255,255,255,1)');
-    grad.addColorStop(0.4, 'rgba(255,255,255,0.6)');
-    grad.addColorStop(1, 'rgba(255,255,255,0)');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, 32, 32);
-    const sprite = new THREE.CanvasTexture(spriteCanvas);
-
-    const mat = new THREE.PointsMaterial({
-      size: 0.025,
-      vertexColors: true,
-      transparent: true,
-      opacity: 0.65,
-      sizeAttenuation: true,
-      map: sprite,
-      alphaTest: 0.001,
-      depthWrite: false,
+    const material = new THREE.ShaderMaterial({
+      vertexShader,
+      fragmentShader,
+      uniforms,
     });
 
-    const particles = new THREE.Points(geo, mat);
-    scene.add(particles);
+    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material);
+    scene.add(mesh);
 
-    // Mouse parallax
-    let mouseX = 0, mouseY = 0;
     const onMouse = (e: MouseEvent) => {
-      mouseX = (e.clientX / window.innerWidth  - 0.5) * 0.3;
-      mouseY = (e.clientY / window.innerHeight - 0.5) * 0.3;
+      uniforms.uMouse.value.set(
+        e.clientX / window.innerWidth,
+        1.0 - e.clientY / window.innerHeight
+      );
     };
     window.addEventListener('mousemove', onMouse, { passive: true });
 
-    // Resize handler
     const onResize = () => {
-      camera.aspect = el.clientWidth / el.clientHeight;
-      camera.updateProjectionMatrix();
       renderer.setSize(el.clientWidth, el.clientHeight);
+      uniforms.uResolution.value.set(el.clientWidth, el.clientHeight);
     };
     window.addEventListener('resize', onResize);
 
-    // Animation loop
     let raf: number;
-    let t = 0;
+    const clock = new THREE.Clock();
     const animate = () => {
       raf = requestAnimationFrame(animate);
-      t += 0.0008;
-      particles.rotation.y = t + mouseX;
-      particles.rotation.x = mouseY * 0.5;
+      uniforms.uTime.value = clock.getElapsedTime();
       renderer.render(scene, camera);
     };
     animate();
@@ -107,11 +133,9 @@ export default function WebGLScene() {
       cancelAnimationFrame(raf);
       window.removeEventListener('mousemove', onMouse);
       window.removeEventListener('resize', onResize);
+      material.dispose();
       renderer.dispose();
-      geo.dispose();
-      mat.dispose();
-      sprite.dispose();
-      el.removeChild(renderer.domElement);
+      if (el.contains(renderer.domElement)) el.removeChild(renderer.domElement);
     };
   }, []);
 
