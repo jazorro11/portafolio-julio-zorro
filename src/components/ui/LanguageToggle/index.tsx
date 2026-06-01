@@ -23,18 +23,15 @@ export default function LanguageToggle() {
       onClick={toggle}
       disabled={isPending}
       style={{
-        fontFamily: 'var(--font-mono)',
+        fontFamily: 'var(--font-body)',
         fontSize: 'var(--text-xs)',
-        letterSpacing: '0.1em',
-        textTransform: 'uppercase',
-        color: isPending ? 'var(--color-accent-dim)' : 'var(--color-accent)',
-        background: 'transparent',
-        border: '1px solid',
-        borderColor: isPending ? 'var(--color-accent-dim)' : 'rgba(255,140,66,0.3)',
-        borderRadius: '100px',
-        padding: '4px 12px',
-        cursor: isPending ? 'wait' : 'pointer',
-        transition: 'border-color 200ms ease, color 200ms ease',
+        color: 'var(--accent-lichen)',
+        background: 'none',
+        border: 'none',
+        borderBottom: '1px solid rgba(122,173,94,0.4)',
+        paddingBottom: '1px',
+        cursor: 'pointer',
+        transition: 'opacity 200ms ease',
       }}
       onMouseEnter={e => {
         if (!isPending) (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--color-accent)';

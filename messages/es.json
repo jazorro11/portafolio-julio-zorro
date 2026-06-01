@@ -1,8 +1,8 @@
 {
   "nav": {
     "about": "Sobre mí",
-    "capabilities": "Stack",
-    "work": "Proyectos",
+    "work": "Trabajo",
+    "services": "Servicios",
     "contact": "Contacto"
   },
   "hero": {
