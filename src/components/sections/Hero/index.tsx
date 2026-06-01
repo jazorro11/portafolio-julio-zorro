@@ -1,163 +1,212 @@
 'use client';
 
+import { useRef } from 'react';
+import { useGSAP } from '@gsap/react';
+import { gsap, SplitText, ScrollTrigger } from '@/lib/gsap-config';
 import dynamic from 'next/dynamic';
-import { useTranslations } from 'next-intl';
-import { getLenis } from '@/lib/lenis-instance';
 
 // SSR: false — Three.js needs window
 const WebGLScene = dynamic(() => import('./WebGLScene'), { ssr: false });
 
-function SplitName({ name }: { name: string }) {
-  return (
-    <span aria-label={name} style={{ display: 'flex', overflow: 'hidden', flexWrap: 'wrap' }}>
-      {name.split('').map((char, i) => (
-        <span
-          key={i}
-          style={{ display: 'inline-block', whiteSpace: char === ' ' ? 'pre' : 'normal' }}
-        >
-          {char}
-        </span>
-      ))}
-    </span>
-  );
-}
-
 export default function Hero() {
-  const t = useTranslations('hero');
+  const sectionRef   = useRef<HTMLElement>(null);
+  const coordRef     = useRef<HTMLParagraphElement>(null);
+  const firstNameRef = useRef<HTMLSpanElement>(null);
+  const lastNameRef  = useRef<HTMLSpanElement>(null);
+  const taglineRef   = useRef<HTMLParagraphElement>(null);
+  const ctaRef       = useRef<HTMLAnchorElement>(null);
+  const scrollRef    = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReduced) {
+      gsap.set([coordRef.current, firstNameRef.current, lastNameRef.current,
+                taglineRef.current, ctaRef.current, scrollRef.current],
+        { opacity: 1, y: 0 });
+      return;
+    }
+
+    const splitFirst = new SplitText(firstNameRef.current, { type: 'chars' });
+    const splitLast  = new SplitText(lastNameRef.current,  { type: 'chars' });
+
+    gsap.set([...(splitFirst.chars as Element[]), ...(splitLast.chars as Element[]),
+              coordRef.current, taglineRef.current, ctaRef.current, scrollRef.current],
+      { opacity: 0 });
+
+    const tl = gsap.timeline();
+
+    // Coordinates
+    tl.to(coordRef.current, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 0.6);
+
+    // First name chars
+    tl.to(splitFirst.chars as Element[], {
+      opacity: 1, y: 0, duration: 0.7, ease: 'biome.grow', stagger: 0.04,
+    }, 1.0);
+
+    // Last name chars
+    tl.to(splitLast.chars as Element[], {
+      opacity: 1, y: 0, duration: 0.7, ease: 'biome.grow', stagger: 0.04,
+    }, 1.4);
+
+    // Tagline
+    tl.to(taglineRef.current, { opacity: 1, duration: 0.7, ease: 'power3.out' }, 1.9);
+
+    // CTA
+    tl.to(ctaRef.current, { opacity: 1, duration: 0.5, ease: 'power3.out' }, 2.3);
+
+    // Scroll indicator loop
+    tl.to(scrollRef.current, { opacity: 0.5, duration: 0.4, ease: 'power3.out' }, 2.6);
+    gsap.to(scrollRef.current, {
+      scale: 1.15, opacity: 0.3, duration: 1.4, ease: 'biome.breathe',
+      repeat: -1, yoyo: true, delay: 3.0,
+    });
+
+    // Scroll-out: hero fades as user scrolls
+    ScrollTrigger.create({
+      trigger: sectionRef.current,
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 1,
+      onUpdate: (self) => {
+        const p = self.progress;
+        gsap.set(sectionRef.current!.querySelector('.hero-content'), {
+          opacity: 1 - p * 1.25,
+          y: -p * 60,
+        });
+      },
+    });
+
+    return () => {
+      splitFirst.revert();
+      splitLast.revert();
+    };
+  }, { scope: sectionRef });
 
   return (
     <section
       id="hero"
+      ref={sectionRef}
       data-theme="dark"
       className="with-grain"
       style={{
-        background: 'var(--color-dark)',
+        position: 'relative',
+        minHeight: '100svh',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '100svh',
         overflow: 'hidden',
+        background: 'var(--bg-deep)',
       }}
     >
-      {/* WebGL background */}
       <WebGLScene />
 
-      {/* Amber glow — radial gradient accent */}
       <div
-        aria-hidden
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background:
-            'radial-gradient(ellipse 80% 60% at 65% 55%, rgba(255,140,66,0.08) 0%, transparent 70%),' +
-            'radial-gradient(ellipse 40% 40% at 20% 80%, rgba(59,130,246,0.06) 0%, transparent 60%)',
-          zIndex: 1,
-          pointerEvents: 'none',
-        }}
-      />
-
-      {/* Content */}
-      <div
+        className="hero-content"
         style={{
           position: 'relative',
-          zIndex: 2,
-          textAlign: 'center',
+          zIndex: 10,
           padding: '0 var(--container-padding)',
-          maxWidth: '1000px',
+          maxWidth: 'var(--container-max)',
+          width: '100%',
         }}
       >
-        {/* Role label */}
+        {/* Field log coordinates */}
         <p
-          className="section-label"
-          style={{ color: 'var(--color-accent)', marginBottom: '1.5rem' }}
+          ref={coordRef}
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: '11px',
+            letterSpacing: '0.18em',
+            color: 'var(--text-technical)',
+            marginBottom: 'var(--space-6)',
+            opacity: 0,
+            transform: 'translateY(8px)',
+          }}
         >
-          {t('title')}
+          FIELD_LOG · 04°42′N 74°08′W · BIOME_001
         </p>
 
-        {/* Name — letter by letter */}
+        {/* Name — split text target */}
         <h1
           style={{
             fontFamily: 'var(--font-display)',
             fontSize: 'var(--text-hero)',
-            fontWeight: 900,
-            letterSpacing: '-0.04em',
+            fontWeight: 400,
             lineHeight: 0.9,
-            color: 'var(--color-text-dark)',
-            marginBottom: '2rem',
+            letterSpacing: '-0.02em',
+            color: 'var(--text-primary)',
+            marginBottom: 'var(--space-8)',
           }}
         >
-          <SplitName name={t('name')} />
+          <span
+            ref={firstNameRef}
+            style={{ display: 'block', overflow: 'hidden' }}
+          >
+            Julio
+          </span>
+          <span
+            ref={lastNameRef}
+            style={{ display: 'block', overflow: 'hidden' }}
+          >
+            Zorro
+          </span>
         </h1>
 
         {/* Tagline */}
         <p
+          ref={taglineRef}
           style={{
-            fontSize: 'var(--text-lg)',
-            color: 'var(--color-text-dark-secondary)',
-            maxWidth: '560px',
-            margin: '0 auto 3rem',
-            lineHeight: 1.5,
+            fontFamily: 'var(--font-body)',
+            fontSize: 'var(--text-sm)',
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+            color: 'var(--text-technical)',
+            marginBottom: 'var(--space-12)',
+            opacity: 0,
           }}
         >
-          {t('tagline')}
+          AI Engineer · Full Stack Developer · Software Engineer
         </p>
 
         {/* CTA */}
         <a
+          ref={ctaRef}
           href="#work"
-          onClick={e => {
-            e.preventDefault();
-            const lenis = getLenis();
-            if (lenis) lenis.scrollTo('#work', { offset: -72, duration: 1.2 });
-            else document.querySelector('#work')?.scrollIntoView({ behavior: 'smooth' });
-          }}
           style={{
-            display: 'inline-block',
-            fontFamily: 'var(--font-mono)',
-            fontSize: 'var(--text-xs)',
-            letterSpacing: '0.1em',
-            textTransform: 'uppercase',
-            color: 'var(--color-accent)',
-            border: '1px solid rgba(255,140,66,0.4)',
-            borderRadius: '100px',
-            padding: '14px 32px',
+            fontFamily: 'var(--font-body)',
+            fontSize: 'var(--text-sm)',
+            color: 'var(--accent-lichen)',
             textDecoration: 'none',
-            transition: 'border-color 200ms ease',
+            borderBottom: '1px solid var(--accent-lichen)',
+            paddingBottom: '2px',
+            opacity: 0,
+            transition: 'opacity 200ms ease',
           }}
-          onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--color-accent)')}
-          onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(255,140,66,0.4)')}
+          onMouseEnter={e => (e.currentTarget.style.opacity = '0.7')}
+          onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
         >
-          {t('cta')} ↓
+          → Enter the biome
         </a>
       </div>
 
       {/* Scroll indicator */}
       <div
+        ref={scrollRef}
         style={{
           position: 'absolute',
-          bottom: '2.5rem',
+          bottom: '2rem',
           left: '50%',
           transform: 'translateX(-50%)',
-          zIndex: 2,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '8px',
+          opacity: 0,
+          zIndex: 10,
         }}
+        aria-hidden
       >
-        <span
-          className="section-label"
-          style={{ color: 'var(--color-text-dark-muted)', fontSize: '0.65rem' }}
-        >
-          scroll
-        </span>
-        <div
-          style={{
-            width: 1,
-            height: 40,
-            background: 'linear-gradient(to bottom, rgba(255,140,66,0.6), transparent)',
-          }}
-        />
+        <div style={{
+          width: '1px',
+          height: '48px',
+          background: 'linear-gradient(to bottom, var(--accent-lichen), transparent)',
+        }} />
       </div>
     </section>
   );
