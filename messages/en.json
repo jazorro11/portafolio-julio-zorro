@@ -9,7 +9,8 @@
     "name": "Julio Zorro",
     "title": "Software Engineer · AI",
     "tagline": "I build intelligent systems and the interfaces that make them feel human.",
-    "cta": "See my work"
+    "cta": "See my work",
+    "scroll": "scroll"
   },
   "about": {
     "label": "About",
@@ -68,5 +69,33 @@
     "heading": "Let's build something.",
     "email": "jzorroperez@gmail.com",
     "available": "Currently available for freelance and full-time opportunities."
+  },
+  "ocean": {
+    "depth": {
+      "surface":  "0m — Surface",
+      "shallow":  "200m — Shallow Waters",
+      "reef":     "800m — The Reef",
+      "abyss":    "3,500m — The Abyss",
+      "trench":   "11,000m — Mariana Trench"
+    },
+    "depth_short": {
+      "surface":  "0m",
+      "shallow":  "200m",
+      "reef":     "800m",
+      "abyss":    "3.5km",
+      "trench":   "11km"
+    },
+    "astronaut": {
+      "alt": "Cartoon astronaut floating in deep ocean with a flashlight"
+    },
+    "chest": {
+      "alt": "Glowing bioluminescent treasure chest on the Mariana Trench floor"
+    },
+    "contact": {
+      "github_label":   "View GitHub profile",
+      "linkedin_label": "Connect on LinkedIn",
+      "email_label":    "Send an email"
+    },
+    "scroll_hint": "scroll to descend"
   }
 }

@@ -9,7 +9,8 @@
     "name": "Julio Zorro",
     "title": "Software Engineer · AI",
     "tagline": "Construyo sistemas inteligentes y las interfaces que los hacen sentir humanos.",
-    "cta": "Ver proyectos"
+    "cta": "Ver proyectos",
+    "scroll": "scroll"
   },
   "about": {
     "label": "Sobre mí",
@@ -68,5 +69,33 @@
     "heading": "Construyamos algo.",
     "email": "jzorroperez@gmail.com",
     "available": "Disponible para proyectos freelance y posiciones full-time."
+  },
+  "ocean": {
+    "depth": {
+      "surface":  "0m — Superficie",
+      "shallow":  "200m — Aguas Someras",
+      "reef":     "800m — El Arrecife",
+      "abyss":    "3.500m — El Abismo",
+      "trench":   "11.000m — Trinchera de las Marianas"
+    },
+    "depth_short": {
+      "surface":  "0m",
+      "shallow":  "200m",
+      "reef":     "800m",
+      "abyss":    "3,5km",
+      "trench":   "11km"
+    },
+    "astronaut": {
+      "alt": "Astronauta de caricatura flotando en el océano profundo con una linterna"
+    },
+    "chest": {
+      "alt": "Cofre bioluminiscente brillante en el fondo de la Trinchera de las Marianas"
+    },
+    "contact": {
+      "github_label":   "Ver perfil de GitHub",
+      "linkedin_label": "Conectar en LinkedIn",
+      "email_label":    "Enviar un correo"
+    },
+    "scroll_hint": "desplaza para descender"
   }
 }
