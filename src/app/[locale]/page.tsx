@@ -1,26 +1,28 @@
-'use client';
+'use client'
 
-import Hero from '@/components/sections/Hero';
-import About from '@/components/sections/About';
-import Capabilities from '@/components/sections/Capabilities';
-import Work from '@/components/sections/Work';
-import Contact from '@/components/sections/Contact';
-import Nav from '@/components/ui/Nav';
-import CustomCursor from '@/components/ui/CustomCursor';
-import SmoothScroll from '@/components/ui/SmoothScroll';
+import OceanSystem from '@/components/ocean/OceanSystem'
+import FishingThread from '@/components/ocean/FishingThread'
+import Hero from '@/components/sections/Hero'
+import About from '@/components/sections/About'
+import Stack from '@/components/sections/Stack'
+import Work from '@/components/sections/Work'
+import Contact from '@/components/sections/Contact'
+import Nav from '@/components/ui/Nav'
+import CustomCursor from '@/components/ui/CustomCursor'
 
 export default function HomePage() {
   return (
-    <SmoothScroll>
+    <OceanSystem>
       <CustomCursor />
       <Nav />
+      <FishingThread />
       <main>
         <Hero />
         <About />
-        <Capabilities />
+        <Stack />
         <Work />
         <Contact />
       </main>
-    </SmoothScroll>
-  );
+    </OceanSystem>
+  )
 }
