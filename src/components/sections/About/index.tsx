@@ -23,7 +23,7 @@ function RevealBlock({ children, delay = 0 }: { children: React.ReactNode; delay
         initial="hidden"
         animate={inView ? 'visible' : 'hidden'}
         variants={revealVariants}
-        transition={{ delay: inView ? delay : 0, duration: 0.8, ease: EASE }}
+        transition={{ delay, duration: 0.8, ease: EASE }}
       >
         {children}
       </motion.div>
