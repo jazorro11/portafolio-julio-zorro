@@ -110,6 +110,15 @@ function NightSkyScene() {
   )
 }
 
+// ── Depth zone helper ─────────────────────────────────────────────────────────
+function getDepthZone(p: number): string {
+  if (p <= 0.2) return '0m · Surface'
+  if (p <= 0.4) return '200m · Shallow'
+  if (p <= 0.6) return '800m · Reef'
+  if (p <= 0.8) return '3,500m · Abyss'
+  return '11,000m · Trench'
+}
+
 // ── Main Hero ─────────────────────────────────────────────────────────────────
 export default function Hero() {
   const t = useTranslations('hero')
@@ -292,7 +301,7 @@ export default function Hero() {
             color: 'var(--color-text-dark-muted)',
           }}
         >
-          0m · Surface
+          {getDepthZone(depthProgress)}
         </span>
       </div>
 
