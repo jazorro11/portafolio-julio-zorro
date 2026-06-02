@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const conversation = [
   { role: 'user',      text: 'What tools do you have access to?' },
@@ -13,17 +13,38 @@ const conversation = [
 
 export default function ChatMockup() {
   const [visible, setVisible] = useState(0);
+  const [started, setStarted] = useState<boolean>(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Start animation only when component enters viewport
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setStarted(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   // Auto-advance messages — "data mutation" effect
   useEffect(() => {
+    if (!started) return;
     if (visible >= conversation.length) return;
     const delay = visible === 0 ? 600 : 1800;
     const t = setTimeout(() => setVisible(v => v + 1), delay);
     return () => clearTimeout(t);
-  }, [visible]);
+  }, [visible, started]);
 
   return (
     <div
+      ref={containerRef}
       style={{
         background: '#0E0E1A',
         borderRadius: '16px',
