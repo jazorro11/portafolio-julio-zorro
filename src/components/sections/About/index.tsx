@@ -48,11 +48,14 @@ export default function About() {
 
   return (
     <OceanBackground
-      color="var(--ocean-shallow)"
+      color="oklch(0% 0 0 / 0.45)"
       style={{
-        background: 'oklch(9% 0.03 258)',
+        backgroundColor: 'oklch(9% 0.03 258)',
         padding: 'var(--section-padding-y) var(--container-padding)',
         overflow: 'hidden',
+        backgroundImage: 'url(/assets/bg-shallow.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
       }}
     >
       <section

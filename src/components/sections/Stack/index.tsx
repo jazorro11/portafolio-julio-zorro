@@ -3,7 +3,6 @@
 import { useTranslations } from 'next-intl'
 import { motion } from 'framer-motion'
 import OceanBackground from '@/components/ocean/OceanBackground'
-import CoralReef from '@/components/ocean/CoralReef'
 import BioParticles from '@/components/ocean/BioParticles'
 
 const EASE = [0.23, 1, 0.32, 1] as [number, number, number, number]
@@ -78,9 +77,12 @@ export default function Stack() {
 
   return (
     <OceanBackground
-      color="var(--ocean-reef)"
+      color="oklch(0% 0 0 / 0.4)"
       style={{
-        background: 'oklch(7% 0.025 262)',
+        backgroundColor: 'oklch(7% 0.025 262)',
+        backgroundImage: 'url(/assets/bg-reef.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
         padding: 'var(--section-padding-y) var(--container-padding)',
         overflow: 'hidden',
       }}
@@ -90,12 +92,42 @@ export default function Stack() {
         data-theme="dark"
         style={{ position: 'relative' }}
       >
-        <CoralReef />
-
         <BioParticles
           colors={['rgba(0,229,200,0.18)', 'rgba(200,50,180,0.12)']}
           desktopCount={12}
           mobileCount={6}
+        />
+
+        {/* Reef fish — decorative */}
+        <img
+          src="/assets/fish-parrotfish.png"
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            bottom: '14%',
+            left: '2%',
+            width: 160,
+            opacity: 0.85,
+            pointerEvents: 'none',
+            transform: 'scaleX(1)',
+            filter: 'drop-shadow(0 0 14px rgba(0,229,200,0.35))',
+          }}
+        />
+        <img
+          src="/assets/fish-angelfish.png"
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            top: '18%',
+            right: '3%',
+            width: 140,
+            opacity: 0.8,
+            pointerEvents: 'none',
+            transform: 'scaleX(-1)',
+            filter: 'drop-shadow(0 0 12px rgba(100,150,255,0.35))',
+          }}
         />
 
         <div style={{ position: 'relative', zIndex: 1 }}>

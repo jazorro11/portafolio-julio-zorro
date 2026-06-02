@@ -4,17 +4,17 @@ import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 
 interface JellyfishProps {
-  color: string
   size: number
   left: string
   bottom: string
   amplitude: number
   duration: number
   delay: number
+  opacity: number
 }
 
-function Jellyfish({ color, size, left, bottom, amplitude, duration, delay }: JellyfishProps) {
-  const ref = useRef<SVGSVGElement>(null)
+function Jellyfish({ size, left, bottom, amplitude, duration, delay, opacity }: JellyfishProps) {
+  const ref = useRef<HTMLImageElement>(null)
 
   useEffect(() => {
     if (!ref.current) return
@@ -32,37 +32,30 @@ function Jellyfish({ color, size, left, bottom, amplitude, duration, delay }: Je
   }, [amplitude, duration, delay])
 
   return (
-    <svg
+    <img
       ref={ref}
-      viewBox="0 0 40 54"
+      src="/assets/jellyfish.png"
       width={size}
       height={Math.round(size * 1.35)}
       aria-hidden="true"
+      alt=""
       style={{
         position: 'absolute',
         left,
         bottom,
+        opacity,
         willChange: 'transform',
         pointerEvents: 'none',
+        filter: 'drop-shadow(0 0 12px rgba(0,229,200,0.4))',
       }}
-    >
-      {/* Bell */}
-      <ellipse cx="20" cy="16" rx="16" ry="14" fill={color} />
-      {/* Inner glow ring */}
-      <ellipse cx="20" cy="18" rx="10" ry="8" fill="none" stroke={color} strokeWidth="1" opacity="0.4" />
-      {/* Tentacles */}
-      <path d="M10 29 Q7 40 11 47" stroke={color} strokeWidth="1.5" fill="none" strokeLinecap="round" />
-      <path d="M16 30 Q13 43 17 50" stroke={color} strokeWidth="1.5" fill="none" strokeLinecap="round" />
-      <path d="M22 30 Q25 43 21 50" stroke={color} strokeWidth="1.5" fill="none" strokeLinecap="round" />
-      <path d="M28 29 Q31 40 27 47" stroke={color} strokeWidth="1.5" fill="none" strokeLinecap="round" />
-    </svg>
+    />
   )
 }
 
 const JELLIES: JellyfishProps[] = [
-  { color: 'rgba(180,80,255,0.28)',  size: 48, left: '4%',  bottom: '30%', amplitude: 12, duration: 10, delay: 0   },
-  { color: 'rgba(0,229,200,0.22)',   size: 36, left: '18%', bottom: '55%', amplitude: 15, duration: 12, delay: 2.5 },
-  { color: 'rgba(180,80,255,0.18)',  size: 28, left: '8%',  bottom: '70%', amplitude: 18, duration:  9, delay: 5.0 },
+  { size: 90,  left: '3%',  bottom: '28%', amplitude: 12, duration: 10, delay: 0,   opacity: 0.75 },
+  { size: 65,  left: '17%', bottom: '54%', amplitude: 15, duration: 12, delay: 2.5, opacity: 0.55 },
+  { size: 50,  left: '7%',  bottom: '68%', amplitude: 18, duration:  9, delay: 5.0, opacity: 0.4  },
 ]
 
 export default function JellyfishGroup() {

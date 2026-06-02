@@ -13,9 +13,12 @@ export default function Contact() {
 
   return (
     <OceanBackground
-      color="var(--ocean-trench)"
+      color="oklch(0% 0 0 / 0.5)"
       style={{
-        background: 'oklch(3% 0.01 268)',
+        backgroundColor: 'oklch(3% 0.01 268)',
+        backgroundImage: 'url(/assets/bg-trench.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
         overflow: 'hidden',
       }}
     >

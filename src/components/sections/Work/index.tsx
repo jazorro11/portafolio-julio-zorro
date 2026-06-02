@@ -4,7 +4,6 @@ import { useTranslations } from 'next-intl'
 import { motion } from 'framer-motion'
 import OceanBackground from '@/components/ocean/OceanBackground'
 import BioParticles from '@/components/ocean/BioParticles'
-import AstronautSVG from '@/components/ocean/AstronautSVG'
 import ChatMockup from './ChatMockup'
 
 const EASE = [0.23, 1, 0.32, 1] as [number, number, number, number]
@@ -87,9 +86,12 @@ export default function Work() {
 
   return (
     <OceanBackground
-      color="var(--ocean-abyss)"
+      color="oklch(0% 0 0 / 0.45)"
       style={{
-        background: 'oklch(5% 0.018 265)',
+        backgroundColor: 'oklch(5% 0.018 265)',
+        backgroundImage: 'url(/assets/bg-abyss.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
         padding: 'var(--section-padding-y) var(--container-padding)',
         minHeight: '100svh',
         overflow: 'hidden',
@@ -111,7 +113,40 @@ export default function Work() {
             pointerEvents: 'none',
           }}
         >
-          <AstronautSVG width={240} />
+          <img
+            src="/assets/astronaut-abyss.png"
+            alt=""
+            aria-hidden="true"
+            width={240}
+            style={{
+              display: 'block',
+              filter: 'drop-shadow(0 0 24px rgba(0,229,200,0.3))',
+            }}
+          />
+        </div>
+
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            top: '10%',
+            right: '3%',
+            zIndex: 1,
+            pointerEvents: 'none',
+          }}
+        >
+          <img
+            src="/assets/anglerfish.png"
+            alt=""
+            aria-hidden="true"
+            width={190}
+            style={{
+              display: 'block',
+              opacity: 0.7,
+              filter: 'drop-shadow(0 0 18px rgba(255,140,66,0.25))',
+              transform: 'scaleX(-1)',
+            }}
+          />
         </div>
 
         <BioParticles

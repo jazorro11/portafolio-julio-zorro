@@ -93,35 +93,19 @@ function NightSkyScene() {
         }}
       />
 
-      {/* Boat SVG — centered on thread (left: 32%) */}
-      <svg
-        viewBox="0 0 140 70"
-        width="140"
-        height="70"
+      <img
+        src="/assets/astronaut-boat.png"
+        alt=""
+        aria-hidden="true"
         style={{
           position: 'absolute',
           bottom: '34%',
-          left: 'calc(var(--thread-left-desktop) - 70px)',
+          left: 'calc(var(--thread-left-desktop) - 110px)',
           transform: 'translateY(50%)',
+          width: 220,
+          pointerEvents: 'none',
         }}
-      >
-        <path
-          d="M15 42 Q70 58 125 42 L115 32 Q70 27 25 32 Z"
-          fill="oklch(25% 0.04 250)"
-          stroke="oklch(68% 0.18 48 / 0.3)"
-          strokeWidth="0.5"
-        />
-        <rect
-          x="52" y="22" width="28" height="14" rx="3"
-          fill="oklch(20% 0.03 250)"
-          stroke="oklch(68% 0.18 48 / 0.2)"
-          strokeWidth="0.5"
-        />
-        <line x1="70" y1="32" x2="70" y2="4" stroke="oklch(68% 0.18 48 / 0.7)" strokeWidth="1.5" strokeLinecap="round" />
-        <line x1="50" y1="28" x2="30" y2="16" stroke="oklch(68% 0.18 48 / 0.8)" strokeWidth="1" strokeLinecap="round" />
-        <circle cx="30" cy="16" r="2" fill="oklch(68% 0.18 48 / 0.9)" />
-        <path d="M20 54 Q70 60 120 54" stroke="rgba(0,180,200,0.15)" strokeWidth="1.5" fill="none" />
-      </svg>
+      />
     </div>
   )
 }
@@ -137,7 +121,10 @@ export default function Hero() {
       data-theme="dark"
       className="with-grain"
       style={{
-        background: 'linear-gradient(to bottom, oklch(8% 0.02 250) 0%, oklch(12% 0.02 250) 100%)',
+        backgroundColor: 'oklch(8% 0.02 250)',
+        backgroundImage: 'url(/assets/bg-surface.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center top',
         minHeight: '100svh',
         overflow: 'hidden',
         position: 'relative',

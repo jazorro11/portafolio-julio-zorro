@@ -4,7 +4,6 @@ import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useTranslations } from 'next-intl'
-import TreasureChestSVG from './TreasureChestSVG'
 
 function GitHubIcon() {
   return (
@@ -102,7 +101,16 @@ export default function TreasureChest() {
     >
       {/* SVG chest illustration with glow overlay */}
       <div style={{ position: 'relative' }}>
-        <TreasureChestSVG width={180} />
+        <img
+          src="/assets/treasure-chest.png"
+          alt=""
+          aria-hidden="true"
+          width={220}
+          style={{
+            display: 'block',
+            filter: 'drop-shadow(0 0 20px rgba(255,50,180,0.35))',
+          }}
+        />
         {/* Bioluminescent glow burst */}
         <div
           ref={glowRef}
