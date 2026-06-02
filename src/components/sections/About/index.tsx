@@ -39,7 +39,7 @@ const chapters: Array<{
 }> = [
   { key: 'iot',        bg: 'oklch(11% 0.03 260)',  textColor: 'rgba(245,241,235,0.85)', labelColor: '#FF8C42' },
   { key: 'university', bg: 'oklch(13% 0.025 255)', textColor: 'rgba(245,241,235,0.75)', labelColor: 'var(--bio-cyan)' },
-  { key: 'now',        bg: '#FF8C42',              textColor: 'rgba(8,8,16,0.85)',       labelColor: 'rgba(8,8,16,0.5)' },
+  { key: 'now',        bg: 'oklch(11% 0.03 260)',  textColor: 'rgba(245,241,235,0.85)', labelColor: 'oklch(68% 0.18 48)' },
 ]
 
 export default function About() {
@@ -175,7 +175,7 @@ export default function About() {
               transition={{ delay: 0.08 * i, duration: 0.4, ease: EASE }}
               style={{
                 background: bg,
-                border: '1px solid oklch(55% 0.12 185 / 0.18)',
+                border: key === 'now' ? '1px solid oklch(68% 0.18 48 / 0.5)' : '1px solid oklch(55% 0.12 185 / 0.18)',
                 borderRadius: '14px',
                 padding: '1.5rem 1.75rem',
                 display: 'flex',
