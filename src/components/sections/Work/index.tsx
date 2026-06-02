@@ -160,7 +160,7 @@ export default function Work() {
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             className="section-label"
             style={{ color: 'var(--color-accent)', marginBottom: '0.75rem' }}
           >
@@ -169,7 +169,7 @@ export default function Work() {
           <motion.h2
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             transition={{ duration: 0.6, ease: EASE }}
             style={{
               fontFamily: 'var(--font-display)',
@@ -187,7 +187,7 @@ export default function Work() {
           <motion.div
             initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             transition={{ duration: 0.7, ease: EASE }}
             style={{
               background: 'rgba(10,20,50,0.9)',
@@ -298,7 +298,7 @@ export default function Work() {
                 key={key}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
                 transition={{ delay: 0.08 * i, duration: 0.5, ease: EASE }}
                 style={{
                   background: 'rgba(10,20,50,0.85)',

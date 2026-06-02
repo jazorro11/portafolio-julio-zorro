@@ -41,7 +41,7 @@ function SkillBubble({ name, glowColor, i }: BubbleProps) {
     <motion.span
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      viewport={{ once: false }}
       transition={{ delay: i * 0.04, duration: 0.35, ease: EASE }}
       style={{
         display: 'inline-block',
@@ -135,7 +135,7 @@ export default function Stack() {
             <motion.p
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
               className="section-label"
               style={{ color: 'var(--color-accent)', marginBottom: '1rem' }}
             >
@@ -144,7 +144,7 @@ export default function Stack() {
             <motion.h2
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
               transition={{ duration: 0.6, ease: EASE }}
               style={{
                 fontFamily: 'var(--font-display)',
@@ -165,7 +165,7 @@ export default function Stack() {
                 <motion.p
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: false }}
                   transition={{ delay: ci * 0.08 }}
                   className="section-label"
                   style={{
@@ -189,7 +189,7 @@ export default function Stack() {
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             className="section-label"
             style={{ color: 'var(--color-accent)', marginBottom: '2.5rem' }}
           >
@@ -202,7 +202,7 @@ export default function Stack() {
                 <motion.p
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: false }}
                   transition={{ delay: ci * 0.08 }}
                   className="section-label"
                   style={{ color: 'var(--color-text-dark-muted)', marginBottom: '1rem' }}

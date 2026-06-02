@@ -16,14 +16,14 @@ const revealVariants = {
 
 function RevealBlock({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-10% 0px' })
+  const inView = useInView(ref, { once: false, margin: '-10% 0px' })
   return (
     <div ref={ref} style={{ overflow: 'hidden' }}>
       <motion.div
         initial="hidden"
         animate={inView ? 'visible' : 'hidden'}
         variants={revealVariants}
-        transition={{ delay, duration: 0.8, ease: EASE }}
+        transition={{ delay: inView ? delay : 0, duration: 0.8, ease: EASE }}
       >
         {children}
       </motion.div>
@@ -171,7 +171,7 @@ export default function About() {
               key={key}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-10%' }}
+              viewport={{ once: false, margin: '-10%' }}
               transition={{ delay: 0.08 * i, duration: 0.4, ease: EASE }}
               style={{
                 background: bg,
