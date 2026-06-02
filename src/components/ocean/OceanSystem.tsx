@@ -39,7 +39,7 @@ export default function OceanSystem({ children }: { children: React.ReactNode })
 
     if (!pin) {
       // GSAP not yet mounted (SSR/hydration window) — navigate directly
-      lenis?.scrollTo('#work', { duration: 0.8 })
+      lenis?.scrollTo('#about', { duration: 0.8 })
       return
     }
 
@@ -47,7 +47,7 @@ export default function OceanSystem({ children }: { children: React.ReactNode })
       progress: 1,
       duration: 0.3,
       ease: 'power3.out',
-      onComplete: () => lenis?.scrollTo('#work', { duration: 0.8 }),
+      onComplete: () => lenis?.scrollTo('#about', { duration: 0.8 }),
     })
   }, [])
 

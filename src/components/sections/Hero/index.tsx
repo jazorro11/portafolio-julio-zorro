@@ -113,7 +113,7 @@ function NightSkyScene() {
 // ── Main Hero ─────────────────────────────────────────────────────────────────
 export default function Hero() {
   const t = useTranslations('hero')
-  const { bypassHeroPin } = useOcean()
+  const { bypassHeroPin, depthProgress } = useOcean()
 
   return (
     <section
@@ -256,6 +256,45 @@ export default function Hero() {
           }}
         />
       </motion.div>
+
+      {/* Depth indicator badge — right side, fades in once scrolling begins */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'fixed',
+          bottom: '2.5rem',
+          right: 'var(--container-padding)',
+          zIndex: 50,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '6px',
+          opacity: depthProgress > 0.02 ? 1 : 0,
+          transition: 'opacity 400ms ease',
+          pointerEvents: 'none',
+        }}
+      >
+        {/* Amber accent dot */}
+        <span
+          style={{
+            width: 5,
+            height: 5,
+            borderRadius: '50%',
+            background: 'var(--color-accent)',
+            flexShrink: 0,
+          }}
+        />
+        <span
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.6rem',
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+            color: 'var(--color-text-dark-muted)',
+          }}
+        >
+          0m · Surface
+        </span>
+      </div>
 
       <style>{`
         @media (max-width: 767px) {
