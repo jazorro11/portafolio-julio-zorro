@@ -1,17 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { usePathname } from 'next/navigation';
 import { Link } from '@/i18n/navigation';
 import LanguageToggle from '../LanguageToggle';
 import { getLenis } from '@/lib/lenis-instance';
 
 export default function Nav() {
   const t = useTranslations('nav');
-  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const hamburgerRef = useRef<HTMLButtonElement>(null);
+  const firstDrawerLinkRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -19,12 +20,25 @@ export default function Nav() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Prevent body scroll when mobile drawer is open
+  // Escape key closes drawer
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMobileOpen(false);
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, []);
+
+  // Prevent body scroll when mobile drawer is open; Lenis stop/start; focus management
   useEffect(() => {
     if (mobileOpen) {
       document.body.style.overflow = 'hidden';
+      getLenis()?.stop();
+      firstDrawerLinkRef.current?.focus();
     } else {
       document.body.style.overflow = '';
+      getLenis()?.start();
+      hamburgerRef.current?.focus();
     }
     return () => { document.body.style.overflow = ''; };
   }, [mobileOpen]);
@@ -112,10 +126,12 @@ export default function Nav() {
 
         {/* Hamburger button — only visible on mobile */}
         <button
+          ref={hamburgerRef}
           className="nav-hamburger"
           onClick={() => setMobileOpen(prev => !prev)}
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={mobileOpen}
+          aria-controls="mobile-nav-drawer"
           style={{
             background: 'none',
             border: 'none',
@@ -157,63 +173,69 @@ export default function Nav() {
         `}</style>
       </nav>
 
-      {/* Mobile drawer overlay */}
-      {mobileOpen && (
+      {/* Mobile drawer overlay — always in DOM, visibility toggled via opacity */}
+      <div
+        id="mobile-nav-drawer"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Navigation"
+        className="nav-mobile-overlay"
+        style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 'calc(var(--z-nav) - 1)' as string,
+          background: 'oklch(5% 0.02 260 / 0.95)',
+          backdropFilter: 'blur(8px)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '2rem',
+          opacity: mobileOpen ? 1 : 0,
+          pointerEvents: mobileOpen ? 'auto' : 'none',
+          transition: 'opacity 200ms ease',
+        }}
+        onClick={() => setMobileOpen(false)}
+      >
+        {/* Inner content — stop propagation so clicking links doesn't close via backdrop handler */}
         <div
-          className="nav-mobile-overlay"
           style={{
-            position: 'fixed',
-            inset: 0,
-            zIndex: 'calc(var(--z-nav) - 1)' as string,
-            background: 'oklch(5% 0.02 260 / 0.95)',
-            backdropFilter: 'blur(8px)',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            justifyContent: 'center',
-            gap: '2rem',
+            gap: '2.5rem',
           }}
-          onClick={() => setMobileOpen(false)}
+          onClick={e => e.stopPropagation()}
         >
-          {/* Inner content — stop propagation so clicking links doesn't close via backdrop handler */}
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '2.5rem',
-            }}
-            onClick={e => e.stopPropagation()}
-          >
-            {links.map(({ href, label }) => (
-              <a
-                key={href}
-                href={href}
-                onClick={e => {
-                  handleNavClick(e, href);
-                  setMobileOpen(false);
-                }}
-                style={{
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: 'clamp(1.25rem, 5vw, 1.75rem)',
-                  letterSpacing: '0.15em',
-                  textTransform: 'uppercase',
-                  color: 'var(--color-text-dark-secondary)',
-                  textDecoration: 'none',
-                  transition: 'color 200ms ease',
-                }}
-                onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-accent)')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'var(--color-text-dark-secondary)')}
-              >
-                {label}
-              </a>
-            ))}
-            <div style={{ marginTop: '0.5rem' }}>
-              <LanguageToggle />
-            </div>
+          {links.map(({ href, label }, index) => (
+            <a
+              key={href}
+              ref={index === 0 ? firstDrawerLinkRef : undefined}
+              href={href}
+              onClick={e => {
+                handleNavClick(e, href);
+                setMobileOpen(false);
+              }}
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: 'clamp(1.25rem, 5vw, 1.75rem)',
+                letterSpacing: '0.15em',
+                textTransform: 'uppercase',
+                color: 'var(--color-text-dark-secondary)',
+                textDecoration: 'none',
+                transition: 'color 200ms ease',
+              }}
+              onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-accent)')}
+              onMouseLeave={e => (e.currentTarget.style.color = 'var(--color-text-dark-secondary)')}
+            >
+              {label}
+            </a>
+          ))}
+          <div style={{ marginTop: '0.5rem' }}>
+            <LanguageToggle />
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 }
