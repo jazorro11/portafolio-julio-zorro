@@ -186,37 +186,42 @@ export default function Stack() {
 
           <div aria-hidden style={{ borderTop: '1px solid rgba(0,229,200,0.1)', marginBlock: '3rem' }} />
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: false }}
-            className="section-label"
-            style={{ color: 'var(--color-accent)', marginBottom: '2.5rem' }}
-          >
-            {t('hardware.label')}
-          </motion.p>
+          <details open style={{ background: 'oklch(5% 0.025 260)', borderRadius: '16px', padding: '2rem', border: '1px solid rgba(255,80,50,0.15)' }}>
+            <summary style={{ cursor: 'pointer', listStyle: 'none', display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '2.5rem', userSelect: 'none' }}>
+              <motion.p
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: false }}
+                className="section-label"
+                style={{ color: 'rgba(255,80,50,0.8)', margin: 0, fontSize: 'var(--text-sm)' }}
+              >
+                {t('hardware.label')}
+              </motion.p>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'rgba(255,80,50,0.4)', letterSpacing: '0.1em' }}>▾</span>
+            </summary>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '2.5rem' }}>
-            {hardwareStack.map(({ category, items, glowColor }, ci) => (
-              <div key={category}>
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: false }}
-                  transition={{ delay: ci * 0.08 }}
-                  className="section-label"
-                  style={{ color: 'var(--color-text-dark-muted)', marginBottom: '1rem' }}
-                >
-                  {category}
-                </motion.p>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                  {items.map((item, i) => (
-                    <SkillBubble key={item} name={item} glowColor={glowColor} i={ci * 6 + i} />
-                  ))}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '2.5rem' }}>
+              {hardwareStack.map(({ category, items, glowColor }, ci) => (
+                <div key={category}>
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: false }}
+                    transition={{ delay: ci * 0.08 }}
+                    className="section-label"
+                    style={{ color: 'rgba(255,80,50,0.6)', marginBottom: '1rem' }}
+                  >
+                    {category}
+                  </motion.p>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                    {items.map((item, i) => (
+                      <SkillBubble key={item} name={item} glowColor={glowColor} i={ci * 6 + i} />
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </details>
         </div>
 
         {/* Touch: bubbles always have subtle glow */}
