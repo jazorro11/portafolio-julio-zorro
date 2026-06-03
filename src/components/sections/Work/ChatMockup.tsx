@@ -3,12 +3,12 @@
 import { useEffect, useRef, useState } from 'react';
 
 const conversation = [
-  { role: 'user',      text: 'What tools do you have access to?' },
-  { role: 'assistant', text: 'I can search the web, read files, and run Python code. What do you need?' },
-  { role: 'user',      text: 'Summarize the Q3 sales report.' },
-  { role: 'assistant', text: 'Analyzing the report... Revenue grew 18% YoY. Top regions: LATAM +34%, EU +12%. Flagging 3 anomalies for review.' },
-  { role: 'user',      text: 'Show me the anomalies.' },
-  { role: 'assistant', text: '① Week 32 dip (-22%) linked to system outage. ② Sept 14 spike: promotional campaign. ③ EU Unit 4 underperforming vs forecast.' },
+  { role: 'user',      text: 'Search for recent papers on multi-agent LLM coordination.' },
+  { role: 'assistant', text: 'On it — calling web_search and arxiv_fetch tools in parallel.' },
+  { role: 'user',      text: 'Summarize the top 3 findings.' },
+  { role: 'assistant', text: 'Done. ① LLM-Modulo (2024): planner + critic loop. ② AutoGen: async message-passing between specialized agents. ③ LangGraph: stateful graph with conditional edges.' },
+  { role: 'user',      text: 'Which pattern fits a RAG pipeline best?' },
+  { role: 'assistant', text: 'LangGraph wins for production RAG — deterministic routing, observable state, and built-in memory. My recommendation.' },
 ];
 
 export default function ChatMockup() {
