@@ -61,6 +61,10 @@
         "title": "HAZ Arquitectura",
         "description": "Portafolio y servicios para una firma de arquitectura bogotana con más de 30 años de experiencia. Diseño centrado en imagen.",
         "tags": ["Next.js", "TypeScript"]
+      },
+      "iot_monitor": {
+        "title": "IoT Edge Monitor",
+        "description": "Red de sensores ESP32 + LoRa con backend FastAPI, broker MQTT y dashboard en tiempo real. Desplegado para monitoreo ambiental en sitios de campo con baja conectividad."
       }
     }
   },

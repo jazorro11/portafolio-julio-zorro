@@ -61,6 +61,10 @@
         "title": "HAZ Arquitectura",
         "description": "Portfolio and services site for a Bogotá-based architecture firm with 30+ years of experience. Image-first, bilingual-ready.",
         "tags": ["Next.js", "TypeScript"]
+      },
+      "iot_monitor": {
+        "title": "IoT Edge Monitor",
+        "description": "ESP32 + LoRa sensor network with a FastAPI backend, MQTT broker, and real-time dashboard. Deployed to monitor environmental data in low-connectivity field sites."
       }
     }
   },

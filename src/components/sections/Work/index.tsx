@@ -11,6 +11,14 @@ const AGENT_LIVE_URL = 'https://agent-web-web-one.vercel.app'
 
 const secondaryProjects = [
   {
+    key: 'iot_monitor' as const,
+    tags: ['Python', 'FastAPI', 'MQTT'],
+    status: 'live' as const,
+    color: '#00E5C8',
+    github: 'https://github.com/jazorro11',
+    live: null,
+  },
+  {
     key: 'sinergia' as const,
     tags: ['Astro', 'TypeScript', 'Tailwind'],
     status: 'live' as const,
@@ -220,20 +228,6 @@ export default function Work() {
                 <span className="section-label" style={{ color: '#FF8C42' }}>
                   AI · Featured
                 </span>
-                <span
-                  style={{
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: '10px',
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                    color: 'rgba(255,140,66,0.55)',
-                    border: '1px solid rgba(255,140,66,0.2)',
-                    borderRadius: '4px',
-                    padding: '2px 7px',
-                  }}
-                >
-                  {t('wip')}
-                </span>
               </div>
 
               <h3
@@ -289,7 +283,7 @@ export default function Work() {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(2, 1fr)',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
               gap: '1.5rem',
             }}
           >
