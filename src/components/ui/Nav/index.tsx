@@ -10,6 +10,8 @@ export default function Nav() {
   const t = useTranslations('nav');
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>('');
+  const didMountRef = useRef(false);
 
   const hamburgerRef = useRef<HTMLButtonElement>(null);
   const firstDrawerLinkRef = useRef<HTMLAnchorElement>(null);
@@ -31,6 +33,10 @@ export default function Nav() {
 
   // Prevent body scroll when mobile drawer is open; Lenis stop/start; focus management
   useEffect(() => {
+    if (!didMountRef.current) {
+      didMountRef.current = true;
+      return;
+    }
     if (mobileOpen) {
       document.body.style.overflow = 'hidden';
       getLenis()?.stop();
@@ -42,6 +48,25 @@ export default function Nav() {
     }
     return () => { document.body.style.overflow = ''; };
   }, [mobileOpen]);
+
+  // Active section tracker
+  useEffect(() => {
+    const sectionIds = ['about', 'stack', 'work', 'contact'];
+    const observers: IntersectionObserver[] = [];
+    sectionIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActiveSection(id);
+        },
+        { rootMargin: '-40% 0px -40% 0px' }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+    return () => observers.forEach(o => o.disconnect());
+  }, []);
 
   const links = [
     { href: '#about',    label: t('about') },
@@ -96,29 +121,37 @@ export default function Nav() {
 
         {/* Links — hidden on mobile */}
         <ul className="nav-links" style={{ display: 'flex', gap: '2rem', listStyle: 'none', alignItems: 'center' }}>
-          {links.map(({ href, label }) => (
-            <li key={href} className="nav-link-item">
-              <a
-                href={href}
-                onClick={e => handleNavClick(e, href)}
-                style={{
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: 'var(--text-xs)',
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
-                  color: 'var(--color-text-dark-secondary)',
-                  textDecoration: 'none',
-                  transition: 'color 200ms ease',
-                  padding: '12px 0',
-                  display: 'inline-block',
-                }}
-                onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-accent)')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'var(--color-text-dark-secondary)')}
-              >
-                {label}
-              </a>
-            </li>
-          ))}
+          {links.map(({ href, label }) => {
+            const sectionId = href.replace('#', '');
+            const isActive = activeSection === sectionId;
+            return (
+              <li key={href} className="nav-link-item">
+                <a
+                  href={href}
+                  onClick={e => handleNavClick(e, href)}
+                  style={{
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: 'var(--text-xs)',
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    color: isActive ? 'var(--color-accent)' : 'var(--color-text-dark-secondary)',
+                    textDecoration: 'none',
+                    transition: 'color 200ms ease',
+                    padding: '12px 0',
+                    display: 'inline-block',
+                  }}
+                  onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-accent)')}
+                  onMouseLeave={e =>
+                    (e.currentTarget.style.color = isActive
+                      ? 'var(--color-accent)'
+                      : 'var(--color-text-dark-secondary)')
+                  }
+                >
+                  {label}
+                </a>
+              </li>
+            );
+          })}
           <li className="nav-lang-desktop">
             <LanguageToggle />
           </li>
