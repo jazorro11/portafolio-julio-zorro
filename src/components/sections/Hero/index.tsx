@@ -1,29 +1,21 @@
-'use client';
+'use client'
 
-import dynamic from 'next/dynamic';
-import { useTranslations } from 'next-intl';
-import { motion } from 'framer-motion';
-import { getLenis } from '@/lib/lenis-instance';
+import { useTranslations } from 'next-intl'
+import { motion } from 'framer-motion'
+import { useOcean } from '@/components/ocean/OceanSystem'
 
-// SSR: false — Three.js needs window
-const WebGLScene = dynamic(() => import('./WebGLScene'), { ssr: false });
+const EASE = [0.23, 1, 0.32, 1] as [number, number, number, number]
 
-const EASE = [0.23, 1, 0.32, 1] as [number, number, number, number]; // --ease-out-strong
-
-// Stagger each character — Emil rule: 30-80ms between items
+// ── Letter-by-letter name animation (preserved) ──────────────────────────────
 const letterVariants = {
   hidden: { opacity: 0, y: 60, skewY: 4 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
     skewY: 0,
-    transition: {
-      delay: 0.3 + i * 0.05,
-      duration: 0.7,
-      ease: EASE,
-    },
+    transition: { delay: 0.3 + i * 0.05, duration: 0.7, ease: EASE },
   }),
-};
+}
 
 function SplitName({ name }: { name: string }) {
   return (
@@ -39,11 +31,98 @@ function SplitName({ name }: { name: string }) {
         </motion.span>
       ))}
     </span>
-  );
+  )
 }
 
+// ── Night sky + boat scene ────────────────────────────────────────────────────
+function NightSkyScene() {
+  return (
+    <div
+      aria-hidden="true"
+      style={{
+        position: 'absolute',
+        inset: 0,
+        overflow: 'hidden',
+        pointerEvents: 'none',
+      }}
+    >
+      {/* Starfield */}
+      <svg
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+        aria-hidden="true"
+      >
+        {Array.from({ length: 60 }, (_, i) => {
+          const seed = (i * 2654435769) >>> 0
+          const r = (n: number) => ((seed * (n + 1)) % 1000) / 1000
+          return (
+            <circle
+              key={i}
+              cx={`${r(1) * 100}%`}
+              cy={`${r(2) * 65}%`}
+              r={0.5 + r(3) * 1.5}
+              fill={`rgba(255,255,255,${0.2 + r(4) * 0.6})`}
+            />
+          )
+        })}
+      </svg>
+
+      {/* Moon */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '12%',
+          left: '24%',
+          width: 64,
+          height: 64,
+          borderRadius: '50%',
+          background: 'radial-gradient(circle at 40% 40%, rgba(255,200,100,0.95), rgba(255,140,66,0.6))',
+          boxShadow: '0 0 40px rgba(255,140,66,0.35), 0 0 80px rgba(255,140,66,0.15)',
+        }}
+      />
+
+      {/* Ocean horizon line */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '35%',
+          left: 0,
+          right: 0,
+          height: 1,
+          background:
+            'linear-gradient(to right, transparent, rgba(0,180,200,0.25) 30%, rgba(0,180,200,0.25) 70%, transparent)',
+        }}
+      />
+
+      <img
+        src="/assets/astronaut-boat.png"
+        alt=""
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          bottom: '34%',
+          left: 'calc(var(--thread-left-desktop) - 110px)',
+          transform: 'translateY(50%)',
+          width: 220,
+          pointerEvents: 'none',
+        }}
+      />
+    </div>
+  )
+}
+
+// ── Depth zone helper ─────────────────────────────────────────────────────────
+function getDepthZone(p: number): string {
+  if (p <= 0.2) return '0m · Surface'
+  if (p <= 0.4) return '200m · Shallow'
+  if (p <= 0.6) return '800m · Reef'
+  if (p <= 0.8) return '3,500m · Abyss'
+  return '11,000m · Trench'
+}
+
+// ── Main Hero ─────────────────────────────────────────────────────────────────
 export default function Hero() {
-  const t = useTranslations('hero');
+  const t = useTranslations('hero')
+  const { bypassHeroPin, depthProgress } = useOcean()
 
   return (
     <section
@@ -51,137 +130,117 @@ export default function Hero() {
       data-theme="dark"
       className="with-grain"
       style={{
-        background: 'var(--color-dark)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        backgroundColor: 'oklch(8% 0.02 250)',
+        backgroundImage: 'url(/assets/bg-surface.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center top',
         minHeight: '100svh',
         overflow: 'hidden',
+        position: 'relative',
       }}
     >
-      {/* WebGL background */}
-      <WebGLScene />
+      <NightSkyScene />
 
-      {/* Amber glow — radial gradient accent */}
-      <div
-        aria-hidden
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background:
-            'radial-gradient(ellipse 80% 60% at 65% 55%, rgba(255,140,66,0.08) 0%, transparent 70%),' +
-            'radial-gradient(ellipse 40% 40% at 20% 80%, rgba(59,130,246,0.06) 0%, transparent 60%)',
-          zIndex: 1,
-          pointerEvents: 'none',
-        }}
-      />
-
-      {/* Content */}
+      {/* Two-column: thread zone (0–38%) | content (38%+) */}
       <motion.div
+        className="hero-grid"
         initial="hidden"
         animate="visible"
         style={{
           position: 'relative',
           zIndex: 2,
-          textAlign: 'center',
+          display: 'grid',
+          gridTemplateColumns: '38% 1fr',
+          minHeight: '100svh',
+          alignItems: 'center',
           padding: '0 var(--container-padding)',
-          maxWidth: '1000px',
         }}
       >
-        {/* Role label */}
-        <motion.p
-          variants={{
-            hidden: { opacity: 0, y: 20 },
-            visible: { opacity: 1, y: 0, transition: { delay: 0.1, duration: 0.5, ease: EASE } },
-          }}
-          className="section-label"
-          style={{ color: 'var(--color-accent)', marginBottom: '1.5rem' }}
-        >
-          {t('title')}
-        </motion.p>
+        {/* Left zone: decorative — FishingThread is position:fixed */}
+        <div aria-hidden="true" />
 
-        {/* Name — letter by letter */}
-        <h1
-          style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: 'var(--text-hero)',
-            fontWeight: 900,
-            letterSpacing: '-0.04em',
-            lineHeight: 0.9,
-            color: 'var(--color-text-dark)',
-            marginBottom: '2rem',
-          }}
-        >
-          <SplitName name={t('name')} />
-        </h1>
+        {/* Right zone: text content */}
+        <div style={{ padding: '6rem 0' }}>
+          <motion.p
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0, transition: { delay: 0.1, duration: 0.5, ease: EASE } },
+            }}
+            className="section-label"
+            style={{ color: 'var(--color-accent)', marginBottom: '1.5rem' }}
+          >
+            {t('title')}
+          </motion.p>
 
-        {/* Tagline */}
-        <motion.p
-          variants={{
-            hidden: { opacity: 0, y: 24 },
-            visible: {
-              opacity: 1,
-              y: 0,
-              transition: { delay: 0.9, duration: 0.6, ease: EASE },
-            },
-          }}
-          style={{
-            fontSize: 'var(--text-lg)',
-            color: 'var(--color-text-dark-secondary)',
-            maxWidth: '560px',
-            margin: '0 auto 3rem',
-            lineHeight: 1.5,
-          }}
-        >
-          {t('tagline')}
-        </motion.p>
+          <h1
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: 'var(--text-hero)',
+              fontWeight: 900,
+              letterSpacing: '-0.04em',
+              lineHeight: 0.9,
+              color: 'var(--color-text-dark)',
+              marginBottom: '2rem',
+            }}
+          >
+            <SplitName name={t('name')} />
+          </h1>
 
-        {/* CTA */}
-        <motion.a
-          href="#work"
-          onClick={e => {
-            e.preventDefault();
-            const lenis = getLenis();
-            if (lenis) lenis.scrollTo('#work', { offset: -72, duration: 1.2 });
-            else document.querySelector('#work')?.scrollIntoView({ behavior: 'smooth' });
-          }}
-          variants={{
-            hidden: { opacity: 0, scale: 0.95 },
-            visible: {
-              opacity: 1,
-              scale: 1,
-              transition: { delay: 1.1, duration: 0.4, ease: EASE },
-            },
-          }}
-          whileTap={{ scale: 0.97 }} // Emil: scale(0.97) on :active, 160ms ease-out
-          whileHover={{ borderColor: 'var(--color-accent)' }}
-          style={{
-            display: 'inline-block',
-            fontFamily: 'var(--font-mono)',
-            fontSize: 'var(--text-xs)',
-            letterSpacing: '0.1em',
-            textTransform: 'uppercase',
-            color: 'var(--color-accent)',
-            border: '1px solid rgba(255,140,66,0.4)',
-            borderRadius: '100px',
-            padding: '14px 32px',
-            textDecoration: 'none',
-            transition: 'border-color 200ms ease',
-          }}
-        >
-          {t('cta')} ↓
-        </motion.a>
+          <motion.p
+            variants={{
+              hidden: { opacity: 0, y: 24 },
+              visible: { opacity: 1, y: 0, transition: { delay: 0.9, duration: 0.6, ease: EASE } },
+            }}
+            style={{
+              fontSize: 'var(--text-lg)',
+              color: 'var(--color-text-dark-secondary)',
+              maxWidth: '480px',
+              marginBottom: '3rem',
+              lineHeight: 1.5,
+            }}
+          >
+            {t('tagline')}
+          </motion.p>
+
+          {/* CTA — uses OceanSystem context to bypass pin */}
+          <motion.button
+            onClick={bypassHeroPin}
+            variants={{
+              hidden: { opacity: 0, scale: 0.95 },
+              visible: { opacity: 1, scale: 1, transition: { delay: 1.1, duration: 0.4, ease: EASE } },
+            }}
+            whileTap={{ scale: 0.97 }}
+            whileHover={{ borderColor: 'var(--color-accent)' }}
+            style={{
+              display: 'inline-block',
+              fontFamily: 'var(--font-mono)',
+              fontSize: 'var(--text-xs)',
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              color: 'var(--color-accent)',
+              border: '1px solid rgba(255,140,66,0.4)',
+              borderRadius: '100px',
+              padding: '14px 32px',
+              background: 'transparent',
+              cursor: 'pointer',
+              transition: 'border-color 200ms ease',
+            }}
+          >
+            {t('cta')} ↓
+          </motion.button>
+        </div>
       </motion.div>
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator — on thread axis */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.6, duration: 0.6 }}
+        aria-hidden="true"
         style={{
           position: 'absolute',
           bottom: '2.5rem',
-          left: '50%',
+          left: 'var(--thread-left-desktop)',
           transform: 'translateX(-50%)',
           zIndex: 2,
           display: 'flex',
@@ -194,7 +253,7 @@ export default function Hero() {
           className="section-label"
           style={{ color: 'var(--color-text-dark-muted)', fontSize: '0.65rem' }}
         >
-          scroll
+          {t('scroll')}
         </span>
         <motion.div
           animate={{ y: [0, 8, 0] }}
@@ -206,6 +265,60 @@ export default function Hero() {
           }}
         />
       </motion.div>
+
+      {/* Depth indicator badge — right side, fades in once scrolling begins */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'fixed',
+          bottom: '2.5rem',
+          right: 'var(--container-padding)',
+          zIndex: 50,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '6px',
+          opacity: depthProgress > 0.02 ? 1 : 0,
+          transition: 'opacity 400ms ease',
+          pointerEvents: 'none',
+        }}
+      >
+        {/* Amber accent dot */}
+        <span
+          style={{
+            width: 5,
+            height: 5,
+            borderRadius: '50%',
+            background: 'var(--color-accent)',
+            flexShrink: 0,
+          }}
+        />
+        <span
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.6rem',
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+            color: 'var(--color-text-dark-muted)',
+          }}
+        >
+          {getDepthZone(depthProgress)}
+        </span>
+      </div>
+
+      <style>{`
+        @media (max-width: 767px) {
+          .hero-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .hero-grid > [aria-hidden="true"]:first-child {
+            display: none !important;
+          }
+          .hero-grid > div:last-child {
+            padding: 8rem 0 4rem !important;
+            padding-left: 32px !important;
+          }
+        }
+      `}</style>
     </section>
-  );
+  )
 }

@@ -93,3 +93,33 @@
   --section-text-muted:    var(--color-text-light-muted);
   --section-border:        rgba(10, 10, 10, 0.08);
 }
+
+/* ── Ocean System Tokens ── */
+:root {
+  /* Depth backgrounds — near-black OKLCH, chroma reduced at extremes */
+  --ocean-surface:  oklch(12% 0.02 250);
+  --ocean-shallow:  oklch(9%  0.03 258);
+  --ocean-reef:     oklch(7%  0.025 262);
+  --ocean-abyss:    oklch(5%  0.018 265);
+  --ocean-trench:   oklch(3%  0.01  268);
+
+  /* Bioluminescent accents */
+  --bio-cyan:       oklch(80% 0.14 185);
+  --bio-magenta:    oklch(55% 0.22 310);
+  --bio-deep-blue:  oklch(45% 0.18 265);
+  --bio-pink:       oklch(58% 0.24 330);
+
+  /* Thread (amber semitransparente) */
+  --thread-color:        oklch(68% 0.18 48 / 0.5);
+  --thread-left-desktop: 32%;
+  --thread-left-mobile:  12px;
+
+  /* Focus ring — visible on all ocean dark backgrounds */
+  --focus-ring: 0 0 0 2px oklch(68% 0.18 48);
+}
+
+/* Focus visible — applies to all interactive elements site-wide */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}

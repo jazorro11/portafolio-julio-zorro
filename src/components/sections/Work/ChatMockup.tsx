@@ -1,29 +1,50 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const conversation = [
-  { role: 'user',      text: 'What tools do you have access to?' },
-  { role: 'assistant', text: 'I can search the web, read files, and run Python code. What do you need?' },
-  { role: 'user',      text: 'Summarize the Q3 sales report.' },
-  { role: 'assistant', text: 'Analyzing the report... Revenue grew 18% YoY. Top regions: LATAM +34%, EU +12%. Flagging 3 anomalies for review.' },
-  { role: 'user',      text: 'Show me the anomalies.' },
-  { role: 'assistant', text: '① Week 32 dip (-22%) linked to system outage. ② Sept 14 spike: promotional campaign. ③ EU Unit 4 underperforming vs forecast.' },
+  { role: 'user',      text: 'Search for recent papers on multi-agent LLM coordination.' },
+  { role: 'assistant', text: 'On it — calling web_search and arxiv_fetch tools in parallel.' },
+  { role: 'user',      text: 'Summarize the top 3 findings.' },
+  { role: 'assistant', text: 'Done. ① LLM-Modulo (2024): planner + critic loop. ② AutoGen: async message-passing between specialized agents. ③ LangGraph: stateful graph with conditional edges.' },
+  { role: 'user',      text: 'Which pattern fits a RAG pipeline best?' },
+  { role: 'assistant', text: 'LangGraph wins for production RAG — deterministic routing, observable state, and built-in memory. My recommendation.' },
 ];
 
 export default function ChatMockup() {
   const [visible, setVisible] = useState(0);
+  const [started, setStarted] = useState<boolean>(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Start animation only when component enters viewport
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setStarted(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   // Auto-advance messages — "data mutation" effect
   useEffect(() => {
+    if (!started) return;
     if (visible >= conversation.length) return;
     const delay = visible === 0 ? 600 : 1800;
     const t = setTimeout(() => setVisible(v => v + 1), delay);
     return () => clearTimeout(t);
-  }, [visible]);
+  }, [visible, started]);
 
   return (
     <div
+      ref={containerRef}
       style={{
         background: '#0E0E1A',
         borderRadius: '16px',
@@ -33,6 +54,7 @@ export default function ChatMockup() {
         fontSize: '13px',
         width: '100%',
         maxWidth: '460px',
+        position: 'relative',
       }}
     >
       {/* Title bar */}
@@ -104,6 +126,39 @@ export default function ChatMockup() {
           </div>
         )}
       </div>
+
+      {/* Replay button — visible only after animation completes */}
+      {visible >= conversation.length && (
+        <button
+          onClick={() => { setVisible(0); setStarted(false); setTimeout(() => setStarted(true), 50); }}
+          aria-label="Replay conversation"
+          style={{
+            position: 'absolute',
+            bottom: '12px',
+            right: '12px',
+            background: 'none',
+            border: '1px solid rgba(255,140,66,0.3)',
+            borderRadius: '100px',
+            padding: '4px 10px',
+            fontFamily: 'var(--font-mono)',
+            fontSize: '10px',
+            letterSpacing: '0.1em',
+            color: 'rgba(255,140,66,0.4)',
+            cursor: 'pointer',
+            transition: 'color 150ms ease, border-color 150ms ease',
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLButtonElement).style.color = '#FF8C42';
+            (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255,140,66,0.7)';
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLButtonElement).style.color = 'rgba(255,140,66,0.4)';
+            (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255,140,66,0.3)';
+          }}
+        >
+          ↺ Replay
+        </button>
+      )}
 
       <style>{`
         @keyframes fadeUp {
