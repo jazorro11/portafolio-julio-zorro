@@ -54,6 +54,7 @@ export default function ChatMockup() {
         fontSize: '13px',
         width: '100%',
         maxWidth: '460px',
+        position: 'relative',
       }}
     >
       {/* Title bar */}
@@ -125,6 +126,39 @@ export default function ChatMockup() {
           </div>
         )}
       </div>
+
+      {/* Replay button — visible only after animation completes */}
+      {visible >= conversation.length && (
+        <button
+          onClick={() => { setVisible(0); setStarted(false); setTimeout(() => setStarted(true), 50); }}
+          aria-label="Replay conversation"
+          style={{
+            position: 'absolute',
+            bottom: '12px',
+            right: '12px',
+            background: 'none',
+            border: '1px solid rgba(255,140,66,0.3)',
+            borderRadius: '100px',
+            padding: '4px 10px',
+            fontFamily: 'var(--font-mono)',
+            fontSize: '10px',
+            letterSpacing: '0.1em',
+            color: 'rgba(255,140,66,0.4)',
+            cursor: 'pointer',
+            transition: 'color 150ms ease, border-color 150ms ease',
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLButtonElement).style.color = '#FF8C42';
+            (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255,140,66,0.7)';
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLButtonElement).style.color = 'rgba(255,140,66,0.4)';
+            (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255,140,66,0.3)';
+          }}
+        >
+          ↺ Replay
+        </button>
+      )}
 
       <style>{`
         @keyframes fadeUp {
