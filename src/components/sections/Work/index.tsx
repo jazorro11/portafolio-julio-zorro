@@ -349,7 +349,7 @@ export default function Work() {
             #work [style*="grid-template-columns: 1fr minmax"] {
               grid-template-columns: 1fr !important;
             }
-            #work [style*="repeat(2, 1fr)"] {
+            #work [style*="repeat(auto-fit"] {
               grid-template-columns: 1fr !important;
             }
             #work [aria-hidden="true"][style*="position: absolute"][style*="bottom"] {
