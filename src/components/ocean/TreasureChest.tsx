@@ -144,6 +144,7 @@ export default function TreasureChest() {
             target={href.startsWith('mailto') ? undefined : '_blank'}
             rel={href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
             aria-label={ariaLabel}
+            data-chest-link=""
             style={{
               display: 'flex',
               alignItems: 'center',
