@@ -150,7 +150,7 @@ export default function Contact() {
             letterSpacing: '-0.02em',
             color: 'var(--color-text-dark)',
             textDecoration: 'none',
-            display: 'inline-block',
+            display: 'block',
             borderBottom: '1px solid rgba(255,255,255,0.12)',
             paddingBottom: '4px',
             marginTop: '1rem',
@@ -163,7 +163,7 @@ export default function Contact() {
             (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(255,255,255,0.12)';
           }}
         >
-          {phone}
+          +57 {phone}
         </motion.a>
 
         {/* Social links */}
