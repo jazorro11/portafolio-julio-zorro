@@ -136,15 +136,8 @@ export default function Hero() {
           {t('tagline')}
         </motion.p>
 
-        {/* CTA */}
-        <motion.a
-          href="#work"
-          onClick={e => {
-            e.preventDefault();
-            const lenis = getLenis();
-            if (lenis) lenis.scrollTo('#work', { offset: -72, duration: 1.2 });
-            else document.querySelector('#work')?.scrollIntoView({ behavior: 'smooth' });
-          }}
+        {/* CTAs */}
+        <motion.div
           variants={{
             hidden: { opacity: 0, scale: 0.95 },
             visible: {
@@ -153,24 +146,118 @@ export default function Hero() {
               transition: { delay: 1.1, duration: 0.4, ease: EASE },
             },
           }}
-          whileTap={{ scale: 0.97 }} // Emil: scale(0.97) on :active, 160ms ease-out
-          whileHover={{ borderColor: 'var(--color-accent)' }}
-          style={{
-            display: 'inline-block',
-            fontFamily: 'var(--font-mono)',
-            fontSize: 'var(--text-xs)',
-            letterSpacing: '0.1em',
-            textTransform: 'uppercase',
-            color: 'var(--color-accent)',
-            border: '1px solid rgba(255,140,66,0.4)',
-            borderRadius: '100px',
-            padding: '14px 32px',
-            textDecoration: 'none',
-            transition: 'border-color 200ms ease',
-          }}
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}
         >
-          {t('cta')} ↓
-        </motion.a>
+          {/* Pills row */}
+          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+            {/* Primary: scroll to work */}
+            <motion.a
+              href="#work"
+              onClick={e => {
+                e.preventDefault();
+                const lenis = getLenis();
+                if (lenis) lenis.scrollTo('#work', { offset: -72, duration: 1.2 });
+                else document.querySelector('#work')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              whileTap={{ scale: 0.97 }}
+              whileHover={{ borderColor: 'var(--color-accent)' }}
+              style={{
+                display: 'inline-block',
+                fontFamily: 'var(--font-mono)',
+                fontSize: 'var(--text-xs)',
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                color: 'var(--color-accent)',
+                border: '1px solid rgba(255,140,66,0.4)',
+                borderRadius: '100px',
+                padding: '14px 32px',
+                textDecoration: 'none',
+                transition: 'border-color 200ms ease',
+              }}
+            >
+              {t('cta')} ↓
+            </motion.a>
+
+            {/* Contact: scroll to contact */}
+            <motion.a
+              href="#contact"
+              onClick={e => {
+                e.preventDefault();
+                const lenis = getLenis();
+                if (lenis) lenis.scrollTo('#contact', { offset: -72, duration: 1.2 });
+                else document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              whileTap={{ scale: 0.97 }}
+              whileHover={{ opacity: 0.85 }}
+              style={{
+                display: 'inline-block',
+                fontFamily: 'var(--font-mono)',
+                fontSize: 'var(--text-xs)',
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                color: 'var(--color-dark)',
+                background: 'var(--color-accent)',
+                border: '1px solid var(--color-accent)',
+                borderRadius: '100px',
+                padding: '14px 32px',
+                textDecoration: 'none',
+                fontWeight: 600,
+                transition: 'opacity 200ms ease',
+              }}
+            >
+              {t('cta_contact')} →
+            </motion.a>
+          </div>
+
+          {/* Contact data row */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '1.25rem',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+            }}
+          >
+            <a
+              href="mailto:jzorroperez@gmail.com"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                fontFamily: 'var(--font-mono)',
+                fontSize: 'var(--text-xs)',
+                letterSpacing: '0.06em',
+                color: 'rgba(232,224,212,0.35)',
+                textDecoration: 'none',
+              }}
+            >
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+              jzorroperez@gmail.com
+            </a>
+            <div aria-hidden style={{ width: 1, height: 14, background: 'rgba(255,255,255,0.1)' }} />
+            <a
+              href="tel:+573124745704"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                fontFamily: 'var(--font-mono)',
+                fontSize: 'var(--text-xs)',
+                letterSpacing: '0.06em',
+                color: 'rgba(232,224,212,0.35)',
+                textDecoration: 'none',
+              }}
+            >
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8 19.79 19.79 0 01.22 1.22 2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.29 6.29l1.28-1.28a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+              </svg>
+              +57 {t('phone')}
+            </a>
+          </div>
+        </motion.div>
       </motion.div>
 
       {/* Scroll indicator */}

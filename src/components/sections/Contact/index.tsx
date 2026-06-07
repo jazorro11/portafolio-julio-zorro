@@ -7,6 +7,7 @@ import { AmbientBackground } from '@/components/ui/AmbientBackground';
 export default function Contact() {
   const t = useTranslations('contact');
   const email = t('email');
+  const phone = t('phone');
 
   return (
     <section
@@ -133,6 +134,38 @@ export default function Contact() {
           {email}
         </motion.a>
 
+        {/* Phone */}
+        <motion.a
+          className="phone-link"
+          href={`tel:+57${phone.replace(/\s/g, '')}`}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4, duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+          whileHover={{ color: 'var(--color-accent)' }}
+          style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: 'var(--text-2xl)',
+            fontWeight: 700,
+            letterSpacing: '-0.02em',
+            color: 'var(--color-text-dark)',
+            textDecoration: 'none',
+            display: 'block',
+            borderBottom: '1px solid rgba(255,255,255,0.12)',
+            paddingBottom: '4px',
+            marginTop: '1rem',
+            transition: 'color 200ms ease, border-color 200ms ease',
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(255,140,66,0.4)';
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(255,255,255,0.12)';
+          }}
+        >
+          +57 {phone}
+        </motion.a>
+
         {/* Social links */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -178,6 +211,7 @@ export default function Contact() {
         @media (max-width: 480px) {
           #contact h2 { font-size: clamp(2.5rem, 13vw, 4rem) !important; }
           #contact .email-link { font-size: var(--text-xl) !important; word-break: break-all; }
+          #contact .phone-link { font-size: var(--text-xl) !important; word-break: break-all; }
         }
       `}</style>
     </section>

@@ -9,7 +9,9 @@
     "name": "Julio Zorro",
     "title": "Software Engineer · AI",
     "tagline": "Construyo sistemas inteligentes y las interfaces que los hacen sentir humanos.",
-    "cta": "Ver proyectos"
+    "cta": "Ver proyectos",
+    "cta_contact": "Hablemos",
+    "phone": "312 474 5704"
   },
   "about": {
     "label": "Sobre mí",
@@ -67,6 +69,7 @@
     "label": "Contacto",
     "heading": "Construyamos algo.",
     "email": "jzorroperez@gmail.com",
+    "phone": "312 474 5704",
     "available": "Disponible para proyectos freelance y posiciones full-time."
   }
 }
