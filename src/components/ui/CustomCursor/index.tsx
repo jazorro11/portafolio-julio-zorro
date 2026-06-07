@@ -52,6 +52,7 @@ export default function CustomCursor() {
       {/* Dot — tracks immediately */}
       <div
         ref={dotRef}
+        data-cursor-dot=""
         style={{
           position: 'fixed',
           top: 0,
@@ -68,6 +69,7 @@ export default function CustomCursor() {
       {/* Ring — lags behind */}
       <div
         ref={ringRef}
+        data-cursor-ring=""
         data-hover=""
         style={{
           position: 'fixed',
@@ -89,6 +91,12 @@ export default function CustomCursor() {
           width: 56px !important;
           height: 56px !important;
           border-color: rgba(255,140,66,0.8) !important;
+        }
+        @media (pointer: coarse) {
+          [data-cursor-dot],
+          [data-cursor-ring] {
+            display: none !important;
+          }
         }
       `}</style>
     </>

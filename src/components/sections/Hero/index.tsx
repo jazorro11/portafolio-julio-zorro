@@ -27,7 +27,7 @@ const letterVariants = {
 
 function SplitName({ name }: { name: string }) {
   return (
-    <span aria-label={name} style={{ display: 'flex', overflow: 'hidden', flexWrap: 'wrap' }}>
+    <span aria-label={name} style={{ display: 'flex', overflow: 'hidden', flexWrap: 'wrap', justifyContent: 'center' }}>
       {name.split('').map((char, i) => (
         <motion.span
           key={i}
